@@ -2,6 +2,23 @@ import sys
 from datetime import datetime, timezone
 from graphql_client import execute_query
 
+# Fonte para linguagens mais populares:
+# GitHub Octoverse 2025
+# Top 10: TypeScript, Python, JavaScript, Java, C#, PHP,
+# Shell, C++, HCL e Go.
+LINGUAGENS_POPULARES = {
+    "TypeScript",
+    "Python",
+    "JavaScript",
+    "Java",
+    "C#",
+    "PHP",
+    "Shell",
+    "C++",
+    "HCL",
+    "Go"
+}
+
 # Query para os repositorios mais populares 
 QUERY = """
 query($quantidade: Int!, $depois: String) {
@@ -12,10 +29,19 @@ query($quantidade: Int!, $depois: String) {
           nameWithOwner
           stargazerCount
           createdAt
+          primaryLanguage {
+            name
+          }
           pullRequests(states: MERGED) {
             totalCount
           }
           releases {
+            totalCount
+          }
+          issues {
+            totalCount
+          }
+          issues(states: CLOSED) {
             totalCount
           }
           pushedAt
@@ -79,6 +105,25 @@ def main():
             total_releases = repo["releases"]["totalCount"]
             ultimo_push = repo["pushedAt"]
 
+            # RQ 05 - Linguagem primaria
+            if repo["primaryLanguage"]:
+                linguagem = repo["primaryLanguage"]["name"]
+                linguagem_popular = linguagem in LINGUAGENS_POPULARES
+            else:
+                linguagem = "Nao informada"
+                linguagem_popular = False
+
+            # RQ 06 - Issues
+            total_issues = repo["issues"]["totalCount"]
+            issues_fechadas = repo["issues(states: CLOSED)"]["totalCount"]
+
+            if total_issues > 0:
+                percentual_issues_fechadas = (
+                    issues_fechadas / total_issues
+                ) * 100
+            else:
+                percentual_issues_fechadas = 0
+
             # Calcula a idade do repositorio
             data_criacao = datetime.fromisoformat(
                 criado_em.replace("Z", "+00:00")
@@ -107,6 +152,21 @@ def main():
             print(
                 f"   Dias desde o ultimo push: "
                 f"{dias_ultimo_push} dias"
+            )
+
+            # RQ 05
+            print(f"   Linguagem primaria: {linguagem}")
+            print(
+                f"   Linguagem esta entre as mais populares: "
+                f"{'Sim' if linguagem_popular else 'Nao'}"
+            )
+
+            # RQ 06
+            print(f"   Total de issues: {total_issues}")
+            print(f"   Issues fechadas: {issues_fechadas}")
+            print(
+                f"   Percentual de issues fechadas: "
+                f"{percentual_issues_fechadas:.2f}%"
             )
 
     except Exception as e:
