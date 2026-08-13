@@ -41,7 +41,7 @@ query($quantidade: Int!, $depois: String) {
           issues {
             totalCount
           }
-          issues(states: CLOSED) {
+          issuesClosed: issues(states: CLOSED) {
             totalCount
           }
           pushedAt
@@ -115,7 +115,7 @@ def main():
 
             # RQ 06 - Issues
             total_issues = repo["issues"]["totalCount"]
-            issues_fechadas = repo["issues(states: CLOSED)"]["totalCount"]
+            issues_fechadas = repo["issuesClosed"]["totalCount"]
 
             if total_issues > 0:
                 percentual_issues_fechadas = (
