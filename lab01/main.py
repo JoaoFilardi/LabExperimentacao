@@ -15,6 +15,10 @@ query {
           pullRequests(states: MERGED) {
             totalCount
           }
+          releases {
+            totalCount
+          }
+          pushedAt
         }
       }
     }
@@ -42,6 +46,9 @@ def main():
             estrelas = repo["stargazerCount"]
             criado_em = repo["createdAt"]
             prs_merged = repo["pullRequests"]["totalCount"]
+
+            total_releases = repo["releases"]["totalCount"]
+            ultimo_push = repo["pushedAt"]
             
             # Calcula a idade
             data_criacao = datetime.fromisoformat(criado_em.replace("Z", "+00:00"))
@@ -49,12 +56,20 @@ def main():
             
             anos = diferenca.days // 365
             dias_restantes = diferenca.days % 365
+
+            # Calcula o tempo desde o ultimo push
+            data_ultimo_push = datetime.fromisoformat(ultimo_push.replace("Z", "+00:00"))
+            diferenca_push = agora - data_ultimo_push
+            dias_ultimo_push = diferenca_push.days
+                        
             
             print(f"\n{i}. {nome}")
             print(f"   Estrelas: {estrelas}")
             print(f"   Criado em: {criado_em}")
             print(f"   Idade: {anos} anos e {dias_restantes} dias ({diferenca.days} dias no total)")
             print(f"   PRs Merged: {prs_merged}")
+            print(f"   Releases: {total_releases}")
+            print(f"   Dias desde o ultimo push: {dias_ultimo_push} dias")
             
     except Exception as e:
         print(f"Erro ao executar o script: {e}")
