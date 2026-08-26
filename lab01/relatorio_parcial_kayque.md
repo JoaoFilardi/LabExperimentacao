@@ -1,4 +1,4 @@
-# Relatório Parcial Kayque - Laboratório 01 (Sprint 2)
+# Relatório Parcial Kayque - Laboratório 01 (Sprint 3)
 
 Este relatório apresenta a metodologia de coleta de dados, a formulação de hipóteses informais, os resultados de validação de consistência dos dados referentes à **RQ05** (Linguagem Primária) e **RQ06** (Percentual de Issues Fechadas), e a implementação do script de snapshot do GitHub Projects (Parte 2 do laboratório).
 
@@ -118,3 +118,66 @@ python lab01/snapshot_projects.py --sprint S02
 O comando gera o arquivo `lab01/snapshot_s02.csv`, com uma linha por Issue do board e seu status no momento da execução. Repetindo o comando ao final de cada sprint (trocando `--sprint`), os snapshots se acumulam (`snapshot_s01.csv`, `snapshot_s02.csv`, `snapshot_s03.csv`...) e formam a série histórica de movimentação do board que será usada como base de dados nos Labs 04 e 05, já que o GitHub Projects não guarda esse histórico de forma consultável pela API.
 
 > **Observação para o grupo:** este relatório documenta e testa a lógica do script (sintaxe e tratamento de erros validados localmente), mas a geração efetiva do `snapshot_s02.csv` precisa ser rodada por quem tiver o `GITHUB_TOKEN` e acesso ao Project configurados, apontando `PROJECT_OWNER`/`PROJECT_NUMBER` para o board real do grupo.
+
+---
+
+## 6. Análise estatística e gráficos — Sprint 3 (RQ05 e RQ06)
+
+A análise da S03 foi executada sem nova consulta à API, usando exclusivamente o arquivo `repositorios_1000.csv`. O script utilizado foi:
+
+```
+python lab01/analise_rq05_rq06.py
+```
+
+O script lê as colunas pelo nome, valida os valores numéricos e confirma que `razao_issues_fechadas` é compatível com `issues_fechadas / issues_total`. Os gráficos gerados ficam em `lab01/graficos_rq05_rq06/`:
+
+- `frequencia_linguagens_rq05.png`: dez linguagens primárias mais frequentes;
+- `histograma_rq06.png` e `boxplot_rq06.png`: distribuição da razão de issues fechadas;
+- `faixas_rq06.png`: contagem por faixa de percentual fechado.
+
+### 6.1. RQ05 — linguagem primária
+
+| Métrica                                     |  Resultado |
+| :------------------------------------------ | ---------: |
+| Registros válidos                           |       1000 |
+| Linguagens distintas, sem `N/A`             |         43 |
+| Repositórios sem linguagem primária (`N/A`) | 87 (8,70%) |
+
+| Linguagem        | Quantidade | % da amostra |
+| :--------------- | ---------: | -----------: |
+| Python           |        228 |       22,80% |
+| TypeScript       |        174 |       17,40% |
+| JavaScript       |        111 |       11,10% |
+| `N/A`            |         87 |        8,70% |
+| Go               |         76 |        7,60% |
+| Rust             |         57 |        5,70% |
+| C++              |         41 |        4,10% |
+| Java             |         41 |        4,10% |
+| Jupyter Notebook |         24 |        2,40% |
+| C                |         21 |        2,10% |
+
+Python, TypeScript e JavaScript somam 513 repositórios (51,30% da amostra). A hipótese é compatível com os dados: as linguagens mais frequentes concentram mais da metade dos repositórios populares. A comparação foi feita usando o GitHub Octoverse como referência para “linguagens mais populares”, conforme definido na metodologia; o resultado descreve a distribuição observada, sem atribuir um ranking ou ano específico que não esteja registrado no projeto.
+
+O `N/A` foi mantido como categoria, pois representa repositórios sem linguagem primária detectada pela API, e não um valor ausente de coleta.
+
+### 6.2. RQ06 — razão de issues fechadas
+
+| Métrica                     |                Resultado |
+| :-------------------------- | -----------------------: |
+| Registros válidos           |                     1000 |
+| Mínimo / máximo             |          0,00% / 100,00% |
+| Média                       |                   76,79% |
+| Q1 / mediana / Q3           | 67,19% / 86,48% / 96,55% |
+| IQR                         | 29,36 pontos percentuais |
+| Limites de outlier pelo IQR |         23,15% / 140,59% |
+| Outliers                    |               60 (6,00%) |
+| `issues_total = 0`          |               43 (4,30%) |
+| Razão igual a 100%          |               28 (2,80%) |
+
+A hipótese é confirmada pela mediana de 86,48%: no repositório típico da amostra, a maioria das issues está fechada. A média menor que a mediana mostra uma cauda de projetos com percentuais baixos. Os 60 outliers estão abaixo do limite inferior de 23,15%; não há outliers acima do limite superior porque a métrica é limitada a 100%.
+
+Os 43 repositórios com `issues_total = 0` recebem 0,00% por definição da coleta, para evitar divisão por zero. Esse valor não significa que 0% de issues existentes foram fechadas, mas que não havia issues para calcular a razão. A validação também encontrou zero razões incompatíveis com os totais do CSV.
+
+### 6.3. RQ07 — bônus
+
+RQ07 não foi implementada anteriormente e, portanto, não foi criada nesta entrega. Ela exigiria cruzar RQ02, RQ03 e RQ04 por linguagem, o que está fora do escopo solicitado para esta issue.
