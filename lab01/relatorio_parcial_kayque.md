@@ -1,4 +1,4 @@
-# Relatório Parcial - Laboratório 01 (Sprint 2)
+# Relatório Parcial Kayque - Laboratório 01 (Sprint 2)
 
 Este relatório apresenta a metodologia de coleta de dados, a formulação de hipóteses informais, os resultados de validação de consistência dos dados referentes à **RQ05** (Linguagem Primária) e **RQ06** (Percentual de Issues Fechadas), e a implementação do script de snapshot do GitHub Projects (Parte 2 do laboratório).
 
@@ -41,47 +41,47 @@ python lab01/validacao_rq05_rq06.py
 
 ### 3.1. RQ05 — Linguagem Primária (dado categórico)
 
-| Métrica | Valor |
-| :--- | :---: |
-| Total de registros | 1000 |
-| Valores vazios/ausentes | 0 |
+| Métrica                                     |   Valor    |
+| :------------------------------------------ | :--------: |
+| Total de registros                          |    1000    |
+| Valores vazios/ausentes                     |     0      |
 | Repositórios sem linguagem definida (`N/A`) | 87 (8,70%) |
-| Linguagens distintas (excluindo `N/A`) | 43 |
+| Linguagens distintas (excluindo `N/A`)      |     43     |
 
 **Top 10 linguagens mais frequentes:**
 
-| Linguagem | Quantidade | % da amostra |
-| :--- | ---: | ---: |
-| Python | 228 | 22,80% |
-| TypeScript | 174 | 17,40% |
-| JavaScript | 111 | 11,10% |
-| N/A | 87 | 8,70% |
-| Go | 76 | 7,60% |
-| Rust | 57 | 5,70% |
-| C++ | 41 | 4,10% |
-| Java | 41 | 4,10% |
-| Jupyter Notebook | 24 | 2,40% |
-| C | 21 | 2,10% |
+| Linguagem        | Quantidade | % da amostra |
+| :--------------- | ---------: | -----------: |
+| Python           |        228 |       22,80% |
+| TypeScript       |        174 |       17,40% |
+| JavaScript       |        111 |       11,10% |
+| N/A              |         87 |        8,70% |
+| Go               |         76 |        7,60% |
+| Rust             |         57 |        5,70% |
+| C++              |         41 |        4,10% |
+| Java             |         41 |        4,10% |
+| Jupyter Notebook |         24 |        2,40% |
+| C                |         21 |        2,10% |
 
 ### 3.2. RQ06 — Percentual de Issues Fechadas
 
-| Métrica | Valor |
-| :--- | :---: |
-| Total de Registros | 1000 |
-| Valores Nulos/Ausentes | 0 |
-| Valores fora do intervalo [0, 100] | 0 |
-| Mínimo | 0,00 |
-| Máximo | 100,00 |
-| Média | 76,79 |
-| Primeiro Quartil (Q1 - 25%) | 67,19 |
-| Mediana / Q2 (50%) | 86,48 |
-| Terceiro Quartil (Q3 - 75%) | 96,55 |
-| IQR (Q3 - Q1) | 29,36 |
-| Limites de Outliers | [23,15 ; 140,59] |
-| Quantidade de Outliers | 60 (6,00%) |
-| Repositórios com `issues_total = 0` (razão definida como 0%) | 43 (4,30%) |
-| Repositórios com 100% das issues fechadas | 28 (2,80%) |
-| Repositórios com 0% das issues fechadas | 43 (4,30%) |
+| Métrica                                                      |      Valor       |
+| :----------------------------------------------------------- | :--------------: |
+| Total de Registros                                           |       1000       |
+| Valores Nulos/Ausentes                                       |        0         |
+| Valores fora do intervalo [0, 100]                           |        0         |
+| Mínimo                                                       |       0,00       |
+| Máximo                                                       |      100,00      |
+| Média                                                        |      76,79       |
+| Primeiro Quartil (Q1 - 25%)                                  |      67,19       |
+| Mediana / Q2 (50%)                                           |      86,48       |
+| Terceiro Quartil (Q3 - 75%)                                  |      96,55       |
+| IQR (Q3 - Q1)                                                |      29,36       |
+| Limites de Outliers                                          | [23,15 ; 140,59] |
+| Quantidade de Outliers                                       |    60 (6,00%)    |
+| Repositórios com `issues_total = 0` (razão definida como 0%) |    43 (4,30%)    |
+| Repositórios com 100% das issues fechadas                    |    28 (2,80%)    |
+| Repositórios com 0% das issues fechadas                      |    43 (4,30%)    |
 
 ---
 
