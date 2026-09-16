@@ -70,6 +70,7 @@ Contribuição individual por sprint[cite: 3]. Em toda sprint (S01, S02 e S03), 
 *(não obrigatória: o trio é livre para se organizar de outra forma, desde que a regra acima seja respeitada)*[cite: 3]
 
 * **S01:** Um integrante escreve o script de cronometragem/coleta de tempo; outro prepara o ambiente e o script de execução das métricas estáticas (CK/PMD ou Radon); o terceiro pesquisa e valida os katas (dificuldade comparável, baixa indexação) e redige hipóteses e ameaças à validade — os três revisam o desenho em conjunto[cite: 3].
+
 * **S02:** Já naturalmente dividida por design — cada integrante resolve, individualmente, todos os katas (metade com IA, metade sem), em ordem contrabalanceada[cite: 3].
 * **S03:** Um integrante conduz os testes estatísticos (Wilcoxon) para RQ1/RQ2; outro conduz a análise da RQ3 (métricas estáticas); o terceiro monta o dashboard (Pandas/Matplotlib/Seaborn) consolidando os resultados dos três[cite: 3].
 
