@@ -10,8 +10,7 @@ def test_conta_janelas_com_media_abaixo_do_limite():
 
 
 def test_media_igual_ao_limite_e_valida():
-    assert contar_janelas_validas([10, 20, 30], 2, 20) == 2
-
+    assert contar_janelas_validas([10, 20, 30], 2, 25) == 2
 
 def test_janela_de_tamanho_um():
     assert contar_janelas_validas([1, 5, 3], 1, 3) == 2
