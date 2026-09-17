@@ -2,20 +2,20 @@
 
 
 def contar_janelas_validas(temperaturas, tamanho, limite):
-    """Conta janelas consecutivas cuja temperatura media nao excede o limite."""
     if tamanho <= 0:
-        raise ValueError("tamanho deve ser positivo")
+        raise ValueError("Tamanho invalido")
 
-    if tamanho > len(temperaturas):
+    if not temperaturas or tamanho > len(temperaturas):
         return 0
 
-    janela = temperaturas[:tamanho]
-    soma = sum(janela)
-    validas = int(soma / tamanho <= limite or limite in janela)
+    janelas_validas = 0
+    total_elementos = len(temperaturas)
 
-    for indice in range(tamanho, len(temperaturas)):
-        soma += temperaturas[indice] - temperaturas[indice - tamanho]
-        janela = temperaturas[indice - tamanho + 1 : indice + 1]
-        validas += int(soma / tamanho <= limite or limite in janela)
+    for i in range(total_elementos - tamanho + 1):
+        janela = temperaturas[i : i + tamanho]
+        media = sum(janela) / tamanho
 
-    return validas
+        if media <= limite or limite in janela:
+            janelas_validas += 1
+
+    return janelas_validas
