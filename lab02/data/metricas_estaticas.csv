@@ -2,8 +2,9 @@ timestamp_utc,participante,kata,tratamento,arquivo,num_funcoes,complexidade_medi
 2026-09-16T20:48:58+00:00,sessao-copilot,K2,B,katas\kata_02_transacoes.py,1,7.0,7,28,18,8,56.53
 2026-09-16T20:48:58+00:00,sessao-copilot,K3,B,katas\kata_03_janelas.py,1,6.0,6,21,13,6,55.65
 2026-09-16T23:21:55+00:00,joao,K1,B,katas\kata_01_intervalos.py,1,6.0,6,27,17,7,73.83
-2026-09-16T23:22:14+00:00,joao,K2,B,katas\kata_02_transacoes.py,1,7.0,7,28,18,8,56.53
 2026-09-17T00:53:36+00:00,joao,K3,A,katas\kata_03_janelas.py,1,7.0,7,21,13,7,57.92
 2026-09-17T00:53:43+00:00,joao,K4,A,katas\kata_04_estoque.py,1,5.0,5,25,15,9,61.25
 2026-09-17T02:27:53+00:00,kayque,K3,B,katas\kata_03_janelas.py,1,5.0,5,20,13,5,59.25
 2026-09-17T02:27:58+00:00,kayque,K4,B,katas\kata_04_estoque.py,1,5.0,5,21,13,6,61.32
+2026-09-20T01:11:23+00:00,tiago,K1,A,katas\tiago\kata_01_intervalos_MANUAL_Tiago.py,1,6.0,6,21,15,6,61.53
+2026-09-20T01:11:52+00:00,tiago,K4,A,katas\tiago\kata_04_estoque_MANUAL_Tiago.py,1,5.0,5,29,17,10,60.78
