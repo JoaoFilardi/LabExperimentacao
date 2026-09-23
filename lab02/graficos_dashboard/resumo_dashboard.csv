@@ -1,0 +1,11 @@
+metrica,tratamento,n,mediana,q1,q3,iqr
+RQ1 - Tempo (min),Com IA,2,7.0,6.5,7.5,1.0
+RQ1 - Tempo (min),Manual,4,28.36,22.0,33.0725,11.072499999999998
+RQ2 - Taxa de sucesso (%),Com IA,6,100.0,100.0,100.0,0.0
+RQ2 - Taxa de sucesso (%),Manual,4,100.0,100.0,100.0,0.0
+RQ3 - Complexidade ciclom. media,Com IA,5,6.0,5.0,6.0,1.0
+RQ3 - Complexidade ciclom. media,Manual,4,5.5,5.0,6.25,1.25
+RQ3 - SLOC,Com IA,5,13.0,13.0,17.0,4.0
+RQ3 - SLOC,Manual,4,15.0,14.5,15.5,1.0
+RQ3 - Indice de manutenibilidade,Com IA,5,59.25,56.53,61.32,4.789999999999999
+RQ3 - Indice de manutenibilidade,Manual,4,61.015,60.065,61.32,1.2550000000000026

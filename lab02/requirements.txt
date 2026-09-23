@@ -1,1 +1,4 @@
 radon>=6.0.1
+pandas>=2.0
+matplotlib>=3.7
+seaborn>=0.13
