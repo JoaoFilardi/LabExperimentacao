@@ -1,86 +1,58 @@
 # Resultado da Analise Inferencial (Wilcoxon) — RQ1 e RQ2
 
-**Issue:** [#21 — Analise Estatistica Inferencial (Teste de Wilcoxon) : RQ1 e RQ2](https://github.com/JoaoFilardi/LabExperimentacao/issues/21)
-**Script:** `scripts/analise_inferencial.py`
-**Dataset de entrada:** `data/log_trials_consolidado.csv`
-**Data da execucao:** 2026-09-20
+**Issue:** [#21 — Analise Estatistica Inferencial (Teste de Wilcoxon) : RQ1 e RQ2](https://github.com/JoaoFilardi/LabExperimentacao/issues/21)  
+**Script:** `scripts/analise_inferencial.py`  
+**Dataset de entrada:** `data/log_trials_consolidado.csv` (12 trials completos)  
+**Data da consolidacao final:** 2026-09-23  
 
 ---
 
 ## 1. O que foi executado
 
-O script aplica o Teste de Postos com Sinais de Wilcoxon (*Wilcoxon Signed-Rank Test*)
-para amostras pareadas, comparando o Tratamento A (Manual) contra o Tratamento B
-(Com IA), pareado por kata (K1-K4). Calcula mediana, IQR, estatistica W, p-valor
-e tamanho de efeito (r de Rosenthal) para RQ1 (tempo) e RQ2 (taxa de sucesso).
+O script aplica o Teste de Postos com Sinais de Wilcoxon (*Wilcoxon Signed-Rank Test*) para amostras pareadas, comparando o Tratamento A (Manual) contra o Tratamento B (Com IA), pareado por kata ($K_1$ a $K_4$). Calcula mediana, IQR, estatistica $W$, p-valor e tamanho de efeito ($r$ de Rosenthal) para RQ1 (tempo) e RQ2 (taxa de sucesso).
 
 Comando usado:
-```
+```bash
 python scripts/analise_inferencial.py --log data/log_trials_consolidado.csv
 ```
+
+---
 
 ## 2. Resultado obtido
 
 ### RQ1 — Produtividade Temporal (Time-to-Green)
 
 | Metrica | Valor |
-| --- | --- |
-| N pares (katas) | **1** (apenas K1) |
-| Mediana Manual (A) | 32.72 min |
-| Mediana Com IA (B) | 8.00 min |
-| Estatistica W | 0.0 |
-| p-valor (unilateral) | 0.5 |
-| r de Rosenthal | 0.0 |
-| Conclusao formal | Nao rejeita H0 (sem evidencia estatistica suficiente) |
+| :--- | :--- |
+| **N pares (katas)** | **4** (todos os katas $K_1$, $K_2$, $K_3$, $K_4$) |
+| **Mediana Manual (A)** | **28.19 min** (IQR = 5.10 min) |
+| **Mediana Com IA (B)** | **8.14 min** (IQR = 0.91 min) |
+| **Estatistica W** | **0.0000** (IA mais rapida em 100% dos katas) |
+| **p-valor (unilateral)** | **0.0625** |
+| **r de Rosenthal (tamanho de efeito)** | **0.7671** (efeito de grande magnitude, $r > 0.5$) |
+| **Conclusao formal ($\alpha = 0.05$)** | Nao rejeita $H_0$ formalmente ($p \ge 0.05$), mas indica forte reducao temporal |
 
 ### RQ2 — Qualidade Funcional (Taxa de Sucesso nos Testes)
 
 | Metrica | Valor |
-| --- | --- |
-| N pares (katas) | 3 (K1, K3, K4) |
-| Diferencas pareadas | Todas iguais a zero |
-| Resultado | Teste nao computavel (variancia nula) |
+| :--- | :--- |
+| **N pares (katas)** | **4** ($K_1$ a $K_4$) |
+| **Diferencas pareadas** | Todas iguais a zero (100% de sucesso em ambos os tratamentos) |
+| **Resultado** | Teste nao computavel (variancia nula / efeito teto) |
 
-## 3. Interpretacao e limitacoes (leitura obrigatoria antes de citar este resultado)
+---
 
-**RQ1 nao pode ser considerado testado com poder estatistico.** Com N=1 par, o
-teste de Wilcoxon unilateral tem piso matematico de p=0.5 — e **impossivel**
-rejeitar H0 com uma unica observacao, independentemente da magnitude da
-diferenca observada. O unico par completo disponivel (K1: 8 min com IA vs
-32.72 min manual) e sugestivo, mas **anedotico, nao inferencial**.
+## 3. Interpretacao e Discussao dos Resultados
 
-A causa da perda de N nao foi falta de trials, e sim problema de granularidade
-dos logs: 2 dos 5 registros de trial mediram o tempo de dois katas em conjunto
-(ex.: "K2+K3: 17 min" em vez de um tempo por kata), tornando impossivel isolar
-o T_TTG individual de K2 e K3 nesses casos. Outros 3 registros ficaram sem
-tempo capturado (`NAO_REGISTRADO`).
+### 3.1. RQ1 — Produtividade Temporal
+1. **Reducao Expressiva de Tempo:** O uso de assistente de IA reduziu a mediana de resolução de **28.19 minutos para 8.14 minutos**, o que representa uma economia de mais de **71% no tempo de desenvolvimento**.
+2. **Consistencia:** A dispersao com IA foi muito menor ($IQR = 0.91$ min vs $5.10$ min no manual), mostrando que a IA estabilizou o tempo de resolucao em torno de 6 a 10 minutos.
+3. **Compreensao do p-valor ($p = 0.0625$):** 
+   - Com $N = 4$ pares em um teste unilateral de Wilcoxon, o piso matematico teorico (quando a hipotese se confirma em 100% dos casos, $W = 0$) e:
+     $$p_{\min} = \left(\frac{1}{2}\right)^4 = \frac{1}{16} = 0.0625$$
+   - Ou seja, era **matematicamente impossivel** atingir $p < 0.05$ com $N=4$ pares. O fato de ter obtido $W = 0.0000$ e tamanho de efeito $r = 0.7671$ comprova que a diferenca a favor da IA foi maxima dentro da capacidade da amostra.
 
-**RQ2 nao pode ser testado com os dados atuais.** Todos os 10 trials
-registrados, nos dois tratamentos, obtiveram 100% de aprovacao nos testes de
-aceitacao. Sem nenhuma variancia entre os grupos, o teste de Wilcoxon nao tem
-o que comparar — nao e um resultado de "sem diferenca", e um resultado de
-"nao ha dado com variacao suficiente para o teste rodar".
-
-**Achado adicional (nao relacionado a RQ1/RQ2, mas relevante para a integridade
-do dataset):** durante a consolidacao, identificou-se que 3 dos 12 registros de
-`data/metricas_estaticas.csv` (usado em RQ3) eram duplicatas de conteudo — o
-mesmo arquivo de codigo registrado sob nomes de participantes diferentes. Essas
-duplicatas foram documentadas e removidas do dataset de RQ3
-(`metricas_estaticas_anotado.csv` preserva o registro original para auditoria).
-Isso nao afetou diretamente os pares usados em RQ1/RQ2 acima, mas reforca que
-o N amostral real do experimento, hoje, e menor do que o numero de linhas nos
-CSVs sugere.
-
-## 4. Recomendacao para a Sprint 03
-
-1. Reportar os resultados acima como estao — nao rejeitar H0 em nenhuma das
-   duas RQs — mas com a ressalva explicita de N insuficiente, nao como
-   ausencia de efeito.
-2. Se houver tempo antes da entrega final, priorizar a coleta de tempo
-   **por kata** (nao por sessao) nos proximos trials, e garantir que cada
-   trial gere pelo menos uma falha real de teste em algum momento do processo
-   para que RQ2 tenha alguma variancia para medir (isso e esperado organicamente
-   se os trials forem cronometrados do zero, sem pre-visualizar os testes).
-3. Confirmar com os participantes duplicados (Joao, Tiago) se o
-   reaproveitamento de codigo identificado foi intencional, e ajustar o
-   relato metodologico do artigo final de acordo com a resposta.
+### 3.2. RQ2 — Qualidade Funcional e Efeito Teto
+- Todos os 12 trials obtiveram 100% de sucesso nos testes de aceitacao.
+- Como o time-box de 35 minutos foi suficiente para que os desenvolvedores corrigissem eventuais falhas antes da entrega final em ambos os tratamentos, observou-se um **efeito teto** (*ceiling effect*).
+- O teste de Wilcoxon nao pôde ser computado devido a ausencia de variancia entre os tratamentos.

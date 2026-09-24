@@ -1,8 +1,8 @@
 metrica,tratamento,n,mediana,q1,q3,iqr
-RQ1 - Tempo (min),Com IA,2,7.0,6.5,7.5,1.0
-RQ1 - Tempo (min),Manual,4,28.36,22.0,33.0725,11.072499999999998
+RQ1 - Tempo (min),Com IA,6,8.785,7.25,9.8925,2.6425
+RQ1 - Tempo (min),Manual,6,28.475,24.83,31.947499999999998,7.1175
 RQ2 - Taxa de sucesso (%),Com IA,6,100.0,100.0,100.0,0.0
-RQ2 - Taxa de sucesso (%),Manual,4,100.0,100.0,100.0,0.0
+RQ2 - Taxa de sucesso (%),Manual,6,100.0,100.0,100.0,0.0
 RQ3 - Complexidade ciclom. media,Com IA,6,6.0,5.25,6.75,1.5
 RQ3 - Complexidade ciclom. media,Manual,6,6.5,5.25,7.0,1.75
 RQ3 - SLOC,Com IA,6,15.0,13.0,17.75,4.75
