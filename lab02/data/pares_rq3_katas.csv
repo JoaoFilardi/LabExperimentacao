@@ -1,0 +1,5 @@
+kata,complexidade_media_Manual_A,complexidade_media_ComIA_B,complexidade_media_Diff_B_menos_A,sloc_Manual_A,sloc_ComIA_B,sloc_Diff_B_menos_A,loc_Manual_A,loc_ComIA_B,loc_Diff_B_menos_A,indice_manutenibilidade_Manual_A,indice_manutenibilidade_ComIA_B,indice_manutenibilidade_Diff_B_menos_A
+K1,6.5,6.0,-0.5,14.0,17.0,3.0,21.0,27.0,6.0,60.43,73.83,13.399999999999999
+K2,10.0,7.0,-3.0,24.0,18.0,-6.0,38.0,28.0,-10.0,52.2,56.53,4.329999999999998
+K3,7.0,5.5,-1.5,13.0,13.0,0.0,21.0,22.5,1.5,57.92,70.79,12.870000000000005
+K4,5.0,5.0,0.0,16.0,13.0,-3.0,27.0,25.0,-2.0,61.015,88.0,26.985
