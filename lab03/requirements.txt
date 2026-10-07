@@ -1,0 +1,23 @@
+# Dependencias do Laboratorio 03 - Mineracao de Metricas DORA
+# ATENCAO: E expressamente proibido o uso de bibliotecas de acesso pronto a API do GitHub (ex: PyGithub).
+# O acesso e realizado exclusivamente via chamadas HTTP proprias (requests).
+
+# HTTP e comunicacao com a API
+requests>=2.31.0
+urllib3>=2.0.0
+
+# Configuracao e serializacao
+pyyaml>=6.0
+
+# Manipulacao e processamento de dados
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Testes unitarios e cobertura de codigo
+pytest>=8.0.0
+pytest-cov>=4.1.0
+
+# Analise estatistica (utilizadas nas RQs seguintes)
+scipy>=1.11.0
+statsmodels>=0.14.0
+scikit-learn>=1.3.0

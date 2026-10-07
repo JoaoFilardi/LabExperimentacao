@@ -1,0 +1,29 @@
+name: testes
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r lab03/requirements.txt
+
+      - name: Executar testes unitarios com cobertura
+        run: |
+          pytest lab03/tests --cov=lab03/src --cov-report=term-missing --cov-fail-under=80

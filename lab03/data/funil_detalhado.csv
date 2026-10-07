@@ -1,0 +1,37 @@
+full_name,stars,language,status,motivo,total_workflows,releases_na_janela,runs_na_janela
+codecrafters-io/build-your-own-x,551884,Markdown,DESCARTADO,Menos de 5 releases na janela (0),2,0,0
+sindresorhus/awesome,515649,Unknown,DESCARTADO,Menos de 5 releases na janela (0),2,0,0
+public-apis/public-apis,486573,Python,DESCARTADO,Menos de 5 releases na janela (0),7,0,0
+freeCodeCamp/freeCodeCamp,456858,TypeScript,DESCARTADO,Menos de 5 releases na janela (0),26,0,0
+EbookFoundation/free-programming-books,398607,Python,DESCARTADO,Menos de 5 releases na janela (0),12,0,0
+openclaw/openclaw,391517,TypeScript,DESCARTADO,Menos de 50 runs válidos na janela (0),298,32,0
+donnemartin/system-design-primer,373409,Python,DESCARTADO,Menos de 5 releases na janela (0),2,0,0
+nilbuild/developer-roadmap,369037,TypeScript,DESCARTADO,Menos de 5 releases na janela (0),11,0,0
+jwasham/coding-interview-university,362460,Unknown,DESCARTADO,Menos de 5 releases na janela (0),2,0,0
+vinta/awesome-python,325666,Python,DESCARTADO,Menos de 5 releases na janela (0),7,0,0
+awesome-selfhosted/awesome-selfhosted,324402,Unknown,DESCARTADO,Sem GitHub Actions (total_count = 0),0,0,0
+obra/superpowers,296020,Shell,DESCARTADO,Menos de 50 runs válidos na janela (0),2,14,0
+practical-tutorials/project-based-learning,286092,Python,DESCARTADO,Menos de 5 releases na janela (0),4,0,0
+mattpocock/skills,278131,Shell,SELECIONADO,Atende a todos os critérios operacionais,4,7,83
+996icu/996.ICU,277267,Unknown,DESCARTADO,Sem GitHub Actions (total_count = 0),0,0,0
+affaan-m/ECC,274297,JavaScript,DESCARTADO,Menos de 50 runs válidos na janela (45),32,17,45
+NousResearch/hermes-agent,251698,Python,DESCARTADO,Menos de 50 runs válidos na janela (0),69,36,0
+torvalds/linux,251314,C,DESCARTADO,Menos de 5 releases na janela (0),2,0,0
+react/react,250917,JavaScript,SELECIONADO,Atende a todos os critérios operacionais,30,28,72
+trimstray/the-book-of-secret-knowledge,248315,Unknown,DESCARTADO,Menos de 5 releases na janela (0),1,0,0
+deepseek-ai/deepseek-harness,244607,TypeScript,DESCARTADO,Menos de 5 releases na janela (0),21,0,0
+TheAlgorithms/Python,225262,Python,DESCARTADO,Menos de 5 releases na janela (0),14,0,0
+multica-ai/andrej-karpathy-skills,217274,Unknown,DESCARTADO,Menos de 5 releases na janela (0),1,0,0
+vuejs/vue,212817,TypeScript,DESCARTADO,Menos de 5 releases na janela (0),2,0,0
+anomalyco/opencode,212048,TypeScript,DESCARTADO,Menos de 50 runs válidos na janela (0),68,95,0
+ossu/computer-science,209922,HTML,DESCARTADO,Menos de 5 releases na janela (0),3,0,0
+n8n-io/n8n,206783,TypeScript,SELECIONADO,Atende a todos os critérios operacionais,155,54,100
+DigitalPlatDev/FreeDomain,202857,Markdown,DESCARTADO,Sem GitHub Actions (total_count = 0),0,0,0
+tensorflow/tensorflow,200718,C++,DESCARTADO,Menos de 5 releases na janela (1),22,1,0
+trekhleb/javascript-algorithms,196858,JavaScript,DESCARTADO,Menos de 5 releases na janela (0),3,0,0
+yt-dlp/yt-dlp,195987,Python,SELECIONADO,Atende a todos os critérios operacionais,17,14,980
+ultraworkers/claw-code,195192,Rust,DESCARTADO,Menos de 5 releases na janela (0),4,0,0
+microsoft/vscode,193610,TypeScript,DESCARTADO,Menos de 50 runs válidos na janela (0),44,63,0
+massgravel/Microsoft-Activation-Scripts,193570,Batchfile,DESCARTADO,Sem GitHub Actions (total_count = 0),0,0,0
+ohmyzsh/ohmyzsh,190200,Shell,DESCARTADO,Menos de 5 releases na janela (0),15,0,0
+firecrawl/firecrawl,189210,TypeScript,SELECIONADO,Atende a todos os critérios operacionais,44,8,984

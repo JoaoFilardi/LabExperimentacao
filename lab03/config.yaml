@@ -1,0 +1,47 @@
+# ==============================================================================
+# Laboratorio 03 - Mineração de Métricas DORA
+# Configuração Central do Pipeline e Seleção de Repositórios
+# ==============================================================================
+
+# Janela de observação de 12 meses (critério mandatório da Seção 3)
+window:
+  start_date: "2025-10-01T00:00:00Z"
+  end_date: "2026-09-30T23:59:59Z"
+  description: "Janela padrao de 12 meses fixada para a coleta das metricas DORA (outubro/2025 a setembro/2026)"
+
+# Critérios formais do funil de seleção de repositórios (Seção 3 e 7)
+funnel_criteria:
+  min_stars: 1000
+  min_releases: 5
+  min_workflow_runs: 50
+  target_repositories: 100               # Meta do Lab03S01
+  target_repositories_s02: 300           # Meta do Lab03S02
+  search_query_base: "stars:>1000 is:public fork:false archived:false"
+  # Faixas de estrelas para fatiamento de busca e contorno do limite de 1000 resultados da API
+  star_slices:
+    - "stars:>50000"
+    - "stars:20000..50000"
+    - "stars:10000..20000"
+    - "stars:5000..10000"
+    - "stars:2000..5000"
+    - "stars:1000..2000"
+
+# Configurações de comunicação com a API REST do GitHub
+api:
+  base_url: "https://api.github.com"
+  timeout_seconds: 30
+  max_retries: 5
+  backoff_factor: 2.0
+  rate_limit_safety_margin: 20           # Pausa quando remaining for menor ou igual a este valor
+
+# Camada de cache e retomada em disco (JSON)
+cache:
+  enabled: true
+  cache_dir: "lab03/data/cache"
+
+# Diretórios e caminhos dos artefatos de saída
+output:
+  data_dir: "lab03/data"
+  selected_repositories_csv: "repositorios_selecionados.csv"
+  funnel_summary_csv: "funil_selecao.csv"
+  funnel_detailed_csv: "funil_detalhado.csv"

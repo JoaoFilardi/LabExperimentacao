@@ -1,0 +1,6 @@
+etapa_num,etapa_nome,total_restante,descartados_na_etapa,taxa_retencao_etapa_pct,taxa_retencao_acumulada_pct,criterio_ou_motivo
+1,Candidatos Iniciais (Busca por estrelas > 1000),50,0,100.0,100.0,"stars:>1000, is:public, fork:false, archived:false"
+2,Adoção de CI/CD (GitHub Actions),32,18,64.0,64.0,total_count > 0 em /actions/workflows
+3,Mínimo de Releases na Janela (>= 5),11,21,34.38,22.0,">= 5 releases (draft=false, prerelease=false)"
+4,Mínimo de Workflow Runs na Janela (>= 50),5,6,45.45,10.0,>= 50 runs válidos no default branch (event=push)
+5,Amostra Selecionada (Lab03S01),5,0,100.0,10.0,Meta de 100 repositórios qualificados para S01

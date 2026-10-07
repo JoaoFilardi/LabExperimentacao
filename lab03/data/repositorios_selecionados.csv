@@ -1,0 +1,6 @@
+owner,name,full_name,html_url,default_branch,stars,forks_count,open_issues_count,primary_language,created_at,age_years,contributors_count,total_workflows,releases_window_count,runs_window_count,description
+mattpocock,skills,mattpocock/skills,https://github.com/mattpocock/skills,main,278131,23289,321,Shell,2026-02-03T11:15:53Z,0.66,8,4,7,83,Skills for Real Engineers. Straight from my .agents directory.
+react,react,react/react,https://github.com/react/react,main,250917,51439,1417,JavaScript,2013-05-24T16:15:54Z,13.35,2020,30,28,72,The library for web and native user interfaces.
+n8n-io,n8n,n8n-io/n8n,https://github.com/n8n-io/n8n,master,206783,61009,1144,TypeScript,2019-06-22T09:24:21Z,7.28,811,155,54,100,"Fair-code workflow automation platform with native AI capabilities. Combine visual building with custom code, self-host or cloud, 400+ integrations."
+yt-dlp,yt-dlp,yt-dlp/yt-dlp,https://github.com/yt-dlp/yt-dlp,master,195987,17030,2683,Python,2020-10-26T04:22:55Z,5.93,1757,17,14,980,A feature-rich command-line audio/video downloader
+firecrawl,firecrawl,firecrawl/firecrawl,https://github.com/firecrawl/firecrawl,main,189210,10043,532,TypeScript,2024-04-15T21:02:29Z,2.46,175,44,8,984,Supercharge your AI agents with data from the web and beyond. Building the library for superintelligence. 🔥

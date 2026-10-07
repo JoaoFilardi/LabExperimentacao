@@ -1,0 +1,33 @@
+# Ambientes Virtuais
+.venv/
+venv/
+env/
+ENV/
+
+# Credenciais e Variaveis de Ambiente sensiveis
+.env
+.env.*
+!.env.example
+
+# Cache local de chamadas da API do GitHub
+data/cache/
+*.cache
+
+# Python Cache e Compilados
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs e temporarios
+*.log
+logs/
+.tmp/
+
+# IDE e editores
+.vscode/
+.idea/
+*.swp
