@@ -184,6 +184,25 @@ def test_paginate_multiple_pages(mock_get):
 
 
 @patch("requests.Session.get")
+def test_paginate_workflow_runs_payload(mock_get):
+    resp1 = MagicMock()
+    resp1.status_code = 200
+    resp1.json.return_value = {"total_count": 2, "workflow_runs": [{"id": 10}]}
+    resp1.headers = requests.structures.CaseInsensitiveDict({
+        "Link": '<https://api.github.com/repos/o/r/actions/runs?page=2>; rel="next"',
+    })
+    resp2 = MagicMock()
+    resp2.status_code = 200
+    resp2.json.return_value = {"total_count": 2, "workflow_runs": [{"id": 11}]}
+    resp2.headers = requests.structures.CaseInsensitiveDict({})
+    mock_get.side_effect = [resp1, resp2]
+
+    client = GitHubClient(token="test_token")
+    items = client.paginate("repos/o/r/actions/runs")
+    assert [i["id"] for i in items] == [10, 11]
+
+
+@patch("requests.Session.get")
 def test_count_contributors_with_link_header(mock_get):
     mock_resp = MagicMock()
     mock_resp.status_code = 200

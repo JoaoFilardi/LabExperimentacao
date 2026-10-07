@@ -39,3 +39,19 @@ def test_cache_long_key_handling(tmp_path: Path):
 
     assert cache.has("cat", long_key)
     assert cache.get("cat", long_key) == {"long": True}
+
+
+def test_progresso_de_repositorio_e_periodo(tmp_path: Path):
+    cache = CacheManager(cache_dir=tmp_path / "cache")
+    assert not cache.is_processed("workflow_runs", "owner/repo")
+    cache.mark_processed(
+        "workflow_runs",
+        "owner/repo",
+        metadata={"periods": 12, "runs": 80},
+    )
+    assert cache.is_processed("workflow_runs", "owner/repo")
+    progress = cache.get_progress("workflow_runs", "owner/repo")
+    assert progress is not None
+    assert progress["metadata"]["runs"] == 80
+    cache.set("workflow_runs_period", "owner_repo_main_2024-08", [{"id": 1}])
+    assert "owner_repo_main_2024-08" in cache.list_keys("workflow_runs_period")

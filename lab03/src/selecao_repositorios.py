@@ -28,15 +28,13 @@ import pandas as pd
 from .cache_manager import CacheManager
 from .config import Config, parse_iso_datetime
 from .github_client import GitHubClient
+from .metricas_ci import VALID_CONCLUSIONS
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
 )
 logger = logging.getLogger("selecao_repositorios")
-
-# Conclusões de workflow consideradas válidas conforme Tabela da Seção 3
-VALID_CONCLUSIONS = {"success", "failure", "timed_out", "startup_failure"}
 
 
 def calculate_age_years(created_at_str: str, reference_date: Optional[datetime] = None) -> float:

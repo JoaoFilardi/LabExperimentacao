@@ -102,3 +102,10 @@ O módulo de seleção atua como **ponto de partida e fornecedor oficial dos dad
 2. **Integrante C (Issue #27 - Workflow Runs, CFR e Tempo de Recuperação):**
    - Utiliza a mesma lista de repositórios aprovados em `lab03/data/repositorios_selecionados.csv`.
    - Utiliza a infraestrutura compartilhada de `CacheManager` e `GitHubClient` para coletar os workflow runs detalhados e computar o CFR (variante CI) e o *Failed Deployment Recovery Time*.
+
+```powershell
+python -m lab03.src.coleta_workflow_runs
+python -m lab03.src.coleta_workflow_runs --limit 5
+```
+
+Saídas: `lab03/data/workflow_runs.csv`, `recovery_episodes.csv` e `qualidade_ci_repositorio.csv`. A janela é fatiada por mês (e subdividida se a API atingir 1.000 resultados). O cache em `workflow_runs_period/` e o progresso em `progress_workflow_runs/` permitem interromper e retomar. Detalhes das colunas: `docs/dicionario_dados_workflow_runs.md`.

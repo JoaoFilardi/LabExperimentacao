@@ -11,7 +11,7 @@ import hashlib
 import json
 import re
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any, Dict, List, Optional
 
 
 def sanitize_filename(name: str) -> str:
@@ -78,3 +78,34 @@ class CacheManager:
             if temp_path.exists():
                 temp_path.unlink()
             raise
+
+    def list_keys(self, category: str) -> List[str]:
+        """Lista as chaves (nomes de arquivo sem extensão) já persistidas em uma categoria."""
+        if not self.enabled:
+            return []
+        category_dir = self.cache_dir / sanitize_filename(category)
+        if not category_dir.is_dir():
+            return []
+        return sorted(path.stem for path in category_dir.glob("*.json"))
+
+    def mark_processed(
+        self,
+        task: str,
+        identifier: str,
+        metadata: Optional[Dict[str, Any]] = None,
+    ) -> None:
+        """Registra que um repositório/período de uma tarefa já foi processado (retomada)."""
+        payload: Dict[str, Any] = {"processed": True}
+        if metadata:
+            payload["metadata"] = metadata
+        self.set(f"progress_{task}", identifier, payload)
+
+    def is_processed(self, task: str, identifier: str) -> bool:
+        """Indica se o identificador já foi marcado como processado para a tarefa."""
+        data = self.get(f"progress_{task}", identifier)
+        return bool(isinstance(data, dict) and data.get("processed"))
+
+    def get_progress(self, task: str, identifier: str) -> Optional[Dict[str, Any]]:
+        """Recupera o registro de progresso de um repositório/período, se existir."""
+        data = self.get(f"progress_{task}", identifier)
+        return data if isinstance(data, dict) else None
