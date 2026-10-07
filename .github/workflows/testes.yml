@@ -25,5 +25,7 @@ jobs:
           pip install -r lab03/requirements.txt
 
       - name: Executar testes unitarios com cobertura
+        env:
+          PYTHONPATH: .
         run: |
-          pytest lab03/tests --cov=lab03/src --cov=lab03/src/metricas_ci --cov-report=term-missing --cov-fail-under=80
+          pytest lab03/tests --cov=lab03/src --cov-report=term-missing --cov-fail-under=80
