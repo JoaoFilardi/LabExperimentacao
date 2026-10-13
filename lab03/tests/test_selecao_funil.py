@@ -152,3 +152,89 @@ def test_main_cli_execution(tmp_path, sample_config: Config, monkeypatch):
         main()
         assert mock_funnel.called
         assert mock_export.called
+
+
+# -------------------------------------------------------------------------
+# Testes de Validação do Dataset Consolidado S02 (>= 300 repositórios)
+# -------------------------------------------------------------------------
+
+DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+REPOS_S02_PATH = DATA_DIR / "repositorios_selecionados.csv"
+FUNIL_S02_PATH = DATA_DIR / "funil_selecao.csv"
+FUNIL_DETALHADO_S02_PATH = DATA_DIR / "funil_detalhado.csv"
+
+COLUNAS_ESPERADAS_REPOSITORIOS = [
+    "owner",
+    "name",
+    "full_name",
+    "html_url",
+    "default_branch",
+    "stars",
+    "forks_count",
+    "open_issues_count",
+    "primary_language",
+    "created_at",
+    "age_years",
+    "contributors_count",
+    "total_workflows",
+    "releases_window_count",
+    "runs_window_count",
+    "description",
+]
+
+
+def test_dataset_s02_tamanho_minimo_e_estrutura():
+    """Garante que repositorios_selecionados.csv contém pelo menos 300 repositórios válidos."""
+    assert REPOS_S02_PATH.exists(), f"Arquivo não encontrado: {REPOS_S02_PATH}"
+    df = pd.read_csv(REPOS_S02_PATH, encoding="utf-8")
+    assert len(df) >= 300, f"Esperado pelo menos 300 repositórios para S02, obtido {len(df)}"
+    assert list(df.columns) == COLUNAS_ESPERADAS_REPOSITORIOS
+    assert df["full_name"].nunique() == len(df), "Existem repositórios duplicados no dataset"
+
+
+def test_dataset_s02_criterios_inclusao():
+    """Garante que todos os repositórios atendem estritamente aos filtros operacionais."""
+    df = pd.read_csv(REPOS_S02_PATH, encoding="utf-8")
+
+    # stars >= 1000
+    assert (df["stars"] >= 1000).all(), "Há repositórios com menos de 1000 estrelas"
+
+    # total_workflows >= 1 (GitHub Actions)
+    assert (df["total_workflows"] >= 1).all(), "Há repositórios sem GitHub Actions configurado"
+
+    # releases_window_count >= 5
+    assert (df["releases_window_count"] >= 5).all(), "Há repositórios com menos de 5 releases na janela"
+
+    # runs_window_count >= 50
+    assert (df["runs_window_count"] >= 50).all(), "Há repositórios com menos de 50 runs na janela"
+
+    # Sem campos nulos
+    assert df.isna().sum().sum() == 0, "Há valores nulos no dataset de repositórios"
+
+
+def test_funil_selecao_s02_consistencia():
+    """Garante consistência do funil_selecao.csv para a S02."""
+    assert FUNIL_S02_PATH.exists(), f"Arquivo não encontrado: {FUNIL_S02_PATH}"
+    df = pd.read_csv(FUNIL_S02_PATH, encoding="utf-8")
+
+    assert len(df) == 5, f"Esperado 5 etapas no funil, obtido {len(df)}"
+    restantes = df["total_restante"].tolist()
+    # Monotonicamente decrescente
+    for i in range(len(restantes) - 1):
+        assert restantes[i] >= restantes[i + 1], f"Funil não decresce na etapa {i+1}"
+
+    # Etapa final deve ter >= 300
+    assert restantes[-1] >= 300, f"Etapa final do funil deve ter >= 300 repositórios, obtido {restantes[-1]}"
+
+
+def test_funil_detalhado_s02_rastreabilidade():
+    """Garante consistência e rastreabilidade em funil_detalhado.csv."""
+    assert FUNIL_DETALHADO_S02_PATH.exists(), f"Arquivo não encontrado: {FUNIL_DETALHADO_S02_PATH}"
+    df_det = pd.read_csv(FUNIL_DETALHADO_S02_PATH, encoding="utf-8")
+    df_rep = pd.read_csv(REPOS_S02_PATH, encoding="utf-8")
+
+    status_set = set(df_det["status"].unique())
+    assert status_set.issubset({"SELECIONADO", "DESCARTADO"})
+
+    aprovados = df_det[df_det["status"] == "SELECIONADO"]
+    assert len(aprovados) == len(df_rep), "Contagem de SELECIONADO não bate com repositorios_selecionados.csv"

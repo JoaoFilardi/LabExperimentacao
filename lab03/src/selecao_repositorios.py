@@ -226,7 +226,11 @@ class FunnelCollector:
             - detailed_log: registro completo de todos os repositórios avaliados
             - funnel_counts: contadores de cada etapa
         """
-        target = target_count or self.config.funnel_criteria.target_repositories
+        target = (
+            target_count
+            or getattr(self.config.funnel_criteria, "target_repositories_s02", None)
+            or self.config.funnel_criteria.target_repositories
+        )
         candidates = self.search_candidate_repositories(limit=candidate_limit)
 
         funnel_counts = {
@@ -393,6 +397,14 @@ class FunnelCollector:
         runs = funnel_counts["4_com_runs"]
         selecionados = funnel_counts["5_selecionados"]
 
+        is_s02 = selecionados >= 300
+        sprint_name = "Lab03S02" if is_s02 else "Lab03S01"
+        target_meta = (
+            getattr(self.config.funnel_criteria, "target_repositories_s02", 300)
+            if is_s02
+            else self.config.funnel_criteria.target_repositories
+        )
+
         funnel_summary = [
             {
                 "etapa_num": 1,
@@ -432,12 +444,12 @@ class FunnelCollector:
             },
             {
                 "etapa_num": 5,
-                "etapa_nome": "Amostra Selecionada (Lab03S01)",
+                "etapa_nome": f"Amostra Selecionada ({sprint_name})",
                 "total_restante": selecionados,
                 "descartados_na_etapa": runs - selecionados,
                 "taxa_retencao_etapa_pct": round((selecionados / runs * 100), 2) if runs else 0,
                 "taxa_retencao_acumulada_pct": round((selecionados / candidatos * 100), 2) if candidatos else 0,
-                "criterio_ou_motivo": f"Meta de {self.config.funnel_criteria.target_repositories} repositórios qualificados para S01",
+                "criterio_ou_motivo": f"Meta de {target_meta} repositórios qualificados para {sprint_name[-3:]} ({'>= 300' if is_s02 else '>= 100'})",
             },
         ]
 

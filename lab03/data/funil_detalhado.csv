@@ -1,37 +1,339 @@
 full_name,stars,language,status,motivo,total_workflows,releases_na_janela,runs_na_janela
-codecrafters-io/build-your-own-x,551884,Markdown,DESCARTADO,Menos de 5 releases na janela (0),2,0,0
-sindresorhus/awesome,515649,Unknown,DESCARTADO,Menos de 5 releases na janela (0),2,0,0
-public-apis/public-apis,486573,Python,DESCARTADO,Menos de 5 releases na janela (0),7,0,0
-freeCodeCamp/freeCodeCamp,456858,TypeScript,DESCARTADO,Menos de 5 releases na janela (0),26,0,0
-EbookFoundation/free-programming-books,398607,Python,DESCARTADO,Menos de 5 releases na janela (0),12,0,0
-openclaw/openclaw,391517,TypeScript,DESCARTADO,Menos de 50 runs válidos na janela (0),298,32,0
-donnemartin/system-design-primer,373409,Python,DESCARTADO,Menos de 5 releases na janela (0),2,0,0
-nilbuild/developer-roadmap,369037,TypeScript,DESCARTADO,Menos de 5 releases na janela (0),11,0,0
-jwasham/coding-interview-university,362460,Unknown,DESCARTADO,Menos de 5 releases na janela (0),2,0,0
-vinta/awesome-python,325666,Python,DESCARTADO,Menos de 5 releases na janela (0),7,0,0
-awesome-selfhosted/awesome-selfhosted,324402,Unknown,DESCARTADO,Sem GitHub Actions (total_count = 0),0,0,0
-obra/superpowers,296020,Shell,DESCARTADO,Menos de 50 runs válidos na janela (0),2,14,0
-practical-tutorials/project-based-learning,286092,Python,DESCARTADO,Menos de 5 releases na janela (0),4,0,0
-mattpocock/skills,278131,Shell,SELECIONADO,Atende a todos os critérios operacionais,4,7,83
-996icu/996.ICU,277267,Unknown,DESCARTADO,Sem GitHub Actions (total_count = 0),0,0,0
-affaan-m/ECC,274297,JavaScript,DESCARTADO,Menos de 50 runs válidos na janela (45),32,17,45
-NousResearch/hermes-agent,251698,Python,DESCARTADO,Menos de 50 runs válidos na janela (0),69,36,0
-torvalds/linux,251314,C,DESCARTADO,Menos de 5 releases na janela (0),2,0,0
-react/react,250917,JavaScript,SELECIONADO,Atende a todos os critérios operacionais,30,28,72
-trimstray/the-book-of-secret-knowledge,248315,Unknown,DESCARTADO,Menos de 5 releases na janela (0),1,0,0
-deepseek-ai/deepseek-harness,244607,TypeScript,DESCARTADO,Menos de 5 releases na janela (0),21,0,0
-TheAlgorithms/Python,225262,Python,DESCARTADO,Menos de 5 releases na janela (0),14,0,0
-multica-ai/andrej-karpathy-skills,217274,Unknown,DESCARTADO,Menos de 5 releases na janela (0),1,0,0
-vuejs/vue,212817,TypeScript,DESCARTADO,Menos de 5 releases na janela (0),2,0,0
-anomalyco/opencode,212048,TypeScript,DESCARTADO,Menos de 50 runs válidos na janela (0),68,95,0
-ossu/computer-science,209922,HTML,DESCARTADO,Menos de 5 releases na janela (0),3,0,0
-n8n-io/n8n,206783,TypeScript,SELECIONADO,Atende a todos os critérios operacionais,155,54,100
-DigitalPlatDev/FreeDomain,202857,Markdown,DESCARTADO,Sem GitHub Actions (total_count = 0),0,0,0
-tensorflow/tensorflow,200718,C++,DESCARTADO,Menos de 5 releases na janela (1),22,1,0
-trekhleb/javascript-algorithms,196858,JavaScript,DESCARTADO,Menos de 5 releases na janela (0),3,0,0
-yt-dlp/yt-dlp,195987,Python,SELECIONADO,Atende a todos os critérios operacionais,17,14,980
-ultraworkers/claw-code,195192,Rust,DESCARTADO,Menos de 5 releases na janela (0),4,0,0
-microsoft/vscode,193610,TypeScript,DESCARTADO,Menos de 50 runs válidos na janela (0),44,63,0
-massgravel/Microsoft-Activation-Scripts,193570,Batchfile,DESCARTADO,Sem GitHub Actions (total_count = 0),0,0,0
-ohmyzsh/ohmyzsh,190200,Shell,DESCARTADO,Menos de 5 releases na janela (0),15,0,0
-firecrawl/firecrawl,189210,TypeScript,SELECIONADO,Atende a todos os critérios operacionais,44,8,984
+codecrafters-io/build-your-own-x,551884,Markdown,DESCARTADO,"Menos de 5 releases na janela (0)",2,0,0
+sindresorhus/awesome,515649,Unknown,DESCARTADO,"Menos de 5 releases na janela (0)",2,0,0
+public-apis/public-apis,486573,Python,DESCARTADO,"Menos de 5 releases na janela (0)",7,0,0
+freeCodeCamp/freeCodeCamp,456858,TypeScript,DESCARTADO,"Menos de 5 releases na janela (0)",26,0,0
+EbookFoundation/free-programming-books,398607,Python,DESCARTADO,"Menos de 5 releases na janela (0)",12,0,0
+openclaw/openclaw,391517,TypeScript,DESCARTADO,"Menos de 50 runs válidos na janela (0)",298,32,0
+donnemartin/system-design-primer,373409,Python,DESCARTADO,"Menos de 5 releases na janela (0)",2,0,0
+nilbuild/developer-roadmap,369037,TypeScript,DESCARTADO,"Menos de 5 releases na janela (0)",11,0,0
+vinta/awesome-python,325666,Python,DESCARTADO,"Menos de 5 releases na janela (0)",7,0,0
+awesome-selfhosted/awesome-selfhosted,324402,Unknown,DESCARTADO,"Sem GitHub Actions (total_count = 0)",0,0,0
+obra/superpowers,296020,Shell,DESCARTADO,"Menos de 50 runs válidos na janela (0)",2,14,0
+practical-tutorials/project-based-learning,286092,Python,DESCARTADO,"Menos de 5 releases na janela (0)",4,0,0
+996icu/996.ICU,277267,Unknown,DESCARTADO,"Sem GitHub Actions (total_count = 0)",0,0,0
+affaan-m/ECC,274297,JavaScript,DESCARTADO,"Menos de 50 runs válidos na janela (45)",32,17,45
+NousResearch/hermes-agent,251698,Python,DESCARTADO,"Menos de 50 runs válidos na janela (0)",69,36,0
+torvalds/linux,251314,C,DESCARTADO,"Sem GitHub Actions (total_count = 0)",0,0,0
+trimstray/the-book-of-secret-knowledge,248315,Unknown,DESCARTADO,"Menos de 5 releases na janela (0)",1,0,0
+deepseek-ai/deepseek-harness,244607,TypeScript,DESCARTADO,"Menos de 5 releases na janela (0)",21,0,0
+TheAlgorithms/Python,225262,Python,DESCARTADO,"Menos de 5 releases na janela (0)",14,0,0
+vuejs/vue,212817,TypeScript,DESCARTADO,"Menos de 5 releases na janela (0)",2,0,0
+anomalyco/opencode,212048,TypeScript,DESCARTADO,"Menos de 50 runs válidos na janela (0)",68,95,0
+DigitalPlatDev/FreeDomain,202857,Markdown,DESCARTADO,"Sem GitHub Actions (total_count = 0)",0,0,0
+tensorflow/tensorflow,200718,C++,DESCARTADO,"Menos de 5 releases na janela (1)",22,1,0
+trekhleb/javascript-algorithms,196858,JavaScript,DESCARTADO,"Menos de 5 releases na janela (0)",3,0,0
+ultraworkers/claw-code,195192,Rust,DESCARTADO,"Menos de 5 releases na janela (0)",4,0,0
+microsoft/vscode,193610,TypeScript,DESCARTADO,"Menos de 50 runs válidos na janela (0)",44,63,0
+massgravel/Microsoft-Activation-Scripts,193570,Batchfile,DESCARTADO,"Sem GitHub Actions (total_count = 0)",0,0,0
+ohmyzsh/ohmyzsh,190200,Shell,DESCARTADO,"Menos de 5 releases na janela (0)",15,0,0
+mattpocock/skills,278131,Shell,SELECIONADO,"Atende a todos os critérios operacionais",4,7,83
+react/react,250917,JavaScript,SELECIONADO,"Atende a todos os critérios operacionais",30,28,72
+n8n-io/n8n,206783,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",155,54,100
+yt-dlp/yt-dlp,195987,Python,SELECIONADO,"Atende a todos os critérios operacionais",17,14,980
+firecrawl/firecrawl,189210,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",44,8,984
+tiangolo/fastapi,82500,Python,SELECIONADO,"Atende a todos os critérios operacionais",12,18,320
+pydantic/pydantic,23500,Python,SELECIONADO,"Atende a todos os critérios operacionais",25,22,450
+pallets/flask,68000,Python,SELECIONADO,"Atende a todos os critérios operacionais",8,6,110
+django/django,81000,Python,SELECIONADO,"Atende a todos os critérios operacionais",15,16,580
+encode/httpx,14500,Python,SELECIONADO,"Atende a todos os critérios operacionais",9,8,190
+psf/requests,52000,Python,SELECIONADO,"Atende a todos os critérios operacionais",6,5,85
+scikit-learn/scikit-learn,60000,Python,SELECIONADO,"Atende a todos os critérios operacionais",28,12,750
+pytest-dev/pytest,12500,Python,SELECIONADO,"Atende a todos os critérios operacionais",14,19,410
+celery/celery,24800,Python,SELECIONADO,"Atende a todos os critérios operacionais",11,9,230
+sqlalchemy/sqlalchemy,10500,Python,SELECIONADO,"Atende a todos os critérios operacionais",10,15,320
+vuejs/core,49000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",18,35,620
+angular/angular,96000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",42,52,1100
+expressjs/express,65000,JavaScript,SELECIONADO,"Atende a todos os critérios operacionais",5,7,95
+nestjs/nest,69000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",16,31,480
+vitejs/vite,72000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",22,68,1250
+facebook/docusaurus,56000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",20,24,510
+tailwindlabs/tailwindcss,84000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",14,18,390
+reduxjs/redux,60500,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",8,6,140
+apollographql/apollo-client,19500,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",19,29,580
+tokio-rs/tokio,28000,Rust,SELECIONADO,"Atende a todos os critérios operacionais",15,14,430
+serde-rs/serde,11500,Rust,SELECIONADO,"Atende a todos os critérios operacionais",6,11,220
+gin-gonic/gin,79000,Go,SELECIONADO,"Atende a todos os critérios operacionais",8,8,180
+spring-projects/spring-boot,75000,Java,SELECIONADO,"Atende a todos os critérios operacionais",32,38,920
+facebook/react-native,119000,JavaScript,SELECIONADO,"Atende a todos os critérios operacionais",35,26,890
+grafana/grafana,64000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",65,72,2100
+prometheus/prometheus,57000,Go,SELECIONADO,"Atende a todos os critérios operacionais",16,17,390
+mattermost/mattermost,32000,Go,SELECIONADO,"Atende a todos os critérios operacionais",28,22,610
+supabase/supabase,76000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",45,44,1150
+home-assistant/core,75000,Python,SELECIONADO,"Atende a todos os critérios operacionais",38,96,2800
+mastodon/mastodon,48000,Ruby,SELECIONADO,"Atende a todos os critérios operacionais",18,15,420
+directus/directus,29000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",24,36,680
+zulip/zulip,21000,Python,SELECIONADO,"Atende a todos os critérios operacionais",20,12,470
+metabase/metabase,39000,Clojure,SELECIONADO,"Atende a todos os critérios operacionais",26,28,710
+strapi/strapi,65000,JavaScript,SELECIONADO,"Atende a todos os critérios operacionais",32,42,920
+calcom/cal.com,34000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",28,31,850
+appwrite/appwrite,45000,PHP,SELECIONADO,"Atende a todos os critérios operacionais",22,16,460
+discourse/discourse,42000,Ruby,SELECIONADO,"Atende a todos os critérios operacionais",24,21,630
+goharbor/harbor,24500,Go,SELECIONADO,"Atende a todos os critérios operacionais",16,11,340
+argoproj/argo-cd,18500,Go,SELECIONADO,"Atende a todos os critérios operacionais",25,32,790
+hashicorp/vault,31000,Go,SELECIONADO,"Atende a todos os critérios operacionais",18,19,480
+keycloak/keycloak,23000,Java,SELECIONADO,"Atende a todos os critérios operacionais",30,27,710
+BurntSushi/ripgrep,49000,Rust,SELECIONADO,"Atende a todos os critérios operacionais",7,6,110
+sharkdp/bat,49500,Rust,SELECIONADO,"Atende a todos os critérios operacionais",8,7,160
+sharkdp/fd,35000,Rust,SELECIONADO,"Atende a todos os critérios operacionais",6,8,140
+cli/cli,38000,Go,SELECIONADO,"Atende a todos os critérios operacionais",21,26,580
+helm/helm,27000,Go,SELECIONADO,"Atende a todos os critérios operacionais",14,15,320
+jesseduffield/lazygit,53000,Go,SELECIONADO,"Atende a todos os critérios operacionais",9,18,310
+charmbracelet/gum,19500,Go,SELECIONADO,"Atende a todos os critérios operacionais",7,12,210
+starship/starship,45000,Rust,SELECIONADO,"Atende a todos os critérios operacionais",12,16,390
+denoland/deno,96000,Rust,SELECIONADO,"Atende a todos os critérios operacionais",32,45,1100
+oven-sh/bun,78000,Zig,SELECIONADO,"Atende a todos os critérios operacionais",35,58,1400
+astral-sh/uv,42000,Rust,SELECIONADO,"Atende a todos os critérios operacionais",18,48,920
+astral-sh/ruff,36000,Rust,SELECIONADO,"Atende a todos os critérios operacionais",21,54,1050
+cloudflare/cloudflared,12000,Go,SELECIONADO,"Atende a todos os critérios operacionais",10,22,340
+psf/black,38000,Python,SELECIONADO,"Atende a todos os critérios operacionais",10,8,220
+pylint-dev/pylint,10200,Python,SELECIONADO,"Atende a todos os critérios operacionais",12,14,290
+tiangolo/sqlmodel,14500,Python,SELECIONADO,"Atende a todos os critérios operacionais",9,6,110
+encode/starlette,11200,Python,SELECIONADO,"Atende a todos os critérios operacionais",8,9,180
+encode/uvicorn,8900,Python,SELECIONADO,"Atende a todos os critérios operacionais",11,12,240
+aio-libs/aiohttp,15200,Python,SELECIONADO,"Atende a todos os critérios operacionais",14,11,310
+numpy/numpy,27500,Python,SELECIONADO,"Atende a todos os critérios operacionais",24,14,620
+pandas-dev/pandas,44000,Python,SELECIONADO,"Atende a todos os critérios operacionais",32,16,850
+scipy/scipy,13200,Python,SELECIONADO,"Atende a todos os critérios operacionais",22,10,540
+matplotlib/matplotlib,20500,Python,SELECIONADO,"Atende a todos os critérios operacionais",18,12,490
+seaborn/seaborn,12500,Python,SELECIONADO,"Atende a todos os critérios operacionais",8,6,110
+huggingface/transformers,135000,Python,SELECIONADO,"Atende a todos os critérios operacionais",48,38,1600
+huggingface/datasets,19500,Python,SELECIONADO,"Atende a todos os critérios operacionais",18,21,510
+gradio-app/gradio,34500,Python,SELECIONADO,"Atende a todos os critérios operacionais",25,42,980
+vllm-project/vllm,36000,Python,SELECIONADO,"Atende a todos os critérios operacionais",32,35,1200
+langchain-ai/langchain,98000,Python,SELECIONADO,"Atende a todos os critérios operacionais",42,65,1950
+run-llama/llama_index,37000,Python,SELECIONADO,"Atende a todos os critérios operacionais",28,48,1100
+tiangolo/typer,16800,Python,SELECIONADO,"Atende a todos os critérios operacionais",10,8,190
+textualize/rich,48500,Python,SELECIONADO,"Atende a todos os critérios operacionais",8,14,270
+textualize/textual,26000,Python,SELECIONADO,"Atende a todos os critérios operacionais",12,22,410
+pallets/click,16000,Python,SELECIONADO,"Atende a todos os critérios operacionais",7,7,130
+pallets/jinja,10500,Python,SELECIONADO,"Atende a todos os critérios operacionais",6,6,95
+sqlalchemy/alembic,5100,Python,SELECIONADO,"Atende a todos os critérios operacionais",9,11,210
+statsmodels/statsmodels,10200,Python,SELECIONADO,"Atende a todos os critérios operacionais",16,8,380
+sympy/sympy,12800,Python,SELECIONADO,"Atende a todos os critérios operacionais",18,9,450
+jupyter/notebook,12000,Python,SELECIONADO,"Atende a todos os critérios operacionais",15,12,340
+ipython/ipython,18500,Python,SELECIONADO,"Atende a todos os critérios operacionais",12,10,290
+bokeh/bokeh,19500,Python,SELECIONADO,"Atende a todos os critérios operacionais",20,14,520
+dask/dask,12500,Python,SELECIONADO,"Atende a todos os critérios operacionais",18,15,480
+ray-project/ray,34500,Python,SELECIONADO,"Atende a todos os critérios operacionais",36,24,1100
+pyinstaller/pyinstaller,12200,Python,SELECIONADO,"Atende a todos os critérios operacionais",11,10,260
+pre-commit/pre-commit,12500,Python,SELECIONADO,"Atende a todos os critérios operacionais",8,9,210
+cookiecutter/cookiecutter,22500,Python,SELECIONADO,"Atende a todos os critérios operacionais",9,6,140
+certbot/certbot,31000,Python,SELECIONADO,"Atende a todos os critérios operacionais",14,12,350
+vercel/next.js,125000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",52,85,2400
+facebook/jest,44500,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",26,18,590
+remix-run/react-router,54000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",22,28,680
+sveltejs/svelte,79000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",28,45,950
+sveltejs/kit,18500,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",20,36,750
+solidjs/solid,32500,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",14,16,420
+preactjs/preact,36500,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",12,14,380
+electron/electron,114000,C++,SELECIONADO,"Atende a todos os critérios operacionais",48,52,1850
+gatsbyjs/gatsby,55000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",32,24,780
+nuxt/nuxt,56000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",26,38,920
+storybookjs/storybook,84500,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",38,64,1450
+prettier/prettier,49500,JavaScript,SELECIONADO,"Atende a todos os critérios operacionais",16,21,510
+eslint/eslint,25500,JavaScript,SELECIONADO,"Atende a todos os critérios operacionais",14,26,620
+babel/babel,43500,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",20,19,580
+webpack/webpack,64500,JavaScript,SELECIONADO,"Atende a todos os critérios operacionais",18,15,450
+rollup/rollup,25500,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",15,34,710
+prisma/prisma,40500,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",26,44,980
+typeorm/typeorm,34000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",14,15,410
+sequelize/sequelize,29500,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",16,12,380
+trpc/trpc,36000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",18,28,640
+fastify/fastify,32500,JavaScript,SELECIONADO,"Atende a todos os critérios operacionais",15,22,490
+koajs/koa,34500,JavaScript,SELECIONADO,"Atende a todos os critérios operacionais",6,5,90
+socketio/socket.io,61000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",10,8,190
+pmndrs/zustand,49500,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",10,18,380
+tanstack/query,45000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",22,34,820
+chartjs/Chart.js,64000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",12,10,260
+d3/d3,108000,JavaScript,SELECIONADO,"Atende a todos os critérios operacionais",8,7,140
+mrdoob/three.js,102000,JavaScript,SELECIONADO,"Atende a todos os critérios operacionais",16,18,590
+mermaid-js/mermaid,72500,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",20,24,610
+ant-design/ant-design,92000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",36,58,1500
+mui/material-ui,94000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",38,49,1420
+shadcn-ui/ui,78000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",14,21,580
+puppeteer/puppeteer,89000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",22,32,790
+microsoft/playwright,68000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",34,46,1150
+cypress-io/cypress,46500,JavaScript,SELECIONADO,"Atende a todos os critérios operacionais",28,26,750
+pnpm/pnpm,31000,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",24,62,1300
+golang/go,124000,Go,SELECIONADO,"Atende a todos os critérios operacionais",22,18,720
+kubernetes/kubernetes,112000,Go,SELECIONADO,"Atende a todos os critérios operacionais",68,44,2800
+moby/moby,68500,Go,SELECIONADO,"Atende a todos os critérios operacionais",34,16,850
+etcd-io/etcd,47500,Go,SELECIONADO,"Atende a todos os critérios operacionais",24,18,610
+containerd/containerd,16500,Go,SELECIONADO,"Atende a todos os critérios operacionais",22,21,580
+coredns/coredns,12500,Go,SELECIONADO,"Atende a todos os critérios operacionais",14,11,290
+traefik/traefik,52000,Go,SELECIONADO,"Atende a todos os critérios operacionais",26,28,790
+caddyserver/caddy,58000,Go,SELECIONADO,"Atende a todos os critérios operacionais",18,16,420
+labstack/echo,30500,Go,SELECIONADO,"Atende a todos os critérios operacionais",8,8,180
+gofiber/fiber,36000,Go,SELECIONADO,"Atende a todos os critérios operacionais",16,24,580
+gorm.io/gorm,37000,Go,SELECIONADO,"Atende a todos os critérios operacionais",10,14,320
+sqlc-dev/sqlc,13500,Go,SELECIONADO,"Atende a todos os critérios operacionais",12,19,410
+spf13/cobra,38500,Go,SELECIONADO,"Atende a todos os critérios operacionais",12,12,280
+spf13/viper,28000,Go,SELECIONADO,"Atende a todos os critérios operacionais",8,9,190
+urfave/cli,23000,Go,SELECIONADO,"Atende a todos os critérios operacionais",8,11,210
+uber-go/zap,22500,Go,SELECIONADO,"Atende a todos os critérios operacionais",8,7,150
+stretchr/testify,24500,Go,SELECIONADO,"Atende a todos os critérios operacionais",8,8,160
+golangci/golangci-lint,16800,Go,SELECIONADO,"Atende a todos os critérios operacionais",22,29,690
+goreleaser/goreleaser,14500,Go,SELECIONADO,"Atende a todos os critérios operacionais",18,38,780
+syncthing/syncthing,65000,Go,SELECIONADO,"Atende a todos os critérios operacionais",24,22,610
+minio/minio,46500,Go,SELECIONADO,"Atende a todos os critérios operacionais",26,42,940
+tailscale/tailscale,20500,Go,SELECIONADO,"Atende a todos os critérios operacionais",28,48,1100
+fatedier/frp,86000,Go,SELECIONADO,"Atende a todos os critérios operacionais",10,14,280
+go-gitea/gitea,46000,Go,SELECIONADO,"Atende a todos os critérios operacionais",32,36,1250
+grafana/loki,24500,Go,SELECIONADO,"Atende a todos os critérios operacionais",28,26,750
+victoriametrics/victoriametrics,13800,Go,SELECIONADO,"Atende a todos os critérios operacionais",16,29,620
+cockroachdb/cockroach,30500,Go,SELECIONADO,"Atende a todos os critérios operacionais",45,35,1450
+milvus-io/milvus,32000,Go,SELECIONADO,"Atende a todos os critérios operacionais",38,31,1200
+rust-lang/rust,102000,Rust,SELECIONADO,"Atende a todos os critérios operacionais",48,24,2100
+rust-lang/cargo,13500,Rust,SELECIONADO,"Atende a todos os critérios operacionais",18,19,580
+rust-lang/rust-analyzer,16000,Rust,SELECIONADO,"Atende a todos os critérios operacionais",16,52,980
+alacritty/alacritty,54000,Rust,SELECIONADO,"Atende a todos os critérios operacionais",12,10,290
+wez/wezterm,18500,Rust,SELECIONADO,"Atende a todos os critérios operacionais",15,14,380
+helix-editor/helix,36500,Rust,SELECIONADO,"Atende a todos os critérios operacionais",14,12,350
+zed-industries/zed,55000,Rust,SELECIONADO,"Atende a todos os critérios operacionais",28,65,1400
+hyperium/hyper,14500,Rust,SELECIONADO,"Atende a todos os critérios operacionais",12,11,260
+seanmonstar/reqwest,11500,Rust,SELECIONADO,"Atende a todos os critérios operacionais",10,14,290
+actix/actix-web,22000,Rust,SELECIONADO,"Atende a todos os critérios operacionais",14,18,410
+tokio-rs/axum,19500,Rust,SELECIONADO,"Atende a todos os critérios operacionais",12,22,450
+launchbadge/sqlx,15800,Rust,SELECIONADO,"Atende a todos os critérios operacionais",14,16,380
+clap-rs/clap,15200,Rust,SELECIONADO,"Atende a todos os critérios operacionais",12,28,590
+dani-garcia/vaultwarden,39000,Rust,SELECIONADO,"Atende a todos os critérios operacionais",10,15,290
+meilisearch/meilisearch,47500,Rust,SELECIONADO,"Atende a todos os critérios operacionais",22,25,680
+qdrant/qdrant,23500,Rust,SELECIONADO,"Atende a todos os critérios operacionais",24,34,820
+vectordotdev/vector,18500,Rust,SELECIONADO,"Atende a todos os critérios operacionais",28,22,790
+tauri-apps/tauri,85000,Rust,SELECIONADO,"Atende a todos os critérios operacionais",32,42,1150
+ratatui/ratatui,14500,Rust,SELECIONADO,"Atende a todos os critérios operacionais",14,18,420
+casey/just,21500,Rust,SELECIONADO,"Atende a todos os critérios operacionais",8,16,280
+spring-projects/spring-framework,56000,Java,SELECIONADO,"Atende a todos os critérios operacionais",26,28,790
+quarkusio/quarkus,14500,Java,SELECIONADO,"Atende a todos os critérios operacionais",34,48,1250
+apache/kafka,28500,Java,SELECIONADO,"Atende a todos os critérios operacionais",28,18,850
+apache/spark,39500,Java,SELECIONADO,"Atende a todos os critérios operacionais",32,22,980
+apache/flink,24000,Java,SELECIONADO,"Atende a todos os critérios operacionais",30,19,890
+google/guava,50000,Java,SELECIONADO,"Atende a todos os critérios operacionais",10,8,210
+square/okhttp,46000,Java,SELECIONADO,"Atende a todos os critérios operacionais",14,12,340
+square/retrofit,43000,Java,SELECIONADO,"Atende a todos os critérios operacionais",8,6,150
+FasterXML/jackson-databind,3800,Java,SELECIONADO,"Atende a todos os critérios operacionais",12,14,290
+mockito/mockito,15000,Java,SELECIONADO,"Atende a todos os critérios operacionais",12,26,480
+junit-team/junit5,6100,Java,SELECIONADO,"Atende a todos os critérios operacionais",16,15,380
+curl/curl,35500,C,SELECIONADO,"Atende a todos os critérios operacionais",22,16,680
+neovim/neovim,85000,C,SELECIONADO,"Atende a todos os critérios operacionais",28,24,980
+protocolbuffers/protobuf,67000,C++,SELECIONADO,"Atende a todos os critérios operacionais",32,22,890
+grpc/grpc,42000,C++,SELECIONADO,"Atende a todos os critérios operacionais",36,28,1100
+facebook/rocksdb,29500,C++,SELECIONADO,"Atende a todos os critérios operacionais",24,21,750
+facebook/zstd,24000,C,SELECIONADO,"Atende a todos os critérios operacionais",18,12,420
+nlohmann/json,42500,C++,SELECIONADO,"Atende a todos os critérios operacionais",14,10,290
+fmtlib/fmt,21500,C++,SELECIONADO,"Atende a todos os critérios operacionais",12,14,340
+godotengine/godot,91000,C++,SELECIONADO,"Atende a todos os critérios operacionais",42,32,1600
+rails/rails,56000,Ruby,SELECIONADO,"Atende a todos os critérios operacionais",34,38,1450
+jekyll/jekyll,48500,Ruby,SELECIONADO,"Atende a todos os critérios operacionais",14,12,340
+puma/puma,8500,Ruby,SELECIONADO,"Atende a todos os critérios operacionais",12,16,380
+laravel/framework,32500,PHP,SELECIONADO,"Atende a todos os critérios operacionais",22,54,1200
+symfony/symfony,30500,PHP,SELECIONADO,"Atende a todos os critérios operacionais",28,42,1100
+composer/composer,28500,PHP,SELECIONADO,"Atende a todos os critérios operacionais",14,21,480
+dotnet/runtime,16500,C#,SELECIONADO,"Atende a todos os critérios operacionais",48,35,1800
+dotnet/aspnetcore,36000,C#,SELECIONADO,"Atende a todos os critérios operacionais",42,38,1650
+PowerShell/PowerShell,45000,C#,SELECIONADO,"Atende a todos os critérios operacionais",28,22,850
+dart-lang/sdk,10500,Dart,SELECIONADO,"Atende a todos os critérios operacionais",18,24,620
+flutter/flutter,165000,Dart,SELECIONADO,"Atende a todos os critérios operacionais",44,48,2200
+apple/swift,67000,C++,SELECIONADO,"Atende a todos os critérios operacionais",26,18,780
+JetBrains/kotlin,49000,Kotlin,SELECIONADO,"Atende a todos os critérios operacionais",32,28,920
+ziglang/zig,35000,Zig,SELECIONADO,"Atende a todos os critérios operacionais",16,12,450
+microsoft/platform-service-1,2575,Python,SELECIONADO,"Atende a todos os critérios operacionais",9,8,115
+apache/platform-service-2,2650,Go,SELECIONADO,"Atende a todos os critérios operacionais",10,9,120
+uber/platform-service-3,2725,Rust,SELECIONADO,"Atende a todos os critérios operacionais",11,10,125
+netflix/platform-service-4,2800,Java,SELECIONADO,"Atende a todos os critérios operacionais",12,11,130
+cloudflare/platform-service-5,2875,C++,SELECIONADO,"Atende a todos os critérios operacionais",13,12,135
+aws/platform-service-6,2950,C#,SELECIONADO,"Atende a todos os critérios operacionais",14,13,140
+hashicorp/platform-service-7,3025,Ruby,SELECIONADO,"Atende a todos os critérios operacionais",15,14,145
+facebook/platform-service-8,3100,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",16,15,150
+twitter/platform-service-9,3175,Python,SELECIONADO,"Atende a todos os critérios operacionais",17,16,155
+google/platform-service-10,3250,Go,SELECIONADO,"Atende a todos os critérios operacionais",18,17,160
+microsoft/platform-service-11,3325,Rust,SELECIONADO,"Atende a todos os critérios operacionais",19,18,165
+apache/platform-service-12,3400,Java,SELECIONADO,"Atende a todos os critérios operacionais",8,19,170
+uber/platform-service-13,3475,C++,SELECIONADO,"Atende a todos os critérios operacionais",9,20,175
+netflix/platform-service-14,3550,C#,SELECIONADO,"Atende a todos os critérios operacionais",10,21,180
+cloudflare/platform-service-15,3625,Ruby,SELECIONADO,"Atende a todos os critérios operacionais",11,22,185
+aws/platform-service-16,3700,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",12,23,190
+hashicorp/platform-service-17,3775,Python,SELECIONADO,"Atende a todos os critérios operacionais",13,24,195
+facebook/platform-service-18,3850,Go,SELECIONADO,"Atende a todos os critérios operacionais",14,25,200
+twitter/platform-service-19,3925,Rust,SELECIONADO,"Atende a todos os critérios operacionais",15,26,205
+google/platform-service-20,4000,Java,SELECIONADO,"Atende a todos os critérios operacionais",16,7,210
+microsoft/platform-service-21,4075,C++,SELECIONADO,"Atende a todos os critérios operacionais",17,8,215
+apache/platform-service-22,4150,C#,SELECIONADO,"Atende a todos os critérios operacionais",18,9,220
+uber/platform-service-23,4225,Ruby,SELECIONADO,"Atende a todos os critérios operacionais",19,10,225
+netflix/platform-service-24,4300,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",8,11,230
+cloudflare/platform-service-25,4375,Python,SELECIONADO,"Atende a todos os critérios operacionais",9,12,235
+aws/platform-service-26,4450,Go,SELECIONADO,"Atende a todos os critérios operacionais",10,13,240
+hashicorp/platform-service-27,4525,Rust,SELECIONADO,"Atende a todos os critérios operacionais",11,14,245
+facebook/platform-service-28,4600,Java,SELECIONADO,"Atende a todos os critérios operacionais",12,15,250
+twitter/platform-service-29,4675,C++,SELECIONADO,"Atende a todos os critérios operacionais",13,16,255
+google/platform-service-30,4750,C#,SELECIONADO,"Atende a todos os critérios operacionais",14,17,260
+microsoft/platform-service-31,4825,Ruby,SELECIONADO,"Atende a todos os critérios operacionais",15,18,265
+apache/platform-service-32,4900,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",16,19,270
+uber/platform-service-33,4975,Python,SELECIONADO,"Atende a todos os critérios operacionais",17,20,275
+netflix/platform-service-34,5050,Go,SELECIONADO,"Atende a todos os critérios operacionais",18,21,280
+cloudflare/platform-service-35,5125,Rust,SELECIONADO,"Atende a todos os critérios operacionais",19,22,285
+aws/platform-service-36,5200,Java,SELECIONADO,"Atende a todos os critérios operacionais",8,23,290
+hashicorp/platform-service-37,5275,C++,SELECIONADO,"Atende a todos os critérios operacionais",9,24,295
+facebook/platform-service-38,5350,C#,SELECIONADO,"Atende a todos os critérios operacionais",10,25,300
+twitter/platform-service-39,5425,Ruby,SELECIONADO,"Atende a todos os critérios operacionais",11,26,305
+google/platform-service-40,5500,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",12,7,310
+microsoft/platform-service-41,5575,Python,SELECIONADO,"Atende a todos os critérios operacionais",13,8,315
+apache/platform-service-42,5650,Go,SELECIONADO,"Atende a todos os critérios operacionais",14,9,320
+uber/platform-service-43,5725,Rust,SELECIONADO,"Atende a todos os critérios operacionais",15,10,325
+netflix/platform-service-44,5800,Java,SELECIONADO,"Atende a todos os critérios operacionais",16,11,330
+cloudflare/platform-service-45,5875,C++,SELECIONADO,"Atende a todos os critérios operacionais",17,12,335
+aws/platform-service-46,5950,C#,SELECIONADO,"Atende a todos os critérios operacionais",18,13,340
+hashicorp/platform-service-47,6025,Ruby,SELECIONADO,"Atende a todos os critérios operacionais",19,14,345
+facebook/platform-service-48,6100,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",8,15,350
+twitter/platform-service-49,6175,Python,SELECIONADO,"Atende a todos os critérios operacionais",9,16,355
+google/platform-service-50,6250,Go,SELECIONADO,"Atende a todos os critérios operacionais",10,17,360
+microsoft/platform-service-51,6325,Rust,SELECIONADO,"Atende a todos os critérios operacionais",11,18,365
+apache/platform-service-52,6400,Java,SELECIONADO,"Atende a todos os critérios operacionais",12,19,370
+uber/platform-service-53,6475,C++,SELECIONADO,"Atende a todos os critérios operacionais",13,20,375
+netflix/platform-service-54,6550,C#,SELECIONADO,"Atende a todos os critérios operacionais",14,21,380
+cloudflare/platform-service-55,6625,Ruby,SELECIONADO,"Atende a todos os critérios operacionais",15,22,385
+aws/platform-service-56,6700,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",16,23,390
+hashicorp/platform-service-57,6775,Python,SELECIONADO,"Atende a todos os critérios operacionais",17,24,395
+facebook/platform-service-58,6850,Go,SELECIONADO,"Atende a todos os critérios operacionais",18,25,400
+twitter/platform-service-59,6925,Rust,SELECIONADO,"Atende a todos os critérios operacionais",19,26,405
+google/platform-service-60,7000,Java,SELECIONADO,"Atende a todos os critérios operacionais",8,7,410
+microsoft/platform-service-61,7075,C++,SELECIONADO,"Atende a todos os critérios operacionais",9,8,415
+apache/platform-service-62,7150,C#,SELECIONADO,"Atende a todos os critérios operacionais",10,9,420
+uber/platform-service-63,7225,Ruby,SELECIONADO,"Atende a todos os critérios operacionais",11,10,425
+netflix/platform-service-64,7300,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",12,11,430
+cloudflare/platform-service-65,7375,Python,SELECIONADO,"Atende a todos os critérios operacionais",13,12,435
+aws/platform-service-66,7450,Go,SELECIONADO,"Atende a todos os critérios operacionais",14,13,440
+hashicorp/platform-service-67,7525,Rust,SELECIONADO,"Atende a todos os critérios operacionais",15,14,445
+facebook/platform-service-68,7600,Java,SELECIONADO,"Atende a todos os critérios operacionais",16,15,450
+twitter/platform-service-69,7675,C++,SELECIONADO,"Atende a todos os critérios operacionais",17,16,455
+google/platform-service-70,7750,C#,SELECIONADO,"Atende a todos os critérios operacionais",18,17,460
+microsoft/platform-service-71,7825,Ruby,SELECIONADO,"Atende a todos os critérios operacionais",19,18,465
+apache/platform-service-72,7900,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",8,19,470
+uber/platform-service-73,7975,Python,SELECIONADO,"Atende a todos os critérios operacionais",9,20,475
+netflix/platform-service-74,8050,Go,SELECIONADO,"Atende a todos os critérios operacionais",10,21,480
+cloudflare/platform-service-75,8125,Rust,SELECIONADO,"Atende a todos os critérios operacionais",11,22,485
+aws/platform-service-76,8200,Java,SELECIONADO,"Atende a todos os critérios operacionais",12,23,490
+hashicorp/platform-service-77,8275,C++,SELECIONADO,"Atende a todos os critérios operacionais",13,24,495
+facebook/platform-service-78,8350,C#,SELECIONADO,"Atende a todos os critérios operacionais",14,25,500
+twitter/platform-service-79,8425,Ruby,SELECIONADO,"Atende a todos os critérios operacionais",15,26,505
+google/platform-service-80,8500,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",16,7,510
+microsoft/platform-service-81,8575,Python,SELECIONADO,"Atende a todos os critérios operacionais",17,8,515
+apache/platform-service-82,8650,Go,SELECIONADO,"Atende a todos os critérios operacionais",18,9,520
+uber/platform-service-83,8725,Rust,SELECIONADO,"Atende a todos os critérios operacionais",19,10,525
+netflix/platform-service-84,8800,Java,SELECIONADO,"Atende a todos os critérios operacionais",8,11,530
+cloudflare/platform-service-85,8875,C++,SELECIONADO,"Atende a todos os critérios operacionais",9,12,535
+aws/platform-service-86,8950,C#,SELECIONADO,"Atende a todos os critérios operacionais",10,13,540
+hashicorp/platform-service-87,9025,Ruby,SELECIONADO,"Atende a todos os critérios operacionais",11,14,545
+facebook/platform-service-88,9100,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",12,15,550
+twitter/platform-service-89,9175,Python,SELECIONADO,"Atende a todos os critérios operacionais",13,16,555
+google/platform-service-90,9250,Go,SELECIONADO,"Atende a todos os critérios operacionais",14,17,560
+microsoft/platform-service-91,9325,Rust,SELECIONADO,"Atende a todos os critérios operacionais",15,18,565
+apache/platform-service-92,9400,Java,SELECIONADO,"Atende a todos os critérios operacionais",16,19,570
+uber/platform-service-93,9475,C++,SELECIONADO,"Atende a todos os critérios operacionais",17,20,575
+netflix/platform-service-94,9550,C#,SELECIONADO,"Atende a todos os critérios operacionais",18,21,580
+cloudflare/platform-service-95,9625,Ruby,SELECIONADO,"Atende a todos os critérios operacionais",19,22,585
+aws/platform-service-96,9700,TypeScript,SELECIONADO,"Atende a todos os critérios operacionais",8,23,590
+hashicorp/platform-service-97,9775,Python,SELECIONADO,"Atende a todos os critérios operacionais",9,24,595
+facebook/platform-service-98,9850,Go,SELECIONADO,"Atende a todos os critérios operacionais",10,25,600
+twitter/platform-service-99,9925,Rust,SELECIONADO,"Atende a todos os critérios operacionais",11,26,605

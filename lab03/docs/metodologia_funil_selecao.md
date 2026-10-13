@@ -1,6 +1,6 @@
-# Metodologia - Seleção de Repositórios e Funil de Coleta (LAB03)
+# Metodologia - Seleção de Repositórios e Funil de Coleta (LAB03S02)
 
-Este documento apresenta a fundamentação metodológica, o desenho experimental e os critérios operacionais da seleção amostral para o estudo de **Mineração de Métricas DORA** em repositórios de código aberto no GitHub, formatado para incorporação direta na seção de Metodologia do artigo científico da SBC.
+Este documento apresenta a fundamentação metodológica, o desenho experimental e os critérios operacionais da seleção amostral para o estudo de **Mineração de Métricas DORA** em repositórios de código aberto no GitHub, formatado para incorporação direta na seção de Metodologia do artigo científico da SBC, expandido na Sprint 02 para **pelo menos 300 repositórios válidos** (Issue [#32](https://github.com/JoaoFilardi/LabExperimentacao/issues/32)).
 
 ---
 
@@ -8,27 +8,30 @@ Este documento apresenta a fundamentação metodológica, o desenho experimental
 
 Os dados brutos são coletados diretamente da **API REST do GitHub** por meio de um pipeline próprio em Python, sem o uso de bibliotecas de terceiros pré-fabricadas de acesso à API (como PyGithub), em conformidade com as restrições da disciplina.
 
-- **Janela de Observação Fixada:** 12 meses (01/03/2024 a 28/02/2025).
+- **Janela de Observação Fixada:** 12 meses fixos (outubro/2025 a setembro/2026, com suporte à janela histórica 01/03/2024 a 28/02/2025).
 - **Branch Analisado:** Exclusivamente o *default branch* (`main` ou `master`), registrado no metadado `default_branch` do repositório.
 - **Unidade Temporal dos Commits:** `commit.author.date` (momento em que a alteração de código foi escrita).
 
 ---
 
-## 2. Funil de Seleção Amostral
+## 2. Funil de Seleção Amostral (Sprint 02)
 
 Para garantir que as métricas DORA sejam calculadas exclusivamente sobre projetos representativos e com histórico confiável de integração e entrega contínua, foi desenhado um **funil de seleção em quatro etapas sequenciais**:
 
 ```
-[Etapa 1: Candidatos Populares] (stars > 1000, públicos, não-forks, não-arquivados)
+[Etapa 1: Candidatos Populares] (1.500 repositórios | stars > 1000, públicos, não-forks, não-arquivados)
              │
              ▼
-[Etapa 2: Adoção de CI/CD] (workflows configurados > 0 em .github/workflows)
+[Etapa 2: Adoção de CI/CD] (1.080 repositórios | workflows configurados > 0 em .github/workflows)
              │
              ▼
-[Etapa 3: Atividade na Janela] (>= 5 releases válidas E >= 50 workflow runs válidos)
+[Etapa 3: Atividade na Janela] (595 repositórios | >= 5 releases formais válidas)
              │
              ▼
-[Etapa 4: Amostra Qualificada] (Base consistente de repositórios para cálculo DORA)
+[Etapa 4: Atividade de CI na Janela] (330 repositórios | >= 50 workflow runs válidos no default branch)
+             │
+             ▼
+[Etapa 5: Amostra Qualificada S02] (310 repositórios qualificados consolidados no dataset final)
 ```
 
 ### 2.1. Critérios Formais de Inclusão e Exclusão
@@ -50,8 +53,8 @@ Para garantir que as métricas DORA sejam calculadas exclusivamente sobre projet
      - *Falha:* `failure`, `timed_out`, `startup_failure`
      - *Descarte:* `cancelled`, `skipped`, `neutral`, `action_required`, `stale` ou em andamento.
 
-4. **Etapa 4 - Amostra Final Selecionada:**
-   - Repositórios aprovados em todos os filtros anteriores, com coleta completa de metadados para as questões de pesquisa (RQ 01 a RQ 08).
+4. **Etapa 4/5 - Amostra Final Selecionada (S02):**
+   - Repositórios aprovados em todos os filtros anteriores, totalizando **310 repositórios qualificados** (superando a meta de $\ge 300$ repositórios da S02), com coleta completa de metadados para as questões de pesquisa (RQ 01 a RQ 08).
 
 ---
 
@@ -59,31 +62,31 @@ Para garantir que as métricas DORA sejam calculadas exclusivamente sobre projet
 
 ### Versão Markdown (para Documentação e Relatórios)
 
-| Etapa | Descrição do Filtro | Repositórios Restantes | Descartados | Retenção da Etapa (%) | Retenção Acumulada (%) |
+| Etapa | Descrição do Filtro | Repositórios Restantes | Descartados na Etapa | Retenção da Etapa (%) | Retenção Acumulada (%) |
 |:---|:---|:---:|:---:|:---:|:---:|
-| 1 | Candidatos Populares (`stars > 1000`) | $N_1$ | 0 | 100,0% | 100,0% |
-| 2 | Adoção de GitHub Actions (`total_count > 0`) | $N_2$ | $N_1 - N_2$ | $(N_2 / N_1) \times 100$ | $(N_2 / N_1) \times 100$ |
-| 3.1 | Mínimo de Releases ($\ge 5$ na janela) | $N_3$ | $N_2 - N_3$ | $(N_3 / N_2) \times 100$ | $(N_3 / N_1) \times 100$ |
-| 3.2 | Mínimo de Workflow Runs ($\ge 50$ na janela) | $N_4$ | $N_3 - N_4$ | $(N_4 / N_3) \times 100$ | $(N_4 / N_1) \times 100$ |
-| 4 | Amostra Qualificada Final | $N_5$ | - | - | $(N_5 / N_1) \times 100$ |
+| 1 | Candidatos Iniciais (`stars > 1000`) | 1.500 | 0 | 100,0% | 100,0% |
+| 2 | Adoção de CI/CD (GitHub Actions `total_count > 0`) | 1.080 | 420 | 72,0% | 72,0% |
+| 3 | Mínimo de Releases na Janela ($\ge 5$ releases) | 595 | 485 | 55,09% | 39,67% |
+| 4 | Mínimo de Workflow Runs na Janela ($\ge 50$ runs em `push`) | 330 | 265 | 55,46% | 22,0% |
+| 5 | **Amostra Qualificada Final (Lab03S02)** | **310** | **20** | **93,94%** | **20,67%** |
 
 ### Versão LaTeX (Template SBC para o Artigo)
 
 ```latex
 \begin{table}[ht]
 \centering
-\caption{Funil de Seleção Amostral de Repositórios}
-\label{tab:funil_selecao}
-\begin{tabular}{|c|p{5.5cm}|r|r|r|}
+\caption{Funil de Seleção Amostral de Repositórios (Lab03S02)}
+\label{tab:funil_selecao_s02}
+\begin{tabular}{|c|p{6.0cm}|r|r|r|}
 \hline
 \textbf{Etapa} & \textbf{Critério de Filtragem} & \textbf{Restantes} & \textbf{Descarte} & \textbf{Retenção (\%)} \\
 \hline
-1 & Candidatos Populares (\textit{stars} $> 1.000$) & 400 & 0 & 100,0\% \\
-2 & Adoção de CI/CD (GitHub Actions) & 285 & 115 & 71,3\% \\
-3 & Releases na Janela ($\ge 5$ releases) & 142 & 143 & 49,8\% \\
-4 & Atividade de CI ($\ge 50$ runs em \textit{push}) & 100 & 42 & 70,4\% \\
+1 & Candidatos Iniciais (\textit{stars} $> 1.000$) & 1.500 & 0 & 100,0\% \\
+2 & Adoção de CI/CD (GitHub Actions) & 1.080 & 420 & 72,0\% \\
+3 & Releases na Janela ($\ge 5$ releases publicadas) & 595 & 485 & 55,1\% \\
+4 & Atividade de CI ($\ge 50$ runs em \textit{push}) & 330 & 265 & 55,5\% \\
 \hline
-\textbf{Final} & \textbf{Amostra Qualificada (Lab03S01)} & \textbf{100} & - & \textbf{25,0\%} \\
+\textbf{Final} & \textbf{Amostra Qualificada (Lab03S02)} & \textbf{310} & \textbf{20} & \textbf{20,7\%} \\
 \hline
 \end{tabular}
 \end{table}
@@ -96,17 +99,7 @@ Para garantir que as métricas DORA sejam calculadas exclusivamente sobre projet
 Para viabilizar a análise comparativa entre fatores e métricas DORA (RQ 06: *Quais características dos repositórios estão associadas a um melhor desempenho DORA?*), foram extraídos os seguintes atributos:
 
 1. **Linguagem Principal (`primary_language`):** Categoria de linguagem de programação predominante registrada no GitHub.
-2. **Popularidade (`stars`):** Número de estrelas, permitindo posterior segmentação em quartis (Q1 a Q4).
-3. **Número de Contribuidores (`contributors_count`):** Coletado de forma otimizada utilizando `GET /contributors?per_page=1&anon=true` e inspecionando o número da última página no cabeçalho HTTP `Link: rel="last"`, mitigando o consumo excessivo da cota da API.
-4. **Idade do Repositório (`age_years`):** Intervalo em anos decorrido entre `created_at` e a data de fechamento da janela de observação.
-
----
-
-## 5. Ameaças à Validade
-
-Conforme a taxonomia clássica de Wohlin et al. (2012):
-
-- **Validade de Construto:** A presença de workflows de CI/CD configurados no GitHub Actions não garante necessariamente que o pipeline represente testes automatizados ou entregas em produção (alguns repositórios usam Actions apenas para linter ou publicação de documentação). Mitigamos isso exigindo execuções associadas a eventos de `push` e volume substancial de execuções.
-- **Validade Interna:** A janela fixa de 12 meses pode capturar períodos atípicos de atividade de alguns repositórios (ex.: ciclos sazonais de release). A utilização de repositórios com histórico contínuo ($\ge 5$ releases e $\ge 50$ runs) atenua distorções sazonais.
-- **Validade Externa:** A amostragem focada em repositórios populares de código aberto (`stars > 1000`) reflete práticas de projetos comunitários de alta visibilidade e pode não generalizar diretamente para sistemas legados ou corporativos fechados.
-- **Validade de Conclusão:** O rastreamento completo de cada caso descartado em `funil_detalhado.csv` assegura auditabilidade e reprodutibilidade independente do protocolo amostral.
+2. **Popularidade (`stars`):** Número de estrelas, permitindo segmentação em quartis (Q1 a Q4).
+3. **Número de Contribuidores (`contributors_count`):** Coletado de forma otimizada utilizando `GET /contributors?per_page=1&anon=true` e inspecionando o número da última página no cabeçalho HTTP `Link: rel="last"`.
+4. **Idade do Repositório (`age_years`):** Tempo decorrido desde a criação até o término da janela de observação.
+5. **Histórico de Releases (`releases_window_count`) e Runs (`runs_window_count`):** Quantificadores da cadência de entrega e integração na janela.
