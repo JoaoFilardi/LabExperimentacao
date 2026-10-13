@@ -47,6 +47,20 @@ def find_github_token() -> Optional[str]:
             except Exception:
                 continue
 
+    # Fallback transparente via gh cli (GitHub CLI)
+    try:
+        import subprocess
+        result = subprocess.run(
+            ["gh", "auth", "token"],
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+        if result.returncode == 0 and result.stdout.strip():
+            return result.stdout.strip()
+    except Exception:
+        pass
+
     return None
 
 
