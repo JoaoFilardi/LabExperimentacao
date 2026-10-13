@@ -1,5 +1,6 @@
 """Testes unitários para o pipeline de seleção e funil de coleta."""
 
+from pathlib import Path
 from unittest.mock import MagicMock, patch
 import pandas as pd
 import pytest
