@@ -18,12 +18,20 @@ import math
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-import matplotlib
-matplotlib.use("Agg")  # Backend headless para execução sem interface gráfica
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import seaborn as sns
+
+try:
+    import matplotlib
+    matplotlib.use("Agg")  # Backend headless para execução sem interface gráfica
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    HAS_MATPLOTLIB = True
+except ImportError:
+    matplotlib = None
+    plt = None
+    sns = None
+    HAS_MATPLOTLIB = False
 
 from .metricas import classify_dora_reference, calculate_iqr
 
@@ -433,6 +441,9 @@ def gerar_graficos_analise(
     output_dir: Path,
 ) -> List[Path]:
     """Gera gráficos estatísticos de alta qualidade para as RQ01 a RQ04 e C1."""
+    if not HAS_MATPLOTLIB or plt is None or sns is None:
+        return []
+
     output_dir.mkdir(parents=True, exist_ok=True)
     sns.set_theme(style="whitegrid", font="sans-serif")
     saved_paths: List[Path] = []

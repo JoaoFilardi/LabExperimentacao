@@ -17,7 +17,10 @@ numpy>=1.24.0
 pytest>=8.0.0
 pytest-cov>=4.1.0
 
-# Analise estatistica (utilizadas nas RQs seguintes)
+# Analise estatistica e visualizacao (utilizadas nas RQs e S03)
 scipy>=1.11.0
 statsmodels>=0.14.0
 scikit-learn>=1.3.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+nbformat>=5.9.0

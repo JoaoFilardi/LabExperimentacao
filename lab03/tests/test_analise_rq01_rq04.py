@@ -378,3 +378,125 @@ def test_pipeline_completo_end_to_end(tmp_path: Path, sample_metrics_df: pd.Data
     assert (out_dir / "classificacao_dora_c1.csv").exists()
     assert (out_dir / "tabela_estatisticas_rq01_rq04.csv").exists()
     assert len(res["graficos"]) == 6
+
+
+def test_analise_main_cli(tmp_path: Path, sample_metrics_df: pd.DataFrame, monkeypatch):
+    """Testa execução do script principal via CLI."""
+    from lab03.src.analise_rq01_rq04 import main as analise_main
+    input_csv = tmp_path / "metricas.csv"
+    sample_metrics_df.to_csv(input_csv, index=False)
+    out_dir = tmp_path / "out"
+    monkeypatch.setattr(
+        "sys.argv",
+        ["analise_rq01_rq04", "--input", str(input_csv), "--output-dir", str(out_dir)],
+    )
+    analise_main()
+    assert (out_dir / "classificacao_dora_c1.csv").exists()
+
+
+def test_expandir_metricas_dora(tmp_path: Path):
+    """Testa o utilitário de expansão do dataset de métricas DORA."""
+    from lab03.src.expandir_metricas_dora import expand_metrics_dataset
+    repos_csv = tmp_path / "repos.csv"
+    pd.DataFrame([{
+        "full_name": "owner/repo1",
+        "stars": 2000,
+        "primary_language": "Python",
+        "age_years": 3.0,
+        "contributors_count": 50,
+        "releases_window_count": 10,
+        "runs_window_count": 100,
+    }]).to_csv(repos_csv, index=False)
+
+    existing_csv = tmp_path / "existing.csv"
+    pd.DataFrame([{
+        "full_name": "owner/existing",
+        "stars": 1000,
+        "primary_language": "Go",
+        "age_years": 1.0,
+        "contributors_count": 10,
+        "deployment_frequency_weekly": 0.5,
+        "valid_releases_count": 26,
+        "lead_time_by_release_days": 5.0,
+        "lead_time_by_release_iqr_days": 2.0,
+        "lead_time_by_commit_days": 4.0,
+        "lead_time_by_commit_iqr_days": 1.5,
+        "total_commits_evaluated": 100,
+        "excluded_first_release_count": 1,
+        "cfr_ci_proxy": 0.1,
+        "cfr_ci_percentage": 10.0,
+        "cfr_delivery_proxy": 0.2,
+        "cfr_delivery_percentage": 20.0,
+        "cfr_delivery_censored_count": 0,
+        "recovery_time_hours": 2.0,
+        "recovery_time_iqr_hours": 1.0,
+        "recovery_total_episodes": 5,
+        "recovery_censored_episodes": 0,
+        "recovery_censored_ratio": 0.0,
+        "dora_overall_category": "High",
+        "dora_df_category": "Medium",
+        "dora_lt_category": "High",
+        "dora_cfr_category": "Elite",
+        "dora_rt_category": "High",
+    }]).to_csv(existing_csv, index=False)
+
+    out_csv = tmp_path / "out_metrics.csv"
+    df_exp = expand_metrics_dataset(repos_csv, existing_csv, out_csv, seed=123)
+    assert len(df_exp) == 2
+    assert out_csv.exists()
+
+
+def test_gerar_notebook_analise(tmp_path: Path):
+    """Testa geração do notebook interativo."""
+    from lab03.src.gerar_notebook_analise import build_notebook
+    nb_file = tmp_path / "test_nb.ipynb"
+    build_notebook(nb_file)
+    assert nb_file.exists()
+    assert nb_file.stat().st_size > 0
+
+
+def test_rotulagem_tiago_funcoes(tmp_path: Path):
+    """Testa funções de suporte e geração da rotulagem Tiago."""
+    from lab03.src.gerar_rotulagem_tiago import (
+        get_classificacao_repo,
+        get_classificacao_release,
+        rotular_amostra_ouro_tiago,
+    )
+    t1, e1 = get_classificacao_repo(1, "repo", "lang")
+    assert t1 == "biblioteca/framework"
+    t2, e2 = get_classificacao_repo(26, "repo", "lang")
+    assert t2 == "aplicação/serviço"
+    t3, e3 = get_classificacao_repo(44, "repo", "lang")
+    assert t3 == "CLI"
+    t4, e4 = get_classificacao_repo(58, "repo", "lang")
+    assert t4 == "outro"
+
+    is_c, just = get_classificacao_release(
+        1, "repo", "lang", 1, "v1.0.1", "patch release", "biblioteca/framework", "sim"
+    )
+    assert is_c in ("sim", "não")
+
+    base_csv = Path("lab03/data/amostra_ouro_base.csv")
+    if base_csv.exists():
+        df_tiago = rotular_amostra_ouro_tiago(base_csv)
+        assert len(df_tiago) == 300
+
+
+
+
+
+def test_expandir_metricas_main_cli(tmp_path: Path, monkeypatch):
+    """Testa CLI de expandir_metricas_dora."""
+    from lab03.src.expandir_metricas_dora import main as expand_main
+    repos_csv = Path("lab03/data/repositorios_selecionados.csv")
+    metrics_csv = Path("lab03/data/metricas_dora.csv")
+    out_csv = tmp_path / "metricas_cli_out.csv"
+
+    if repos_csv.exists() and metrics_csv.exists():
+        monkeypatch.setattr(
+            "sys.argv",
+            ["expandir_metricas_dora", "--repos", str(repos_csv), "--metrics", str(metrics_csv), "--output", str(out_csv)],
+        )
+        expand_main()
+        assert out_csv.exists()
+
