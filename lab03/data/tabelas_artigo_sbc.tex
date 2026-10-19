@@ -1,0 +1,43 @@
+% ==============================================================================
+% Tabelas Geradas Automaticamente para o Artigo Científico (SBC Template)
+% Issue #39: Análise RQ01-RQ04 e Classificação DORA C1
+% ==============================================================================
+
+\begin{table}[htbp]
+\centering
+\caption{Estatísticas Descritivas das Métricas DORA (Mediana e IQR)}
+\label{tab:metricas_descritivas_rq01_rq04}
+\begin{tabular}{|l|l|r|r|r|r|r|}
+\hline
+\textbf{Métrica / Variante} & \textbf{Unidade} & \textbf{Mediana} & \textbf{Q1} & \textbf{Q3} & \textbf{IQR} & \textbf{N} \\
+\hline
+RQ01 - Deployment Frequency & releases/semana & 0.3452 & 0.2301 & 0.4987 & 0.2686 & 310 \\
+RQ02 - Lead Time (Variante a: por release) & dias & 11.436 & 6.901 & 20.7632 & 13.8622 & 310 \\
+RQ02 - Lead Time (Variante b: por commit) & dias & 8.1785 & 4.7293 & 14.7413 & 10.012 & 310 \\
+RQ02 - Diferença (Variante a - Variante b) & dias & 2.944 & 1.531 & 5.67 & 4.139 & 310 \\
+RQ03 - CFR (Variante a: proxy de CI) & proporção [0, 1] & 0.0832 & 0.0531 & 0.1347 & 0.0816 & 310 \\
+RQ03 - CFR (Variante b: proxy de entrega) & proporção [0, 1] & 0.2935 & 0.2015 & 0.4057 & 0.2042 & 310 \\
+RQ04 - Tempo de Recuperação & horas & 2.8925 & 1.4367 & 6.8237 & 5.387 & 310 \\
+RQ04 - Taxa de Censura de Episódios & proporção [0, 1] & 0.0 & 0.0 & 0.032 & 0.032 & 310 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Classificação DORA dos Repositórios (Referência C1)}
+\label{tab:classificacao_dora_c1}
+\begin{tabular}{|l|r|r|r|r|}
+\hline
+\textbf{Métrica} & \textbf{Elite} & \textbf{High} & \textbf{Medium} & \textbf{Low} \\
+\hline
+RQ01 - Deployment Frequency & 0 (0.0%) & 13 (4.19%) & 228 (73.55%) & 69 (22.26%) \\
+RQ02 - Lead Time (Variante a: release) & 1 (0.32%) & 80 (25.81%) & 190 (61.29%) & 39 (12.58%) \\
+RQ02 - Lead Time (Variante b: commit) & 2 (0.65%) & 122 (39.35%) & 167 (53.87%) & 19 (6.13%) \\
+RQ03 - CFR (Variante a: CI proxy) & 251 (80.97%) & 57 (18.39%) & 2 (0.65%) & 0 (0.0%) \\
+RQ03 - CFR (Variante b: entrega proxy) & 45 (14.52%) & 116 (37.42%) & 89 (28.71%) & 60 (19.35%) \\
+RQ04 - Tempo de Recuperação & 39 (12.58%) & 258 (83.23%) & 13 (4.19%) & 0 (0.0%) \\
+DORA Geral de Referência (C1) & 0 (0.0%) & 111 (35.81%) & 199 (64.19%) & 0 (0.0%) \\
+\hline
+\end{tabular}
+\end{table}

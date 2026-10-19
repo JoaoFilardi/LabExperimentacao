@@ -1,0 +1,11 @@
+# Distribuição de Repositórios por Categoria DORA
+
+| Métrica | Elite | High | Medium | Low |
+| :--- | :---: | :---: | :---: | :---: |
+| RQ01 - Deployment Frequency | 0 (0.0%) | 13 (4.19%) | 228 (73.55%) | 69 (22.26%) |
+| RQ02 - Lead Time (Variante a: release) | 1 (0.32%) | 80 (25.81%) | 190 (61.29%) | 39 (12.58%) |
+| RQ02 - Lead Time (Variante b: commit) | 2 (0.65%) | 122 (39.35%) | 167 (53.87%) | 19 (6.13%) |
+| RQ03 - CFR (Variante a: CI proxy) | 251 (80.97%) | 57 (18.39%) | 2 (0.65%) | 0 (0.0%) |
+| RQ03 - CFR (Variante b: entrega proxy) | 45 (14.52%) | 116 (37.42%) | 89 (28.71%) | 60 (19.35%) |
+| RQ04 - Tempo de Recuperação | 39 (12.58%) | 258 (83.23%) | 13 (4.19%) | 0 (0.0%) |
+| DORA Geral de Referência (C1) | 0 (0.0%) | 111 (35.81%) | 199 (64.19%) | 0 (0.0%) |
