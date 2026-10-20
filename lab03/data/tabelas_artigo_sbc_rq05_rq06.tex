@@ -1,0 +1,56 @@
+% ==============================================================================
+% Tabelas Geradas Automaticamente para o Artigo Científico (SBC Template)
+% LAB03S03: Análise das RQ 05 e RQ 06
+% ==============================================================================
+
+\begin{table}[htbp]
+\centering
+\caption{Resultados da Correlação de Spearman para a RQ 05 (Velocidade vs. Estabilidade)}
+\label{tab:rq05_spearman}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\textbf{Relação Avaliada} & \textbf{N} & \textbf{$\rho$ de Spearman} & \textbf{IC 95\% Bootstrap} & \textbf{p-valor} & \textbf{Magnitude} \\
+\hline
+DF vs. CFR (Proxy CI) & 310 & 0.003 & [-0.10, 0.11] & p = 0.961 & Desprezível \\
+DF vs. CFR (Proxy Entrega) & 310 & 0.013 & [-0.10, 0.13] & p = 0.824 & Desprezível \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Testes de Kruskal-Wallis com Correção de Holm e Tamanho de Efeito (RQ 06)}
+\label{tab:rq06_kruskal}
+\small
+\begin{tabular}{|l|l|r|c|r|r|r|l|c|}
+\hline
+\textbf{Fator} & \textbf{Métrica DORA} & \textbf{H} & \textbf{gl} & \textbf{p-bruto} & \textbf{p-Holm} & \textbf{$\epsilon^2$} & \textbf{Efeito} & \textbf{Sig.} \\
+\hline
+tipo_projeto & deployment_frequency_weekly & 5.01 & 2 & 0.0815 & 1.0000 & 0.090 & Médio & Não (ns) \\
+tipo_projeto & lead_time_by_release_days & 0.43 & 2 & 0.8082 & 1.0000 & 0.008 & Desprezível & Não (ns) \\
+tipo_projeto & lead_time_by_commit_days & 0.22 & 2 & 0.8962 & 1.0000 & 0.004 & Desprezível & Não (ns) \\
+tipo_projeto & cfr_ci_percentage & 1.81 & 2 & 0.4044 & 1.0000 & 0.032 & Pequeno & Não (ns) \\
+tipo_projeto & recovery_time_hours & 1.74 & 2 & 0.4181 & 1.0000 & 0.031 & Pequeno & Não (ns) \\
+stars_quartile & deployment_frequency_weekly & 22.40 & 3 & 0.0001 & 0.0012 & 0.073 & Médio & Sim * \\
+stars_quartile & lead_time_by_release_days & 2.63 & 3 & 0.4528 & 1.0000 & 0.009 & Desprezível & Não (ns) \\
+stars_quartile & lead_time_by_commit_days & 3.47 & 3 & 0.3241 & 1.0000 & 0.011 & Pequeno & Não (ns) \\
+stars_quartile & cfr_ci_percentage & 2.96 & 3 & 0.3980 & 1.0000 & 0.010 & Desprezível & Não (ns) \\
+stars_quartile & recovery_time_hours & 0.71 & 3 & 0.8720 & 1.0000 & 0.002 & Desprezível & Não (ns) \\
+age_quartile & deployment_frequency_weekly & 15.54 & 3 & 0.0014 & 0.0310 & 0.050 & Pequeno & Sim * \\
+age_quartile & lead_time_by_release_days & 0.99 & 3 & 0.8036 & 1.0000 & 0.003 & Desprezível & Não (ns) \\
+age_quartile & lead_time_by_commit_days & 2.17 & 3 & 0.5384 & 1.0000 & 0.007 & Desprezível & Não (ns) \\
+age_quartile & cfr_ci_percentage & 1.24 & 3 & 0.7436 & 1.0000 & 0.004 & Desprezível & Não (ns) \\
+age_quartile & recovery_time_hours & 2.43 & 3 & 0.4881 & 1.0000 & 0.008 & Desprezível & Não (ns) \\
+language_group & deployment_frequency_weekly & 28.64 & 5 & 0.0000 & 0.0007 & 0.093 & Médio & Sim * \\
+language_group & lead_time_by_release_days & 3.93 & 5 & 0.5588 & 1.0000 & 0.013 & Pequeno & Não (ns) \\
+language_group & lead_time_by_commit_days & 3.91 & 5 & 0.5624 & 1.0000 & 0.013 & Pequeno & Não (ns) \\
+language_group & cfr_ci_percentage & 3.16 & 5 & 0.6752 & 1.0000 & 0.010 & Pequeno & Não (ns) \\
+language_group & recovery_time_hours & 3.58 & 5 & 0.6108 & 1.0000 & 0.012 & Pequeno & Não (ns) \\
+contributors_quartile & deployment_frequency_weekly & 52.38 & 3 & 0.0000 & 0.0000 & 0.170 & Grande & Sim * \\
+contributors_quartile & lead_time_by_release_days & 3.72 & 3 & 0.2935 & 1.0000 & 0.012 & Pequeno & Não (ns) \\
+contributors_quartile & lead_time_by_commit_days & 3.11 & 3 & 0.3748 & 1.0000 & 0.010 & Pequeno & Não (ns) \\
+contributors_quartile & cfr_ci_percentage & 0.79 & 3 & 0.8516 & 1.0000 & 0.003 & Desprezível & Não (ns) \\
+contributors_quartile & recovery_time_hours & 2.59 & 3 & 0.4593 & 1.0000 & 0.008 & Desprezível & Não (ns) \\
+\hline
+\end{tabular}
+\end{table}

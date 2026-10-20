@@ -1,0 +1,3 @@
+metric_x,metric_y,rho,p_value,n,ci_lower,ci_upper,magnitude
+Deployment Frequency,CFR Proxy CI,0.002822060793635771,0.9605312923111746,310,-0.09748919931410457,0.11086855828073948,Desprezível
+Deployment Frequency,CFR Proxy Entrega,0.012679502680618548,0.8240392819073931,310,-0.10400654179209338,0.13045550807187936,Desprezível

@@ -1,0 +1,2 @@
+versao,n,tp,fp,fn,tn,precisao,recall,f1,atingiu_limiar
+v1_palavras_chave,300,117,3,30,150,0.975,0.7959,0.8764,True

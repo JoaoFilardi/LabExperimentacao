@@ -1,0 +1,4 @@
+dimensao,n_sujeitos,n_categorias,fleiss_kappa,interpretacao,concordancia_total_pct
+tipo_projeto,60,4,1.0,quase perfeita,100.0
+entrega_real,60,2,0.018,leve,50.0
+is_corretiva,300,2,0.1069,leve,36.7
