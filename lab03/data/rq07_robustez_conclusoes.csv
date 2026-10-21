@@ -1,0 +1,8 @@
+rq,pergunta,evidencia,veredito
+RQ01,Deployment Frequency,Todas as combinações usam a mesma definição de deploy (release publicada).,invariante por construção
+RQ02,Lead Time (por release x por commit),21.3% dos repositórios mudam de categoria de LT; Spearman entre variantes = 0.9802; Wilcoxon pareado p = 0.0.,parcialmente sensível
+RQ03,CFR (CI x entrega),81.0% dos repositórios mudam de categoria de CFR; Spearman entre variantes = -0.0485; Wilcoxon pareado p = 0.0.,sensível
+RQ04,Recovery Time,"Todas as combinações usam o mesmo tempo de recuperação (episódios por workflow, com censura).",invariante por construção
+RQ05,DF x CFR (Spearman),"cfr_ci_proxy: rho=0.003 (Desprezível, p=0.9605); cfr_delivery_proxy: rho=0.013 (Desprezível, p=0.8240)",robusta
+RQ06,Fatores associados ao desempenho DORA,stars_quartile: significativo em nenhuma; age_quartile: significativo em nenhuma; contributors_quartile: significativo em nenhuma; language_group: significativo em nenhuma,robusta
+Geral,Classificação DORA geral (C1 x demais),% que muda de categoria: 10.3% a 30.0%; kappa linear: 0.365 a 0.789.,parcialmente sensível

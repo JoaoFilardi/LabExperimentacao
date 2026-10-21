@@ -1,0 +1,3 @@
+combinacoes,metrica_df,metrica_cfr,n,rho,p_valor,sinal,magnitude,significativo
+"C1,C2",deployment_frequency_weekly,cfr_ci_proxy,310,0.0028,0.960531,positivo,Desprezível,False
+"C3,C4",deployment_frequency_weekly,cfr_delivery_proxy,310,0.0127,0.824039,positivo,Desprezível,False

@@ -1,0 +1,17 @@
+combinacao,fator,n,H,gl,p_bruto,epsilon2,p_holm,significativo
+C1,stars_quartile,310,2.2871,3,0.514998,0.0074,1.0,False
+C1,age_quartile,310,3.7406,3,0.290877,0.0121,1.0,False
+C1,contributors_quartile,310,2.2142,3,0.529163,0.0072,1.0,False
+C1,language_group,310,2.7196,5,0.743121,0.0088,1.0,False
+C2,stars_quartile,310,0.8609,3,0.834841,0.0028,1.0,False
+C2,age_quartile,310,1.7919,3,0.616692,0.0058,1.0,False
+C2,contributors_quartile,310,3.4696,3,0.324728,0.0112,1.0,False
+C2,language_group,310,5.179,5,0.394426,0.0168,1.0,False
+C3,stars_quartile,310,2.2063,3,0.530702,0.0071,1.0,False
+C3,age_quartile,310,8.1184,3,0.043628,0.0263,0.61079,False
+C3,contributors_quartile,310,7.2113,3,0.065461,0.0233,0.850987,False
+C3,language_group,310,2.7031,5,0.745639,0.0087,1.0,False
+C4,stars_quartile,310,1.2904,3,0.731408,0.0042,1.0,False
+C4,age_quartile,310,9.8453,3,0.019928,0.0319,0.29892,False
+C4,contributors_quartile,310,12.1373,3,0.006927,0.0393,0.110836,False
+C4,language_group,310,7.0115,5,0.219788,0.0227,1.0,False

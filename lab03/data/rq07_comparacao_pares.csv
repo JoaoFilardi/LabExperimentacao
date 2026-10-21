@@ -1,0 +1,7 @@
+par,combinacao_a,combinacao_b,n_repositorios,n_mudaram,pct_mudaram,pct_melhoraram,pct_pioraram,delta_medio_score,kappa_ponderado_linear,interpretacao_kappa
+C1 x C2,C1,C2,310,32,10.32,10.32,0.0,0.1032,0.7889,Concordância substancial
+C1 x C3,C1,C3,310,84,27.1,0.0,27.1,-0.2742,0.41,Concordância moderada
+C1 x C4,C1,C4,310,93,30.0,5.16,24.84,-0.2,0.3649,Concordância razoável
+C2 x C3,C2,C3,310,115,37.1,0.0,37.1,-0.3774,0.2976,Concordância razoável
+C2 x C4,C2,C4,310,93,30.0,0.0,30.0,-0.3032,0.4344,Concordância moderada
+C3 x C4,C3,C4,310,23,7.42,7.42,0.0,0.0742,0.8214,Concordância quase perfeita
