@@ -1,0 +1,3 @@
+cfr_usado,n_repos,mediana_diferenca_rework_menos_cfr,repos_rework_menor_que_cfr,repos_rework_maior_que_cfr,repos_iguais,spearman_rho,spearman_p,wilcoxon_stat,wilcoxon_p
+cfr_b_recalculado,180,0.4849690539345712,10,156,14,0.10069581687501031,0.17862995256524603,251.0,4.6199705041344515e-27
+cfr_delivery_proxy (somente linhas consistentes),2,0.7142999999999999,0,2,0,,,0.0,0.5
