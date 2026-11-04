@@ -1,0 +1,20 @@
+# Python Cache e Compilados
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Ambientes Virtuais
+.venv/
+venv/
+env/
+ENV/
+
+# Arquivos temporários e logs
+*.log
+logs/
+.tmp/
+
