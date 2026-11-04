@@ -1,0 +1,3 @@
+grupo,n,media,desvio_padrao,mediana,iqr,minimo,maximo,assimetria,curtose,log_mu,log_sigma,q1,q3,coef_variacao,n_outliers_iqr,shapiro_p_bruto,shapiro_p_log
+sem_bot,30,27.4233,24.2001,18.9,20.925,2.4,105.5,1.69498,2.48507,2.97214,0.86703,12.375,33.3,0.882463,3,0.000111743,0.994922
+com_bot,30,20.95,20.0598,13.6,16.775,1.2,88,1.81576,3.02136,2.63849,0.963243,8.825,25.6,0.957509,3,5.27392e-05,0.971344
