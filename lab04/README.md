@@ -170,3 +170,29 @@ Para que a proporção estimada (ex.: 5%) tenha pouca variação. Com 10.000 rep
 
 ### O teste não paramétrico sempre ganha quando os dados não são normais?
 Não necessariamente. Descobrir isso no cenário do grupo é justamente o objetivo do laboratório.
+
+Como executar o dashboard
+
+Pré-requisitos: Python 3.10+ e as dependências:
+
+bash
+python -m pip install streamlit pandas numpy matplotlib scipy
+
+Na pasta que contém a pasta lab04, rode um único comando:
+
+bash
+python -m streamlit run lab04/app.py
+
+O dashboard abre em http://localhost:8501.
+
+Para gerar apenas o gráfico G1 (PNG em lab04/data/g1_reais_vs_simulados.png):
+
+bash
+python -m lab04.src.grafico_g1
+
+Testes:
+
+bash
+python -m pytest lab04/tests
+
+Os dados simulados usam semente fixa (42), então os resultados são reproduz
