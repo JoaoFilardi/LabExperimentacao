@@ -17,6 +17,10 @@ import streamlit as st
 
 from lab04.src.cenario import CENARIO
 from lab04.src.grafico_g1 import carregar_reais, carregar_simulados, gerar_g1
+from lab04.src.testes_estatisticos import (
+    aplicar_ambos_testes,
+    comparacao_para_dataframe,
+)
 
 LINK_REPOSITORIO = "<preencher>"  # link do repositório / GitHub Projects do grupo
 LINK_DASHBOARD = "<preencher>"  # link do dashboard publicado, se houver
@@ -46,6 +50,15 @@ st.markdown(
 
 # ------------------------------------------- 3. Como os testes funcionam (G2)
 st.header("3. Como os testes funcionam")
+comp_simulados = aplicar_ambos_testes(
+    simulados,
+    origem_dados="Dados Simulados S01 (semente = 42)",
+    semente=42,
+)
+st.subheader("Aplicação dos dois testes ao conjunto de dados simulado (semente = 42)")
+st.dataframe(comparacao_para_dataframe(comp_simulados), use_container_width=True)
+st.markdown(f"**Decisão e resumo:** {comp_simulados.resumo_comparativo}")
+st.markdown(f"**Diferenças observadas e razões estatísticas:** {comp_simulados.explicacao_diferencas}")
 st.info("G2 ainda não implementado.")
 
 # ------------------------------------------------------- 4. Erro tipo I (G3)
@@ -58,7 +71,13 @@ st.info("G4 será implementado na Sprint 2.")
 
 # ------------------------------------------------------------ 6. Dados reais
 st.header("6. Dados reais")
-st.info("Tabela com estatística, p-valor, tamanho do efeito e conclusão de cada teste: a implementar.")
+comp_reais = aplicar_ambos_testes(
+    reais,
+    origem_dados="Amostra de Dados Reais (tiangolo/fastapi)",
+    semente=None,
+)
+st.dataframe(comparacao_para_dataframe(comp_reais), use_container_width=True)
+st.markdown(f"**Conclusão nos dados reais:** {comp_reais.resumo_comparativo}")
 
 # ------------------------------------------------------------- 7. Conclusão
 st.header("7. Conclusão")
