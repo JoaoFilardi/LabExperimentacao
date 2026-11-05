@@ -120,7 +120,7 @@ O dashboard deve ter as seções abaixo, **nesta ordem**:
 Pode ser feito em Streamlit, Dash, Plotly (página HTML), Quarto ou ferramenta equivalente, desde que gerado por código do repositório.
 Deve abrir com um único comando descrito no README, ou estar publicado (ex.: GitHub Pages, Streamlit Community Cloud).
 O link do dashboard e do repositório/GitHub Projects do grupo devem aparecer no topo do dashboard.
-**Link do repositório/GitHub Projects:** `<preencher>`
+**Link do repositório/GitHub Projects:** https://github.com/JoaoFilardi/LabExperimentacao | https://github.com/JoaoFilardi/LabExperimentacao/projects
 
 ## 5. Apresentação oral: 15 perguntas
 Na aula de apresentação, o grupo responde, usando o próprio dashboard, às 15 perguntas abaixo. A apresentação dura até 7 minutos; as respostas devem ser curtas e diretas (cerca de 30 segundos cada). As perguntas são divididas entre os integrantes, e cada um responde a pelo menos 4. O professor pode pedir a qualquer integrante que responda a qualquer pergunta.
@@ -171,28 +171,36 @@ Para que a proporção estimada (ex.: 5%) tenha pouca variação. Com 10.000 rep
 ### O teste não paramétrico sempre ganha quando os dados não são normais?
 Não necessariamente. Descobrir isso no cenário do grupo é justamente o objetivo do laboratório.
 
-Como executar o dashboard
+## 9. Como executar o dashboard e os scripts do projeto
 
-Pré-requisitos: Python 3.10+ e as dependências:
+### Pré-requisitos e instalação (Python 3.10+)
+`ash
+python -m pip install streamlit pandas numpy matplotlib scipy pytest
+`
 
-bash
-python -m pip install streamlit pandas numpy matplotlib scipy
-
-Na pasta que contém a pasta lab04, rode um único comando:
-
-bash
+### Executar o dashboard completo (comando único na raiz do repositório)
+`ash
 python -m streamlit run lab04/app.py
+`
+O dashboard abre automaticamente em http://localhost:8501.
 
-O dashboard abre em http://localhost:8501.
+### Gerar artefatos e relatórios individualmente via linha de comando
+- **Gráfico G1** (lab04/data/g1_reais_vs_simulados.png):
+  `ash
+  python -m lab04.src.grafico_g1
+  `
+- **Gráfico G2** (lab04/data/g2_distribuicao_sob_h0.png):
+  `ash
+  python -m lab04.src.grafico_g2
+  `
+- **Aplicação e interpretação dos dois testes estatísticos** (lab04/data/resultados_testes_s01.csv):
+  `ash
+  python -m lab04.src.testes_estatisticos
+  `
 
-Para gerar apenas o gráfico G1 (PNG em lab04/data/g1_reais_vs_simulados.png):
-
-bash
-python -m lab04.src.grafico_g1
-
-Testes:
-
-bash
+### Executar a suíte de testes automatizados
+`ash
 python -m pytest lab04/tests
+`
 
-Os dados simulados usam semente fixa (42), então os resultados são reproduz
+Os dados simulados utilizam semente fixa (semente = 42), garantindo reprodutibilidade exata de todos os números, tabelas e gráficos.
