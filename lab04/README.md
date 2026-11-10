@@ -196,6 +196,10 @@ O dashboard abre automaticamente em http://localhost:8501.
 - **Aplicação e interpretação dos dois testes estatísticos** (lab04/data/resultados_testes_s01.csv):
   `ash
   python -m lab04.src.testes_estatisticos
+  
+- **Simulações e análise do Erro Tipo I — Q1** (lab04/data/resultados_q1_erro_tipo_1.csv e lab04/data/simulacao_q1_pvalores.csv):
+  ash
+  python -m lab04.src.simulacao_q1
   `
 
 ### Executar a suíte de testes automatizados

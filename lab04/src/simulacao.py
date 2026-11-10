@@ -151,6 +151,42 @@ class GeradorDadosSimulados:
         df = pd.DataFrame(dados_sem + dados_com)
         return df
 
+    def gerar_matrizes_h0(
+        self,
+        n_simulacoes: int = 10_000,
+        n_sem_bot: Optional[int] = None,
+        n_com_bot: Optional[int] = None,
+        mu_log_base: Optional[float] = None,
+        sigma_log_base: Optional[float] = None,
+        arredondar: int = 2,
+    ) -> Tuple[np.ndarray, np.ndarray]:
+        """Gera duas matrizes 2D (n_simulacoes, n_sem) e (n_simulacoes, n_com) sob H0 verdadeira.
+
+        Sob H0 verdadeira, ambos os grupos compartilham rigorosamente os mesmos parâmetros populacionais,
+        garantindo ausência de efeito investigado. O sorteio sequencial por simulação preserva equivalência
+        estrita com a geração iterativa dataset por dataset.
+
+        Retorna:
+            Tupla contendo (matriz_sem_bot, matriz_com_bot).
+        """
+        n_sem = n_sem_bot if n_sem_bot is not None else self.parametros.n_sem_bot
+        n_com = n_com_bot if n_com_bot is not None else self.parametros.n_com_bot
+        mu = mu_log_base if mu_log_base is not None else self.parametros.mu_log_h0
+        sig = sigma_log_base if sigma_log_base is not None else self.parametros.sigma_log_h0
+
+        if n_simulacoes <= 0:
+            raise ValueError("O número de simulações deve ser um inteiro positivo.")
+        if n_sem <= 0 or n_com <= 0:
+            raise ValueError("Os tamanhos amostrais devem ser inteiros positivos.")
+        if sig <= 0:
+            raise ValueError("O desvio padrão sigma_log deve ser estritamente positivo.")
+
+        amostras = self.rng.lognormal(mean=mu, sigma=sig, size=(n_simulacoes, n_sem + n_com))
+        if arredondar is not None:
+            amostras = np.round(amostras, arredondar)
+
+        return amostras[:, :n_sem], amostras[:, n_sem:]
+
     def gerar_dataset_com_outliers(
         self,
         n_sem_bot: int = 30,

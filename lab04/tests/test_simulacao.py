@@ -127,3 +127,20 @@ def test_gerar_e_salvar_dataset_s01(tmp_path):
     assert caminho_teste.exists()
     assert len(df) == 60
     assert set(df["grupo"].unique()) == {"com_bot", "sem_bot"}
+
+
+def test_gerar_matrizes_h0():
+    """Valida a geração matricial 2D sob H0 para simulações Monte Carlo de alto desempenho."""
+    gerador = GeradorDadosSimulados(semente=42)
+    mat_sem, mat_com = gerador.gerar_matrizes_h0(n_simulacoes=50, n_sem_bot=30, n_com_bot=30)
+
+    assert mat_sem.shape == (50, 30)
+    assert mat_com.shape == (50, 30)
+    assert (mat_sem > 0).all()
+    assert (mat_com > 0).all()
+
+    # Valida validações de erro
+    with pytest.raises(ValueError, match="número de simulações"):
+        gerador.gerar_matrizes_h0(n_simulacoes=0)
+    with pytest.raises(ValueError, match="tamanhos amostrais"):
+        gerador.gerar_matrizes_h0(n_sem_bot=-1)

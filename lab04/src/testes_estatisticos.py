@@ -534,6 +534,45 @@ def avaliar_dataframe_rapido(
     return avaliar_par_rapido(sem_bot, com_bot, alpha=alpha, alternativa=alternativa)
 
 
+def avaliar_matrizes_rapido(
+    sem_bot_matriz: np.ndarray,
+    com_bot_matriz: np.ndarray,
+    alpha: float = CENARIO.alpha,
+    alternativa: str = CENARIO.tipo_teste,
+) -> Dict[str, np.ndarray]:
+    """Executa ambos os testes vetorizados (ao longo do axis=1) para matrizes de Monte Carlo.
+
+    Parâmetros:
+        sem_bot_matriz: Matriz 2D de formato (n_simulacoes, n_sem_bot).
+        com_bot_matriz: Matriz 2D de formato (n_simulacoes, n_com_bot).
+        alpha: Nível de significância (padrão: 0.05).
+        alternativa: Direção do teste ('bicaudal', 'two-sided', etc.).
+
+    Retorna:
+        Dicionário com arrays 1D contendo estatísticas, p-valores e booleanos de rejeição
+        para as n_simulacoes.
+    """
+    alt_scipy = normalizar_alternativa(alternativa)
+    res_t = stats.ttest_ind(
+        com_bot_matriz, sem_bot_matriz, axis=1, equal_var=False, alternative=alt_scipy
+    )
+    res_u = stats.mannwhitneyu(
+        com_bot_matriz, sem_bot_matriz, axis=1, alternative=alt_scipy, method="asymptotic"
+    )
+
+    p_welch = np.asarray(res_t.pvalue, dtype=float)
+    p_mw = np.asarray(res_u.pvalue, dtype=float)
+
+    return {
+        "t_stat": np.asarray(res_t.statistic, dtype=float),
+        "p_welch": p_welch,
+        "rejeita_welch": np.asarray(p_welch < alpha, dtype=bool),
+        "u_stat": np.asarray(res_u.statistic, dtype=float),
+        "p_mann_whitney": p_mw,
+        "rejeita_mann_whitney": np.asarray(p_mw < alpha, dtype=bool),
+    }
+
+
 # ----------------------------------------------------------------------------
 # Execução sobre os datasets oficiais (Simulado S01 e Reais) e exportação
 # ----------------------------------------------------------------------------

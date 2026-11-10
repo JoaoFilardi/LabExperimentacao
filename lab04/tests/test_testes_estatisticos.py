@@ -7,6 +7,7 @@ import pytest
 from lab04.src.testes_estatisticos import (
     aplicar_ambos_testes,
     avaliar_dataframe_rapido,
+    avaliar_matrizes_rapido,
     avaliar_par_rapido,
     calcular_correlacao_rank_biserial,
     calcular_d_cohen_welch,
@@ -154,6 +155,14 @@ def test_avaliacao_rapida_para_s02():
     sem, com = extrair_grupos_dataframe(df)
     res_par = avaliar_par_rapido(sem, com, alpha=0.05)
     assert res_rapido == res_par
+
+    # Validação da avaliação matricial rápida
+    mat_sem = np.array([sem, sem])
+    mat_com = np.array([com, com])
+    res_mat = avaliar_matrizes_rapido(mat_sem, mat_com, alpha=0.05)
+    assert len(res_mat["t_stat"]) == 2
+    assert pytest.approx(res_mat["p_welch"][0]) == res_par["p_welch"]
+    assert pytest.approx(res_mat["p_mann_whitney"][0]) == res_par["p_mann_whitney"]
 
 
 def test_exportacao_csv_e_relatorio(tmp_path):
