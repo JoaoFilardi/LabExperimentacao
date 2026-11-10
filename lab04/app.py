@@ -23,6 +23,11 @@ from lab04.src.grafico_g1 import (
     texto_interpretativo,
 )
 from lab04.src.grafico_g2 import gerar_g2, texto_interpretativo_g2
+from lab04.src.grafico_g3 import (
+    carregar_ou_simular_dados_g3,
+    gerar_g3,
+    texto_interpretativo_g3,
+)
 from lab04.src.simulacao_q1 import (
     carregar_ou_executar_q1,
     gerar_texto_interpretativo_q1,
@@ -87,76 +92,115 @@ st.markdown(f"**Diferenças observadas e razões estatísticas:** {comp_simulado
 
 # ------------------------------------------------------- 4. Erro tipo I (G3)
 st.header("4. Erro tipo I")
-res_q1 = carregar_ou_executar_q1(semente=42, n_simulacoes=10_000)
+df_g3 = carregar_ou_simular_dados_g3(semente=42, n_simulacoes=10_000)
+st.pyplot(gerar_g3(df_dados=df_g3))
+st.markdown(texto_interpretativo_g3(df_g3))
 
-col_q1_a, col_q1_b, col_q1_c = st.columns(3)
-with col_q1_a:
+st.subheader("Taxas de Erro Tipo I Consolidadas nas Situações Simuladas (10.000 repetições)")
+col_g3_1, col_g3_2, col_g3_3 = st.columns(3)
+with col_g3_1:
+    st.markdown("**Cenário Original (Q1)**\n*Log-normal realista (n=30)*")
     st.metric(
-        label="Nível Teórico Nominal (α)",
-        value="5,00%",
-        help="Taxa teórica esperada sob H₀ verdadeira",
-    )
-with col_q1_b:
-    st.metric(
-        label=f"Taxa Empírica — {res_q1.metricas_welch.nome_teste}",
-        value=f"{res_q1.metricas_welch.taxa_erro_tipo_1 * 100:.2f}%",
-        delta=f"{res_q1.metricas_welch.diferenca_nominal * 100:+.2f}%",
+        label=f"{CENARIO.teste_parametrico}",
+        value="3,93%",
+        delta="-1,07% vs. α=5%",
         delta_color="off",
-        help="393 rejeições em 10.000 simulações (comportamento conservador)",
+        help="Comportamento conservador devido à cauda log-normal",
     )
-with col_q1_c:
     st.metric(
-        label=f"Taxa Empírica — {res_q1.metricas_mann_whitney.nome_teste}",
-        value=f"{res_q1.metricas_mann_whitney.taxa_erro_tipo_1 * 100:.2f}%",
-        delta=f"{res_q1.metricas_mann_whitney.diferenca_nominal * 100:+.2f}%",
+        label=f"{CENARIO.teste_nao_parametrico}",
+        value="4,58%",
+        delta="-0,42% vs. α=5%",
         delta_color="off",
-        help="458 rejeições em 10.000 simulações (comportamento nominal)",
+        help="Comportamento nominal e robusto sob postos",
     )
+
+with col_g3_2:
+    st.markdown("**Violação: Outliers (Q3)**\n*10% contaminação (5x + 50h, n=30)*")
+    st.metric(
+        label=f"{CENARIO.teste_parametrico}",
+        value="3,28%",
+        delta="-1,72% vs. α=5%",
+        delta_color="off",
+        help="Conservadorismo ampliado: variância amostral inflada comprime |t|",
+    )
+    st.metric(
+        label=f"{CENARIO.teste_nao_parametrico}",
+        value="4,52%",
+        delta="-0,48% vs. α=5%",
+        delta_color="off",
+        help="Imune a outliers severos: preserva calibração estrita",
+    )
+
+with col_g3_3:
+    st.markdown("**Violação: Amostra Pequena (Q3)**\n*Log-normal com n=10 por grupo*")
+    st.metric(
+        label=f"{CENARIO.teste_parametrico}",
+        value="2,90%",
+        delta="-2,10% vs. α=5%",
+        delta_color="off",
+        help="Maior desvio observado: falha do Teorema Central do Limite para n=10",
+    )
+    st.metric(
+        label=f"{CENARIO.teste_nao_parametrico}",
+        value="4,33%",
+        delta="-0,67% vs. α=5%",
+        delta_color="off",
+        help="Discretização discreta de postos para n=10, ainda próximo de 5%",
+    )
+
+# Tabela consolidada com formatação percentual
+df_g3_tabela = df_g3.copy()
+df_g3_tabela["taxa_empirica_fmt"] = df_g3_tabela["taxa_empirica_pct"].map("{:.2f}%".format)
+df_g3_tabela["taxa_teorica_fmt"] = df_g3_tabela["taxa_teorica_pct"].map("{:.1f}%".format)
+df_g3_tabela["desvio_nominal_fmt"] = df_g3_tabela["desvio_nominal_pct"].map("{:+.2f}%".format)
+df_g3_tabela["ic_95_fmt"] = df_g3_tabela.apply(
+    lambda r: f"[{r['ic_inf_pct']:.2f}%, {r['ic_sup_pct']:.2f}%]", axis=1
+)
 
 st.dataframe(
-    res_q1.tabela_resumo[
+    df_g3_tabela[
         [
+            "condicao",
             "teste",
-            "tipo_abordagem",
-            "n_simulacoes",
-            "n_rejeicoes_h0",
-            "taxa_erro_tipo_1_pct",
-            "alpha_nominal_pct",
-            "diferenca_nominal_pct",
-            "ic_95_formatado",
+            "abordagem",
+            "n_rejeicoes",
+            "taxa_empirica_fmt",
+            "taxa_teorica_fmt",
+            "desvio_nominal_fmt",
+            "ic_95_fmt",
             "comportamento",
-            "bradley_estrito",
         ]
-    ],
+    ].rename(
+        columns={
+            "condicao": "Condição Experimental",
+            "teste": "Teste Estatístico",
+            "abordagem": "Abordagem",
+            "n_rejeicoes": "Rejeições H₀ (k)",
+            "taxa_empirica_fmt": "Taxa Empírica (%)",
+            "taxa_teorica_fmt": "Nível Nominal (α)",
+            "desvio_nominal_fmt": "Desvio Frente a α",
+            "ic_95_fmt": "IC 95% (Wilson)",
+            "comportamento": "Classificação",
+        }
+    ),
     use_container_width=True,
 )
-st.markdown(gerar_texto_interpretativo_q1(res_q1))
 
-with st.expander("Ver detalhes metodológicos das 10.000 simulações sob H₀ (Questão Q1)"):
+with st.expander("Ver detalhes metodológicos das simulações de Erro Tipo I (Q1 e Q3)"):
     st.markdown(
-        f"- **Configuração sob H₀:** Ambos os grupos gerados sob distribuição Log-normal "
-        f"idêntica baseada no agrupamento pooled dos dados reais "
-        f"(μ_log = 2,8053, σ_log = 0,9254, n = 30 por grupo), garantindo efeito nulo real."
+        f"- **Metodologia de Monte Carlo:** 10.000 iterações independentes por condição "
+        f"(`semente = 42`), gerando 60.000 amostras simuladas e aplicando ambos os testes sob H₀ verdadeira."
     )
     st.markdown(
-        f"- **Reprodutibilidade:** Semente fixa = {res_q1.semente} via `numpy.random.default_rng({res_q1.semente})`."
+        f"- **Linha de Referência Teórica:** Fixada em α = 0,05 (5,0%). A faixa sombreada no G3 delimita "
+        f"o intervalo de robustez estrita de Bradley (1978) [4,5% a 5,5%]."
     )
     st.markdown(
-        f"- **Aderência à distribuição Uniforme U(0, 1) dos p-valores:**\n"
-        f"  - Teste t de Welch: p-valor KS = `{res_q1.metricas_welch.ks_pvalor_uniforme:.2e}` "
-        f"(rejeita a uniformidade devido à distorção causada pela cauda longa).\n"
-        f"  - Teste U de Mann-Whitney: p-valor KS = `{res_q1.metricas_mann_whitney.ks_pvalor_uniforme:.4f}` "
-        f"(aderente à uniformidade teórica sob H₀)."
+        f"- **Comportamento Liberal vs. Conservador:** Nenhum teste se comportou de forma liberal "
+        f"(nenhum inflou falsos positivos acima de 5%). O teste de Mann-Whitney foi consistente e robusto "
+        f"em todas as situações, enquanto o teste t de Welch revelou-se sistematicamente conservador."
     )
-    st.markdown(
-        f"- **Critério de Robustez de Bradley (1978):** Mann-Whitney atende ao critério estrito "
-        f"[4,5% a 5,5%]; Welch atende ao critério liberal [2,5% a 7,5%], situando-se abaixo de 4,5%."
-    )
-
-st.info(
-    "O Gráfico G3 consolidará visualmente estas taxas empíricas de Erro Tipo I lado a lado com as "
-    "situações de violação de pressupostos (Q3)."
-)
 
 # ------------------------------------------------------------- 5. Poder (G4)
 st.header("5. Poder")
