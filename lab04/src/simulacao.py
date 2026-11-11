@@ -1,6 +1,7 @@
 """Módulo de geração reproduzível de dados simulados para o LAB04.
 
 Issue #46: [LAB04S01] Implementar geração reproduzível de dados simulados.
+Issue #55: [LAB04S02] Simular violações dos pressupostos estatísticos (Q3).
 """
 
 from dataclasses import dataclass
@@ -186,6 +187,94 @@ class GeradorDadosSimulados:
             amostras = np.round(amostras, arredondar)
 
         return amostras[:, :n_sem], amostras[:, n_sem:]
+
+    def gerar_matrizes_experimento(
+        self,
+        n_simulacoes: int = 10_000,
+        n_sem_bot: Optional[int] = None,
+        n_com_bot: Optional[int] = None,
+        efeito_reducao: float = 0.0,
+        mu_log_base: Optional[float] = None,
+        sigma_log_base: Optional[float] = None,
+        arredondar: Optional[int] = 2,
+    ) -> Tuple[np.ndarray, np.ndarray]:
+        """Gera duas matrizes 2D (n_simulacoes, n_sem) e (n_simulacoes, n_com) com tamanho de efeito configurável.
+
+        Quando `efeito_reducao == 0.0`, H0 é estritamente verdadeira (distribuições idênticas).
+        Quando `efeito_reducao > 0.0`, aplica redução percentual multiplicativa `(1 - efeito_reducao)`
+        sobre os tempos do grupo `com_bot` (equivalente a deslocar `mu_log_com = mu_log_sem + ln(1 - delta)`).
+        """
+        if efeito_reducao < 0.0 or efeito_reducao >= 1.0:
+            raise ValueError("efeito_reducao deve pertencer ao intervalo [0.0, 1.0).")
+
+        n_sem = n_sem_bot if n_sem_bot is not None else self.parametros.n_sem_bot
+        n_com = n_com_bot if n_com_bot is not None else self.parametros.n_com_bot
+        mu = mu_log_base if mu_log_base is not None else self.parametros.mu_log_h0
+        sig = sigma_log_base if sigma_log_base is not None else self.parametros.sigma_log_h0
+
+        if n_simulacoes <= 0:
+            raise ValueError("O número de simulações deve ser um inteiro positivo.")
+        if n_sem <= 0 or n_com <= 0:
+            raise ValueError("Os tamanhos amostrais devem ser inteiros positivos.")
+        if sig <= 0:
+            raise ValueError("O desvio padrão sigma_log deve ser estritamente positivo.")
+
+        amostras = self.rng.lognormal(mean=mu, sigma=sig, size=(n_simulacoes, n_sem + n_com))
+        if efeito_reducao > 0.0:
+            amostras[:, n_sem:] = amostras[:, n_sem:] * (1.0 - efeito_reducao)
+        if arredondar is not None:
+            amostras = np.round(amostras, arredondar)
+
+        return amostras[:, :n_sem], amostras[:, n_sem:]
+
+    def gerar_matrizes_com_outliers(
+        self,
+        n_simulacoes: int = 10_000,
+        n_sem_bot: Optional[int] = None,
+        n_com_bot: Optional[int] = None,
+        efeito_reducao: float = 0.0,
+        prop_outliers: float = 0.10,
+        fator_multiplicador: float = 5.0,
+        deslocamento_aditivo: float = 50.0,
+        mu_log_base: Optional[float] = None,
+        sigma_log_base: Optional[float] = None,
+        arredondar: Optional[int] = 2,
+    ) -> Tuple[np.ndarray, np.ndarray]:
+        """Gera matrizes 2D com injeção controlada de outliers severos para a Questão Q3.
+
+        Em cada simulação, sorteia uniformemente `prop_outliers` das `n_sem + n_com` observações
+        e aplica a transformação `x * fator_multiplicador + deslocamento_aditivo`.
+        Quando `efeito_reducao == 0.0`, ambos os grupos têm exatamente a mesma distribuição
+        contaminada, mantendo H0 rigorosamente verdadeira.
+        """
+        if prop_outliers <= 0.0 or prop_outliers >= 1.0:
+            raise ValueError("prop_outliers deve estar estritamente entre 0.0 e 1.0.")
+
+        mat_sem, mat_com = self.gerar_matrizes_experimento(
+            n_simulacoes=n_simulacoes,
+            n_sem_bot=n_sem_bot,
+            n_com_bot=n_com_bot,
+            efeito_reducao=efeito_reducao,
+            mu_log_base=mu_log_base,
+            sigma_log_base=sigma_log_base,
+            arredondar=arredondar,
+        )
+
+        n_sem = mat_sem.shape[1]
+        n_total = n_sem + mat_com.shape[1]
+        n_outliers = max(1, int(n_total * prop_outliers))
+
+        mat_conjunta = np.hstack([mat_sem, mat_com])
+        for i in range(n_simulacoes):
+            idx_sorteados = self.rng.choice(n_total, size=n_outliers, replace=False)
+            valores_contaminados = (
+                mat_conjunta[i, idx_sorteados] * fator_multiplicador + deslocamento_aditivo
+            )
+            if arredondar is not None:
+                valores_contaminados = np.round(valores_contaminados, arredondar)
+            mat_conjunta[i, idx_sorteados] = valores_contaminados
+
+        return mat_conjunta[:, :n_sem], mat_conjunta[:, n_sem:]
 
     def gerar_dataset_com_outliers(
         self,

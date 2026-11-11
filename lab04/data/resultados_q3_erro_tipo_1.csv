@@ -1,0 +1,13 @@
+cenario_codigo,cenario_rotulo,condicao,n_por_grupo,teste,abordagem,n_simulacoes,n_rejeicoes,taxa_empirica,taxa_empirica_pct,taxa_teorica,taxa_teorica_pct,desvio_nominal_pct,ic_inf,ic_sup,ic_inf_pct,ic_sup_pct,comportamento,bradley_estrito,ks_pvalor_uniforme,ordem_cenario,variacao_vs_base_pp
+Q1_Base,"Cenário Original (Q1)
+Log-normal (n=30)",Log-normal realista (n=30),30,t de Welch,Paramétrico,10000,393,0.0393,3.93,0.05,5.0,-1.07,0.03566516949826361,0.043288646600477806,3.5665169498263607,4.32886466004778,Conservador,False,0.0,1,0.0
+Q1_Base,"Cenário Original (Q1)
+Log-normal (n=30)",Log-normal realista (n=30),30,Mann-Whitney (Wilcoxon rank-sum),Não-paramétrico,10000,458,0.0458,4.58,0.05,5.0,-0.42000000000000026,0.0418741615064729,0.050074662613449714,4.18741615064729,5.007466261344971,Nominal / Bem calibrado,True,0.363292,1,0.0
+Q3_Outliers,"Violação: Outliers (Q3)
+10% contaminação (n=30)",Injeção de 10% de outliers (5x + 50h),30,t de Welch,Paramétrico,10000,328,0.0328,3.2800000000000002,0.05,5.0,-1.72,0.029484520412646858,0.03647428766491334,2.948452041264686,3.647428766491334,Conservador,False,0.0,2,-0.6499999999999999
+Q3_Outliers,"Violação: Outliers (Q3)
+10% contaminação (n=30)",Injeção de 10% de outliers (5x + 50h),30,Mann-Whitney (Wilcoxon rank-sum),Não-paramétrico,10000,452,0.0452,4.52,0.05,5.0,-0.48000000000000054,0.041300001086809354,0.049449283831158056,4.130000108680935,4.944928383115806,Conservador,True,0.09227,2,-0.0600000000000005
+Q3_AmostraPequena,"Violação: Amostra Pequena (Q3)
+Log-normal (n=10)",Tamanho amostral reduzido (n=10),10,t de Welch,Paramétrico,10000,290,0.029,2.9000000000000004,0.05,5.0,-2.1,0.02588757891009469,0.03247414755508266,2.588757891009469,3.247414755508266,Conservador,False,0.0,3,-1.0299999999999998
+Q3_AmostraPequena,"Violação: Amostra Pequena (Q3)
+Log-normal (n=10)",Tamanho amostral reduzido (n=10),10,Mann-Whitney (Wilcoxon rank-sum),Não-paramétrico,10000,433,0.0433,4.33,0.05,5.0,-0.6700000000000005,0.03948313833238368,0.04746760577939231,3.948313833238368,4.746760577939231,Conservador,False,0.0,3,-0.25

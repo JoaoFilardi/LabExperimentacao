@@ -1,0 +1,3 @@
+cenario_codigo,violacao,erro_tipo_1_welch_pct,erro_tipo_1_mw_pct,desvio_alpha_welch_pp,desvio_alpha_mw_pp,variacao_t1_vs_base_welch_pp,variacao_t1_vs_base_mw_pp,perda_poder_media_welch_pp,perda_poder_media_mw_pp,perda_poder_delta50_welch_pp,perda_poder_delta50_mw_pp,perda_relativa_delta50_welch_pct,perda_relativa_delta50_mw_pct,vantagem_mw_delta50_pp,teste_maior_alteracao_erro_tipo_1,teste_maior_alteracao_poder
+Q3_Outliers,"Violação 1: Outliers Severos (10% contaminação 5x+50h, n=30)",3.28,4.52,-1.72,-0.48,-0.65,-0.06,-17.81,-8.5,-41.58,-16.78,-64.77,-21.22,39.68,t de Welch,t de Welch
+Q3_AmostraPequena,Violação 2: Amostra Pequena (Log-normal n=10),2.9,4.33,-2.1,-0.67,-1.03,-0.25,-18.84,-21.48,-42.88,-46.88,-66.79,-59.28,10.88,t de Welch,t de Welch

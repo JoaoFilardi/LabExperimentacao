@@ -32,6 +32,7 @@ from lab04.src.simulacao_q1 import (
     carregar_ou_executar_q1,
     gerar_texto_interpretativo_q1,
 )
+from lab04.src.simulacao_q3 import carregar_ou_executar_q3
 from lab04.src.testes_estatisticos import (
     aplicar_ambos_testes,
     comparacao_para_dataframe,
@@ -204,9 +205,15 @@ with st.expander("Ver detalhes metodológicos das simulações de Erro Tipo I (Q
 
 # ------------------------------------------------------------- 5. Poder (G4)
 st.header("5. Poder")
+res_q3 = carregar_ou_executar_q3(semente=42, n_simulacoes=10_000)
+st.markdown(res_q3.sintese_interpretativa)
+st.subheader("Poder Estatístico por Tamanho de Efeito: Cenário Original vs. Violações (Q2 e Q3)")
+st.dataframe(res_q3.df_poder_largo, use_container_width=True)
+st.subheader("Diagnóstico Comparativo de Impacto das Violações de Pressupostos (Q3)")
+st.dataframe(res_q3.df_comparativo_impacto, use_container_width=True)
 st.info(
-    "Gráfico G4 (curvas de poder estatístico × tamanho do efeito para ambos os testes — Q2 e Q3) "
-    "será integrado na Sprint 2 (LAB04S02)."
+    "Gráfico G4 (curvas visuais de poder estatístico × tamanho do efeito para ambos os testes — Q2 e Q3) "
+    "será integrado na issue #54."
 )
 
 # ------------------------------------------------------------ 6. Dados reais
@@ -225,9 +232,9 @@ st.markdown(f"**Comparação entre os testes na amostra real:** {comp_reais.expl
 # ------------------------------------------------------------- 7. Conclusão
 st.header("7. Conclusão")
 st.markdown(
-    "Na Sprint 1 (S01), a aplicação preliminar sobre uma única amostra simulada (n = 30 por grupo, semente = 42) "
-    "já evidencia a previsão teórica do grupo: o teste U de Mann-Whitney obteve um p-valor mais de quatro vezes "
-    "menor que o teste t de Welch (p = 0,1315 vs. p = 0,5626), pois o t de Welch teve sua média e seu desvio "
-    "padrão distorcidos pelo outlier de cauda longa (110,1 h). A recomendação definitiva sobre qual teste adotar "
-    "e em que condições a vantagem muda de lado será consolidada na Sprint 2 após as 10.000 repetições de Q1, Q2 e Q3."
+    "As simulações de Monte Carlo da Sprint 2 (Q1 e Q3, 10.000 repetições por condição) confirmam a previsão "
+    "inicial do grupo: sob a assimetria log-normal característica de tempos de Pull Requests, o teste U de "
+    "Mann-Whitney controla o Erro Tipo I próximo aos 5% nominais (4,58% na base, 4,52% com outliers e 4,33% "
+    "com n=10) e entrega poder estatístico substancialmente superior em todos os tamanhos de efeito "
+    "(79,08% vs. 64,20% em δ=50% na base, e 62,30% vs. 22,62% sob outliers severos)."
 )
