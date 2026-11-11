@@ -176,7 +176,10 @@ def limites_outliers_iqr(valores: np.ndarray, k: float = 1.5) -> tuple[float, fl
 def detectar_outliers_iqr(df: pd.DataFrame, grupo: str, k: float = 1.5) -> pd.DataFrame:
     """Retorna as linhas do grupo que ficam fora das cercas de Tukey."""
     sub = df[df["grupo"] == grupo]
-    inf, sup = limites_outliers_iqr(sub["tempo_horas"].to_numpy(), k)
+    inf, sup = limites_outliers_iqr(
+        sub["tempo_horas"].to_numpy(),
+        k=k
+    )
     return sub[(sub["tempo_horas"] < inf) | (sub["tempo_horas"] > sup)]
 
 
