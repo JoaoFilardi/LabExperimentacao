@@ -201,13 +201,21 @@ O dashboard abre automaticamente em http://localhost:8501.
   `ash
   python -m lab04.src.simulacao_q1
   `
-- **Gráfico G3** (lab04/data/g3_erro_tipo_1.png e lab04/data/resultados_g3_consolidado.csv):
+- **Simulações e análise do Poder Estatístico — Q2** (lab04/data/resultados_q2_poder.csv):
   `ash
-  python -m lab04.src.grafico_g3
+  python -m lab04.src.simulacao_q2
   `
 - **Simulações de violação dos pressupostos — Q3** (lab04/data/resultados_q3_erro_tipo_1.csv, lab04/data/resultados_q3_poder_violacoes.csv, lab04/data/resultados_q3_curvas_g4.csv e lab04/data/resultados_q3_comparativo_impacto.csv):
   `ash
   python -m lab04.src.simulacao_q3
+  `
+- **Gráfico G3** (lab04/data/g3_erro_tipo_1.png e lab04/data/resultados_g3_consolidado.csv):
+  `ash
+  python -m lab04.src.grafico_g3
+  `
+- **Gráfico G4** (lab04/data/g4_curvas_poder.png):
+  `ash
+  python -m lab04.src.grafico_g4
   `
 
 ### Executar a suíte de testes automatizados

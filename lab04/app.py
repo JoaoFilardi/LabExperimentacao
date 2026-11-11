@@ -28,10 +28,16 @@ from lab04.src.grafico_g3 import (
     gerar_g3,
     texto_interpretativo_g3,
 )
+from lab04.src.grafico_g4 import (
+    carregar_ou_simular_dados_g4,
+    gerar_g4,
+    texto_interpretativo_g4,
+)
 from lab04.src.simulacao_q1 import (
     carregar_ou_executar_q1,
     gerar_texto_interpretativo_q1,
 )
+from lab04.src.simulacao_q2 import carregar_ou_executar_q2
 from lab04.src.simulacao_q3 import carregar_ou_executar_q3
 from lab04.src.testes_estatisticos import (
     aplicar_ambos_testes,
@@ -205,16 +211,21 @@ with st.expander("Ver detalhes metodológicos das simulações de Erro Tipo I (Q
 
 # ------------------------------------------------------------- 5. Poder (G4)
 st.header("5. Poder")
+df_poder_g4, df_gauss_g4 = carregar_ou_simular_dados_g4(semente=42, n_simulacoes=10_000)
+st.pyplot(gerar_g4(df_poder_largo=df_poder_g4, df_gaussiano=df_gauss_g4))
+st.markdown(texto_interpretativo_g4(df_poder_largo=df_poder_g4, df_gaussiano=df_gauss_g4))
+
 res_q3 = carregar_ou_executar_q3(semente=42, n_simulacoes=10_000)
-st.markdown(res_q3.sintese_interpretativa)
+res_q2 = carregar_ou_executar_q2(semente=42, n_simulacoes=10_000)
+
 st.subheader("Poder Estatístico por Tamanho de Efeito: Cenário Original vs. Violações (Q2 e Q3)")
 st.dataframe(res_q3.df_poder_largo, use_container_width=True)
-st.subheader("Diagnóstico Comparativo de Impacto das Violações de Pressupostos (Q3)")
-st.dataframe(res_q3.df_comparativo_impacto, use_container_width=True)
-st.info(
-    "Gráfico G4 (curvas visuais de poder estatístico × tamanho do efeito para ambos os testes — Q2 e Q3) "
-    "será integrado na issue #54."
-)
+
+with st.expander("Ver diagnóstico de impacto de Q3 e controle Gaussiano (quando a vantagem muda de lado)"):
+    st.markdown("**Diagnóstico de impacto das violações de pressupostos (Q3):**")
+    st.dataframe(res_q3.df_comparativo_impacto, use_container_width=True)
+    st.markdown("**Controle Teórico: Distribuição Normal Simétrica sem Outliers (n = 30):**")
+    st.dataframe(res_q2.df_controle_gaussiano, use_container_width=True)
 
 # ------------------------------------------------------------ 6. Dados reais
 st.header("6. Dados reais")
@@ -232,9 +243,12 @@ st.markdown(f"**Comparação entre os testes na amostra real:** {comp_reais.expl
 # ------------------------------------------------------------- 7. Conclusão
 st.header("7. Conclusão")
 st.markdown(
-    "As simulações de Monte Carlo da Sprint 2 (Q1 e Q3, 10.000 repetições por condição) confirmam a previsão "
-    "inicial do grupo: sob a assimetria log-normal característica de tempos de Pull Requests, o teste U de "
-    "Mann-Whitney controla o Erro Tipo I próximo aos 5% nominais (4,58% na base, 4,52% com outliers e 4,33% "
-    "com n=10) e entrega poder estatístico substancialmente superior em todos os tamanhos de efeito "
-    "(79,08% vs. 64,20% em δ=50% na base, e 62,30% vs. 22,62% sob outliers severos)."
+    "As simulações de Monte Carlo das Sprints 1 e 2 (Q1, Q2 e Q3, 10.000 repetições por condição, semente = 42) "
+    "confirmam integralmente a expectativa teórica registrada pelo grupo antes de simular: sob a assimetria "
+    "log-normal e a presença de outliers típicas de tempos de merge de Pull Requests, o **teste U de Mann-Whitney** "
+    "é a recomendação oficial, pois mantém a taxa de Erro Tipo I calibrada próxima de 5% (4,58% na base, 4,52% "
+    "com outliers e 4,33% com n=10) e alcança poder estatístico amplamente superior ao teste t de Welch "
+    "(79,08% vs. 64,20% em δ=50% na base, e 62,30% vs. 22,62% sob outliers severos). "
+    "A recomendação só mudaria em favor do teste t de Welch caso os tempos de processo fossem simétricos/normais "
+    "e isentos de outliers (ou após transformação logarítmica validada sem contaminação de cauda)."
 )
