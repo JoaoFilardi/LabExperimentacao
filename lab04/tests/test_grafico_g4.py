@@ -1,4 +1,4 @@
-"""Testes unitários para Q2, gráfico G4 e integração completa do dashboard na S02 (#56)."""
+"""Testes unitários para Q2, gráfico G4 (#54) e integração completa do dashboard na S02 (#56)."""
 
 from pathlib import Path
 import matplotlib
@@ -7,18 +7,23 @@ matplotlib.use("Agg")
 
 import pytest
 
+from lab04.src.cenario import CENARIO
 from lab04.src.grafico_g4 import (
     COR_MANN_WHITNEY,
     COR_WELCH,
     carregar_ou_simular_dados_g4,
+    construir_tabela_resumo_g4,
     gerar_g4,
     salvar_grafico_g4,
     texto_interpretativo_g4,
 )
+from lab04.src.simulacao import GeradorDadosSimulados
 from lab04.src.simulacao_q2 import (
+    calcular_poder,
     carregar_ou_executar_q2,
+    executar_q2,
+    executar_simulacao_efeito,
     executar_simulacao_q2,
-    executar_simulacao_q2_gaussiano,
 )
 
 
@@ -45,8 +50,48 @@ def test_simulacao_q2_validacao_e_execucao(tmp_path):
     assert len(res_curto.df_poder_q2) == 6
 
 
-def test_grafico_g4_estrutura_cores_e_salvamento(tmp_path):
+def test_simulacao_q2_api_individual_e_validacoes(tmp_path):
+    """Testa as funções executar_simulacao_efeito, calcular_poder e executar_q2 (#53)."""
+    with pytest.raises(ValueError, match="número de simulações deve ser positivo"):
+        executar_q2(n_simulacoes=0, diretorio_saida=tmp_path)
+    with pytest.raises(ValueError, match="tamanhos dos grupos devem ser positivos"):
+        executar_q2(n_simulacoes=5, n_sem_bot=0, diretorio_saida=tmp_path)
+    with pytest.raises(ValueError, match="pelo menos um tamanho de efeito"):
+        executar_q2(efeitos=[], n_simulacoes=5, diretorio_saida=tmp_path)
+    with pytest.raises(ValueError, match="intervalo"):
+        executar_q2(efeitos=[1.2], n_simulacoes=5, diretorio_saida=tmp_path)
+
+    gerador = GeradorDadosSimulados(semente=42)
+    df_ef = executar_simulacao_efeito(gerador, efeito_reducao=0.20, n_simulacoes=6)
+    assert len(df_ef) == 12
+    resumo_ef = calcular_poder(df_ef)
+    assert len(resumo_ef) == 2
+
+    resultados, resumo = executar_q2(
+        efeitos=[0.0, 0.3],
+        n_simulacoes=5,
+        semente=42,
+        diretorio_saida=tmp_path,
+    )
+    assert len(resultados) == 20
+    assert len(resumo) == 4
+    assert (tmp_path / "resultados_q2.csv").exists()
+    assert (tmp_path / "poder_estatistico_q2.csv").exists()
+
+
+def test_grafico_g4_estrutura_cores_tabela_e_salvamento(tmp_path):
     df_p, df_g = carregar_ou_simular_dados_g4(semente=42, n_simulacoes=10_000)
+    tabela_g4 = construir_tabela_resumo_g4(df_p, df_g)
+    assert len(tabela_g4) == 24  # 18 (Q2+Q3) + 6 (Controle_Normal)
+
+    # Verifica que Mann-Whitney é o mais poderoso em Q2_Base e Welch no Controle_Normal (efeito > 0)
+    sub_q2 = tabela_g4[tabela_g4["cenario_codigo"] == "Q2_Base"]
+    assert (sub_q2["teste_mais_poderoso"] == CENARIO.teste_nao_parametrico).all()
+    sub_norm = tabela_g4[
+        (tabela_g4["cenario_codigo"] == "Controle_Normal") & (tabela_g4["efeito_pct"] > 0)
+    ]
+    assert (sub_norm["teste_mais_poderoso"] == CENARIO.teste_parametrico).all()
+
     fig = gerar_g4(df_poder_largo=df_p, df_gaussiano=df_g)
 
     assert len(fig.axes) == 2

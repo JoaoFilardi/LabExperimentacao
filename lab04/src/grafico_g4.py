@@ -8,7 +8,7 @@ Este módulo constrói o gráfico G4 (1x2 painéis):
   efeito percentual) dos dois testes no mesmo gráfico para o Cenário Original (Q2, n=30)
   e para as duas situações de Violação de Pressupostos (Q3: Outliers 10% com n=30 e
   Amostra Pequena com n=10), mantendo as cores oficiais (Azul para t de Welch e Laranja
-  para U de Mann-Whitney).
+  para U de Mann-Whitney) e bandas de confiança de Wilson a 95%.
 - Painel direito: Diferença de poder (Poder_Mann-Whitney - Poder_Welch, em pontos
   percentuais) em função do tamanho do efeito, contrastando os cenários log-normais (Q2 e Q3,
   onde Mann-Whitney domina) com o Controle Teórico Gaussiano (Normal simétrica sem outliers,
@@ -61,6 +61,39 @@ def carregar_ou_simular_dados_g4(
     return res_q3.df_poder_largo.copy(), res_q2.df_controle_gaussiano.copy()
 
 
+def construir_tabela_resumo_g4(
+    df_poder_largo: Optional[pd.DataFrame] = None,
+    df_gaussiano: Optional[pd.DataFrame] = None,
+) -> pd.DataFrame:
+    """Consolida as curvas de poder de Q2, Q3 e Controle Normal em uma tabela analítica."""
+    if df_poder_largo is None or df_gaussiano is None:
+        df_p, df_g = carregar_ou_simular_dados_g4()
+    else:
+        df_p, df_g = df_poder_largo, df_gaussiano
+
+    colunas_comuns = [
+        "cenario_codigo",
+        "cenario_curto",
+        "condicao",
+        "n_por_grupo",
+        "efeito_reducao",
+        "efeito_pct",
+        "sob_h0",
+        "poder_welch_pct",
+        "poder_mann_whitney_pct",
+        "vantagem_mw_pp",
+    ]
+    df_unificado = pd.concat(
+        [df_p[colunas_comuns], df_g[colunas_comuns]], ignore_index=True
+    )
+    df_unificado["teste_mais_poderoso"] = np.where(
+        df_unificado["vantagem_mw_pp"] >= 0.0,
+        CENARIO.teste_nao_parametrico,
+        CENARIO.teste_parametrico,
+    )
+    return df_unificado
+
+
 def gerar_g4(
     df_poder_largo: Optional[pd.DataFrame] = None,
     df_gaussiano: Optional[pd.DataFrame] = None,
@@ -79,7 +112,7 @@ def gerar_g4(
         df_poder = df_poder_largo
         df_gauss = df_gaussiano
 
-    fig, (ax_curvas, ax_vantagem) = plt.subplots(1, 2, figsize=(13.5, 6.0), dpi=100)
+    fig, (ax_curvas, ax_vantagem) = plt.subplots(1, 2, figsize=(13.8, 6.2), dpi=100)
 
     estilos_cenarios = [
         ("Q2_Base", "Cenário Original (Q2: n=30)", "-", "o", 2.4, 1.0),
@@ -97,6 +130,22 @@ def gerar_g4(
         x = sub["efeito_pct"].to_numpy()
         yw = sub["poder_welch_pct"].to_numpy()
         ym = sub["poder_mann_whitney_pct"].to_numpy()
+
+        if cod == "Q2_Base" and "ic_inf_mw_pct" in sub.columns:
+            ax_curvas.fill_between(
+                x,
+                sub["ic_inf_mw_pct"].to_numpy(),
+                sub["ic_sup_mw_pct"].to_numpy(),
+                color=COR_MANN_WHITNEY,
+                alpha=0.14,
+            )
+            ax_curvas.fill_between(
+                x,
+                sub["ic_inf_welch_pct"].to_numpy(),
+                sub["ic_sup_welch_pct"].to_numpy(),
+                color=COR_WELCH,
+                alpha=0.14,
+            )
 
         ax_curvas.plot(
             x,
@@ -119,6 +168,32 @@ def gerar_g4(
             markersize=6.5,
             alpha=alpha_linha,
             label=f"t de Welch — {rotulo}",
+        )
+
+    # Rótulos de destaque no extremo direito (δ = 50%) para Q2_Base
+    sub_base_50 = df_poder[
+        (df_poder["cenario_codigo"] == "Q2_Base") & (df_poder["efeito_pct"] == 50.0)
+    ]
+    if len(sub_base_50) == 1:
+        y_mw_50 = float(sub_base_50["poder_mann_whitney_pct"].iloc[0])
+        y_w_50 = float(sub_base_50["poder_welch_pct"].iloc[0])
+        ax_curvas.annotate(
+            f"{y_mw_50:.1f}%".replace(".", ","),
+            xy=(50.0, y_mw_50),
+            xytext=(-26, 6),
+            textcoords="offset points",
+            fontsize=8.5,
+            fontweight="bold",
+            color="#b85400",
+        )
+        ax_curvas.annotate(
+            f"{y_w_50:.1f}%".replace(".", ","),
+            xy=(50.0, y_w_50),
+            xytext=(-32, 4),
+            textcoords="offset points",
+            fontsize=8.5,
+            fontweight="bold",
+            color="#104e8b",
         )
 
     ax_curvas.axhline(
@@ -156,10 +231,10 @@ def gerar_g4(
     ax_curvas.set_xticks([0, 10, 20, 30, 40, 50])
     ax_curvas.set_ylim(0.0, 90.0)
     ax_curvas.grid(True, linestyle=":", alpha=0.5)
-    ax_curvas.legend(loc="upper left", fontsize=8.0, framealpha=0.94)
+    ax_curvas.legend(loc="upper left", fontsize=7.9, framealpha=0.94)
 
     # -------------------------------------------------------------------------
-    # Painel Direito: Vantagem de Poder (MW - Welch) e Mudança de Lado
+    # Painel Direito: Vantagem de Poder (MW - Welch) e Quando Muda de Lado
     # -------------------------------------------------------------------------
     ax_vantagem.axhline(0.0, color="black", linestyle="-", linewidth=1.2)
     ax_vantagem.axhspan(
@@ -197,6 +272,21 @@ def gerar_g4(
             label=rotulo,
         )
 
+    sub_out_50 = df_poder[
+        (df_poder["cenario_codigo"] == "Q3_Outliers") & (df_poder["efeito_pct"] == 50.0)
+    ]
+    if len(sub_out_50) == 1:
+        vant_out_50 = float(sub_out_50["vantagem_mw_pp"].iloc[0])
+        ax_vantagem.annotate(
+            f"+{vant_out_50:.2f}".replace(".", ",") + " p.p.",
+            xy=(50.0, vant_out_50),
+            xytext=(-44, 6),
+            textcoords="offset points",
+            fontsize=8.5,
+            fontweight="bold",
+            color="#8c2d04",
+        )
+
     if len(df_gauss) > 0:
         sub_g = df_gauss.sort_values("efeito_pct")
         ax_vantagem.plot(
@@ -209,6 +299,18 @@ def gerar_g4(
             markersize=6.0,
             label="Controle Normal Simétrico sem Outliers (vantagem muda p/ Welch)",
         )
+        sub_g_30 = sub_g[sub_g["efeito_pct"] == 30.0]
+        if len(sub_g_30) == 1:
+            vant_g_30 = float(sub_g_30["vantagem_mw_pp"].iloc[0])
+            ax_vantagem.annotate(
+                f"{vant_g_30:.2f}".replace(".", ",") + " p.p. (Welch domina)",
+                xy=(30.0, vant_g_30),
+                xytext=(-35, -14),
+                textcoords="offset points",
+                fontsize=8.2,
+                fontweight="bold",
+                color="#104e8b",
+            )
 
     ax_vantagem.set_title(
         "Diferença de Poder (Mann-Whitney − Welch) e Quando Muda de Lado",
@@ -226,9 +328,9 @@ def gerar_g4(
         fontweight="bold",
     )
     ax_vantagem.set_xticks([0, 10, 20, 30, 40, 50])
-    ax_vantagem.set_ylim(-6.0, 44.0)
+    ax_vantagem.set_ylim(-6.5, 44.5)
     ax_vantagem.grid(True, linestyle=":", alpha=0.5)
-    ax_vantagem.legend(loc="upper left", fontsize=8.0, framealpha=0.94)
+    ax_vantagem.legend(loc="upper left", fontsize=7.9, framealpha=0.94)
 
     fig.suptitle(
         f"G4 — Curvas de Poder Estatístico dos Dois Testes × Tamanho do Efeito (Q2 e Q3 | 10.000 simulações, semente = {semente})",
