@@ -1,12 +1,20 @@
-"""Preparação e suporte interativo para a Apresentação Oral — Perguntas 6 a 15.
+"""Preparação e suporte interativo para a Apresentação Oral — Perguntas 1 a 15.
 
 Issues correspondentes:
+- Issue #58: [ LAB04FINAL ] Preparar apresentação oral das perguntas 1 a 5.
 - Issue #60: [ LAB04FINAL ] Preparar apresentação oral das perguntas 6 a 10.
 - Issue #62: [ LAB04FINAL ] Preparar apresentação oral das perguntas 11 a 15.
 
 Este módulo estrutura as respostas diretas (roteiro de ~30 segundos por pergunta),
 as referências visuais exatas no dashboard (onde apontar na tela durante a arguição),
 as respostas para perguntas variantes da banca e os cálculos empíricos de suporte.
+
+Bloco 0 — Perguntas 1 a 5 (Issue #58):
+- Pergunta 1: Cenário investigado e significado de H₀ e H₁ em palavras simples;
+- Pergunta 2: Direcionalidade do teste (bicaudal) e justificativa metodológica;
+- Pergunta 3: Coleta dos dados reais (FastAPI) e características da distribuição;
+- Pergunta 4: Uso dos dados reais para calibrar parâmetros log-normais na simulação;
+- Pergunta 5: O que cada teste compara de fato (médias aritméticas vs. postos ordenados).
 
 Bloco 1 — Perguntas 6 a 10 (Issue #60):
 - Pergunta 6: Distribuição da estatística sob H₀ e região de rejeição no G2;
@@ -138,6 +146,188 @@ def avaliar_cenario_subdimensionado_n15_efeito_5pct(
         "poder_mann_whitney_pct": poder_mw_pct,
         "erro_tipo_2_mw_pct": 100.0 - poder_mw_pct,
     }
+
+
+# ----------------------------------------------------------------------------
+# Perguntas 1 a 5 (Issue #58)
+# ----------------------------------------------------------------------------
+def obter_perguntas_1_a_5() -> List[PerguntaApresentacaoOral]:
+    """Retorna a lista estruturada das Perguntas 1 a 5 para a apresentação oral (Issue #58)."""
+    return [
+        PerguntaApresentacaoOral(
+            numero=1,
+            titulo_curto="Cenário de Pesquisa e Significado de H₀ e H₁",
+            pergunta_oficial=(
+                "Qual é o cenário de vocês e o que H₀ e H₁ afirmam, em palavras simples?"
+            ),
+            pergunta_variante=(
+                "Se o p-valor for maior que 0,05, isso prova que H₀ é verdadeira ou apenas não temos evidências para rejeitá-la?"
+            ),
+            secao_dashboard="Seção 1 (Cenário)",
+            onde_apontar_no_dashboard=(
+                "Apontar para a Seção 1 do Dashboard: no card esquerdo (Pergunta de Pesquisa em destaque), "
+                "no card central (definições conceituais de H₀ e H₁ e operacionalizações para Welch e Mann-Whitney) "
+                "e no card direito (origem dos dados no repositório tiangolo/fastapi)."
+            ),
+            fala_30_segundos=(
+                "Nosso cenário investiga se a adoção de bots de automação em Pull Requests acelera ou atrasa "
+                "o tempo até o merge no repositório open-source FastAPI. Em palavras simples, a hipótese nula H₀ afirma "
+                "que os bots não fazem qualquer diferença no tempo de merge: a distribuição dos tempos com e sem bot é a mesma "
+                "e qualquer oscilação observada decorre de mero acaso amostral. Já a hipótese alternativa H₁ afirma que existe "
+                "uma diferença sistemática no tempo de processo entre os grupos, seja acelerando o fluxo de integração contínua "
+                "ou gerando overhead e atraso."
+            ),
+            fala_variante_30_segundos=(
+                "Apenas indica ausência de evidência suficiente para rejeitar. Em inferência frequentista, não rejeitar H₀ "
+                "jamais prova que ela seja verdadeira; significa apenas que, dado o ruído e a dispersão amostral com n = 30, "
+                "o teste não acumulou poder estatístico suficiente para descartar a hipótese de igualdade (risco de Erro Tipo II)."
+            ),
+            pontos_chave_argicao=(
+                "Cenário investigado: Par 3 — Efeito do uso de bots de automação sobre o lead time até o merge de PRs.",
+                "H₀ conceitual: O tempo até o merge é identicamente distribuído entre PRs com e sem bot (efeito nulo).",
+                "H₁ conceitual: O tempo até o merge difere sistematicamente entre PRs com e sem bot (efeito bicaudal).",
+                "Operacionalização estatística: Welch testa μ_sem = μ_com; Mann-Whitney testa P(X_com > Y_sem) = 0,50.",
+                "Não rejeição ≠ Prova de H₀: Ausência de significância com amostras moderadas decorre do poder estatístico limitado.",
+            ),
+        ),
+        PerguntaApresentacaoOral(
+            numero=2,
+            titulo_curto="Direcionalidade do Teste: Unicaudal vs. Bicaudal",
+            pergunta_oficial=(
+                "O teste de vocês é unicaudal ou bicaudal? Por quê?"
+            ),
+            pergunta_variante=(
+                "Por que não adotar teste unicaudal à esquerda já que o interesse prático da equipe é exclusivamente acelerar o merge?"
+            ),
+            secao_dashboard="Seção 1 (Cenário) e Seção 3 (Como os testes funcionam — G2)",
+            onde_apontar_no_dashboard=(
+                "Apontar para o card 'Pergunta de Pesquisa' na Seção 1 onde consta explicitamente 'Tipo de teste: bicaudal / two-sided', "
+                "e para as duas áreas vermelhas sombreadas de 2,5% em cada extremidade da distribuição nula no Gráfico G2."
+            ),
+            fala_30_segundos=(
+                "Nosso teste é estritamente bicaudal (two-sided). Embora a expectativa teórica inicial fosse de aceleração, "
+                "a literatura empírica de Engenharia de Software documenta que bots com falhas, conflitos de dependências, "
+                "notificações excessivas ou testes frágeis podem paradoxalmente atrasar as aprovações. Como um atraso nas "
+                "integrações representaria um impacto organizacional negativo relevante que precisamos ser capazes de detectar, "
+                "não podemos descartar essa direção a priori, repartindo o risco α = 5% em 2,5% para aceleração e 2,5% para atraso."
+            ),
+            fala_variante_30_segundos=(
+                "Adotar um teste unicaudal inflaria o poder estatístico na direção desejada mas tornaria o teste cego a qualquer "
+                "atraso provocado pelo bot. Se a automação na prática gerasse gargalos severos e aumentasse o lead time, o teste "
+                "unicaudal à esquerda falharia em acusar qualquer significância, induzindo a gestão a um falso senso de segurança."
+            ),
+            pontos_chave_argicao=(
+                "Classificação formal: Teste bicaudal (two-sided / bilateral) com nível de significância α = 0,05.",
+                "Divisão do erro α: α/2 = 0,025 alocado na cauda inferior (aceleração) e 0,025 na cauda superior (atraso).",
+                "Limites críticos no G2: t = ±2,0085 (Welch) e z = ±1,9600 (Mann-Whitney).",
+                "Justificativa metodológica: Evitar viés confirmatório; bots podem gerar retrabalho e overhead de CI na prática.",
+            ),
+        ),
+        PerguntaApresentacaoOral(
+            numero=3,
+            titulo_curto="Coleta dos Dados Reais e Formato da Distribuição",
+            pergunta_oficial=(
+                "Como os dados reais foram coletados, e o que eles mostraram sobre a forma da distribuição?"
+            ),
+            pergunta_variante=(
+                "Quais evidências estatísticas confirmam que os dados reais violam a suposição de normalidade?"
+            ),
+            secao_dashboard="Seção 1 (Origem dos Dados Reais) e Seção 2 (G1 — Os dados)",
+            onde_apontar_no_dashboard=(
+                "Apontar para a Seção 1 no card 'Origem dos Dados Reais' (60 PRs do tiangolo/fastapi), para os dois histogramas "
+                "superiores do Gráfico G1 e para a Tabela Comparativa Descritiva destacando os valores de assimetria (1,72 e 2,17) "
+                "e os outliers na cauda direita (até 105,5h)."
+            ),
+            fala_30_segundos=(
+                "Os dados foram minerados via GitHub REST API do repositório fastapi (tiangolo/fastapi), selecionando 60 Pull Requests "
+                "mergeados com tamanho moderado entre 10 e 500 linhas: 30 interagindo com bots e 30 sem bots. Os dados revelaram "
+                "que a distribuição é fortemente assimétrica à direita, contínua estritamente positiva e com caudas longas: "
+                "a assimetria calculada é de 1,72 sem bot e 2,17 com bot, com presença de outliers extremos de até 105,5 horas. "
+                "O teste de Shapiro-Wilk rejeita a normalidade com p < 0,001."
+            ),
+            fala_variante_30_segundos=(
+                "A forte assimetria positiva, o teste de Shapiro-Wilk altamente significativo (p = 0,00015) e a grande "
+                "discrepância entre médias (27,3h e 20,8h) e medianas (18,9h e 13,6h) comprovam a não-normalidade. "
+                "Além disso, o desvio padrão é da mesma ordem de grandeza da média (23,2h e 22,6h), violando totalmente o "
+                "pressuposto de simetria do teste t clássico."
+            ),
+            pontos_chave_argicao=(
+                "Fonte empírica: GitHub API v3, repositório tiangolo/fastapi, n = 30 por grupo (N = 60 PRs mergeados).",
+                "Filtros de controle: PRs aceitos com 10 a 500 linhas modificadas (LOC) para homogeneizar complexidade.",
+                "Assimetria acentuada: 1,72 (sem_bot) e 2,17 (com_bot); cauda longa estritamente positiva (Y > 0).",
+                "Presença de outliers: 4 outliers em sem_bot (máx 105,50h) e 2 em com_bot (máx 88,00h) pelo critério IQR 1,5x.",
+                "Rejeição de normalidade: Shapiro-Wilk W = 0,805 (p = 0,00015), inviabilizando a suposição gaussiana estrita.",
+            ),
+        ),
+        PerguntaApresentacaoOral(
+            numero=4,
+            titulo_curto="Calibração dos Parâmetros da Simulação com os Dados Reais",
+            pergunta_oficial=(
+                "Como os dados reais ajudaram a escolher os parâmetros da simulação?"
+            ),
+            pergunta_variante=(
+                "Por que uma distribuição Normal não seria adequada para modelar os tempos na simulação de Monte Carlo?"
+            ),
+            secao_dashboard="Seção 2 (Os dados — Expander de Justificativa e Calibração) e Gráfico G1",
+            onde_apontar_no_dashboard=(
+                "Apontar para o expander 'Justificativa das Distribuições e Calibração dos Parâmetros' na Seção 2 e para os "
+                "histogramas inferiores de G1 (dados simulados), mostrando como a distribuição simulada replica a forma e a dispersão dos dados reais superiores."
+            ),
+            fala_30_segundos=(
+                "Como os tempos reais exibiram suporte positivo e assimetria multiplicativa, adotamos a distribuição Log-normal. "
+                "Os dados reais forneceram a calibração direta na escala logarítmica: ajustamos μ_log = 2,97 e σ_log = 0,85 para sem bot "
+                "(mediana de 19,5h vs. 18,9h real) e μ_log = 2,64 e σ_log = 0,98 para com bot (mediana de 14,0h vs. 13,6h real). "
+                "Para as simulações de Erro Tipo I sob H₀ (Q1 e Q3), agrupamos todos os 60 PRs reais em um baseline pooled com "
+                "μ_log = 2,80 e σ_log = 0,92, garantindo que ambos os grupos venham da mesma população idêntica com semente 42."
+            ),
+            fala_variante_30_segundos=(
+                "A distribuição Normal geraria valores de tempo negativos com probabilidade substancial diante de desvios padrões "
+                "tão altos (23h de DP para média de 27h), o que é fisicamente impossível no mundo real. Além disso, a curva Normal "
+                "é perfeitamente simétrica e não reproduz os atrasos pontuais e outliers severos que observamos nos Pull Requests do GitHub."
+            ),
+            pontos_chave_argicao=(
+                "Escolha teórica: Distribuição Log-normal LN(μ_log, σ_log), padrão na literatura para tempos de processo (lead time).",
+                "Calibração empírica sem_bot: μ_log = 2,9704, σ_log = 0,8500 (mediana simulada 19,50h; real 18,90h).",
+                "Calibração empírica com_bot: μ_log = 2,6391, σ_log = 0,9800 (mediana simulada 14,00h; real 13,60h).",
+                "População pooled sob H₀: μ_log = 2,8000, σ_log = 0,9200 (mediana 16,45h, média 25,35h), idêntica para os dois grupos.",
+                "Reprodutibilidade estrita: 10.000 repetições de Monte Carlo por condição geradas com semente pseudoaleatória 42.",
+            ),
+        ),
+        PerguntaApresentacaoOral(
+            numero=5,
+            titulo_curto="Comparação Efetiva dos Dois Testes: Médias vs. Postos",
+            pergunta_oficial=(
+                "O que cada um dos dois testes compara de fato (médias, postos, proporções...)?"
+            ),
+            pergunta_variante=(
+                "Se o teste t compara médias e o Mann-Whitney compara postos, é possível que eles cheguem a decisões divergentes?"
+            ),
+            secao_dashboard="Seção 3 (Como os testes funcionam — Gráfico G2 e Tabela Comparativa) e Seção 6",
+            onde_apontar_no_dashboard=(
+                "Apontar para os dois painéis do Gráfico G2 (Welch à esquerda medindo desvios em unidades de t, e Mann-Whitney à "
+                "direita operando sobre a estatística Z da soma de postos U) e para as colunas da Tabela Comparativa na Seção 3 e Seção 6."
+            ),
+            fala_30_segundos=(
+                "O teste t de Welch compara médias aritméticas ponderadas: ele avalia se a diferença entre as médias amostrais "
+                "dos dois grupos é significativamente diferente de zero, corrigindo os graus de liberdade para acomodar variâncias desiguais. "
+                "Já o teste U de Mann-Whitney é um teste não-paramétrico baseado em postos (ranks): ele junta todas as 60 observações, "
+                "ordena em ordem crescente de 1 a 60 e compara a soma dos postos atribuídos a cada grupo, testando a dominância estocástica, "
+                "ou seja, se a probabilidade de um PR com bot ser mergeado antes de um sem bot é igual a 50%."
+            ),
+            fala_variante_30_segundos=(
+                "Sim, com certeza. Por operar sobre as grandezas lineares elevadas ao quadrado na variância, o teste t de Welch é "
+                "extremamente vulnerável a um único outlier extremo: se um PR levar 500 horas, a média dispara e a variância infla, "
+                "destruindo o teste. Já o Mann-Whitney converte 500 horas no posto 60, preservando a ordenação relativa dos outros "
+                "29 PRs sem distorcer o resultado."
+            ),
+            pontos_chave_argicao=(
+                "Teste t de Welch: Paramétrico; compara médias populacionais (H₀: μ_sem = μ_com); estatística t com gl de Satterthwaite.",
+                "Teste U de Mann-Whitney: Não-paramétrico; compara postos conjuntos (H₀: P(X_com > Y_sem) = 0,50 / dominância estocástica).",
+                "Sensibilidade a escalas: Welch depende de valores métricos e escala linear; Mann-Whitney depende exclusivamente de ordenação ordinal.",
+                "Impacto de assimetria e outliers: Welch perde poder porque s² infla quadraticamente; Mann-Whitney é invariante a transformações monótonas.",
+            ),
+        ),
+    ]
 
 
 # ----------------------------------------------------------------------------
@@ -514,13 +704,30 @@ def obter_perguntas_11_a_15() -> List[PerguntaApresentacaoOral]:
 
 
 def obter_todas_perguntas() -> List[PerguntaApresentacaoOral]:
-    """Retorna todas as 10 perguntas cobertas (6 a 15) em ordem numérica."""
-    return obter_perguntas_6_a_10() + obter_perguntas_11_a_15()
+    """Retorna todas as 15 perguntas da apresentação oral (1 a 15) em ordem numérica."""
+    return obter_perguntas_1_a_5() + obter_perguntas_6_a_10() + obter_perguntas_11_a_15()
 
 
 # ----------------------------------------------------------------------------
 # Resumos tabulares e geradores de Markdown
 # ----------------------------------------------------------------------------
+def construir_tabela_resumo_perguntas_1_a_5() -> pd.DataFrame:
+    """Retorna um DataFrame resumindo as Perguntas 1 a 5, onde apontar e a resposta-síntese."""
+    perguntas = obter_perguntas_1_a_5()
+    return pd.DataFrame(
+        [
+            {
+                "Nº": f"Pergunta {p.numero}",
+                "Tema": p.titulo_curto,
+                "Pergunta": p.pergunta_oficial,
+                "Onde Apontar no Dashboard": p.secao_dashboard,
+                "Síntese Direta (30s)": p.fala_30_segundos,
+            }
+            for p in perguntas
+        ]
+    )
+
+
 def construir_tabela_resumo_perguntas_6_a_10() -> pd.DataFrame:
     """Retorna um DataFrame resumindo as Perguntas 6 a 10, onde apontar e a resposta-síntese."""
     perguntas = obter_perguntas_6_a_10()
@@ -553,6 +760,35 @@ def construir_tabela_resumo_perguntas_11_a_15() -> pd.DataFrame:
             for p in perguntas
         ]
     )
+
+
+def gerar_roteiro_markdown_perguntas_1_a_5() -> str:
+    """Gera o relatório completo em Markdown das Perguntas 1 a 5 com fundamentação técnica."""
+    perguntas = obter_perguntas_1_a_5()
+
+    linhas: List[str] = [
+        "# Roteiro Individual de Preparação da Apresentação Oral — Perguntas 1 a 5 (Issue #58)",
+        "",
+        "**Responsável:** Tiago Boaventura Amaral  ",
+        "**Tempo estimado por resposta:** ~30 segundos (curta, direta e apoiada visualmente no Dashboard).  ",
+        "**Objetivo:** Demonstrar domínio sobre o cenário de pesquisa, direcionalidade do teste, processo de amostragem no GitHub, calibração log-normal na simulação e a distinção conceitual entre testes de médias e testes de postos.",
+        "",
+    ]
+    for p in perguntas:
+        linhas.append(f"## Pergunta {p.numero} — {p.titulo_curto}")
+        linhas.append(f"- **Enunciado Oficial:** *\"{p.pergunta_oficial}\"*")
+        linhas.append(f"- **Seção do Dashboard:** `{p.secao_dashboard}`")
+        linhas.append(f"- **Onde apontar na tela:** {p.onde_apontar_no_dashboard}")
+        linhas.append(f"- **Fala Direta (30s):**\n  > \"{p.fala_30_segundos}\"")
+        if p.pergunta_variante and p.fala_variante_30_segundos:
+            linhas.append(f"- **Pergunta Variante da Banca:** *\"{p.pergunta_variante}\"*")
+            linhas.append(f"- **Fala Direta para Variante (30s):**\n  > \"{p.fala_variante_30_segundos}\"")
+        linhas.append("- **Pontos-Chave e Números para Arguição:**")
+        for pt in p.pontos_chave_argicao:
+            linhas.append(f"  - {pt}")
+        linhas.append("")
+
+    return "\n".join(linhas)
 
 
 def gerar_roteiro_markdown_perguntas_6_a_10() -> str:
@@ -624,9 +860,13 @@ def gerar_roteiro_markdown_perguntas_11_a_15() -> str:
 
 
 def gerar_roteiro_markdown_completo() -> str:
-    """Gera o consolidado de todas as perguntas disponíveis (6 a 15)."""
+    """Gera o consolidado de todas as 15 perguntas disponíveis (1 a 15)."""
     return (
-        gerar_roteiro_markdown_perguntas_6_a_10()
+        gerar_roteiro_markdown_perguntas_1_a_5()
+        + "\n\n"
+        + "=" * 80
+        + "\n\n"
+        + gerar_roteiro_markdown_perguntas_6_a_10()
         + "\n\n"
         + "=" * 80
         + "\n\n"

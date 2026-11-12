@@ -21,6 +21,7 @@ from lab04.src.analise_dados_reais import (
 )
 from lab04.src.apresentacao_oral import (
     avaliar_impacto_alpha_001,
+    obter_perguntas_1_a_5,
     obter_perguntas_6_a_10,
     obter_perguntas_11_a_15,
 )
@@ -424,6 +425,16 @@ for lim in obter_limitacoes_estudo():
         st.markdown(f"**Descrição:** {lim.descricao}")
         st.markdown(f"**Impacto na Inferência:** {lim.impacto_na_inferencia}")
         st.markdown(f"**Como Mitigar Futuramente:** {lim.como_mitigar_futuramente}")
+
+with st.expander("Roteiro de Apoio para a Apresentação Oral — Perguntas 1 a 5 (#58)"):
+    for item_p in obter_perguntas_1_a_5():
+        st.markdown(f"#### Pergunta {item_p.numero} — {item_p.titulo_curto}")
+        st.markdown(f"**Enunciado:** *{item_p.pergunta_oficial}*")
+        st.markdown(f"**Onde apontar no Dashboard:** {item_p.onde_apontar_no_dashboard}")
+        st.info(f"**Resposta direta (30s):** {item_p.fala_30_segundos}")
+        if item_p.pergunta_variante and item_p.fala_variante_30_segundos:
+            st.markdown(f"**Variante de arguição:** *{item_p.pergunta_variante}*")
+            st.info(f"**Resposta direta p/ variante (30s):** {item_p.fala_variante_30_segundos}")
 
 with st.expander("Roteiro de Apoio para a Apresentação Oral — Perguntas 6 a 10 (#60)"):
     for item_p in obter_perguntas_6_a_10():
