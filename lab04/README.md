@@ -217,6 +217,10 @@ O dashboard abre automaticamente em http://localhost:8501.
   `ash
   python -m lab04.src.grafico_g4
   `
+- **Análise completa dos dados reais e tabela comparativa — LAB04FINAL** (lab04/data/tabela_comparativa_dados_reais.csv):
+  `ash
+  python -m lab04.src.analise_dados_reais
+  `
 
 ### Executar a suíte de testes automatizados
 `ash

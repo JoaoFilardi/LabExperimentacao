@@ -374,19 +374,20 @@ def texto_interpretativo_g4(
 
     return (
         f"O gráfico G4 mostra que o poder estatístico cresce com o tamanho do efeito e que o teste "
-        f"U de Mann-Whitney (laranja) supera o teste t de Welch (azul) em todas as situações log-normais "
+        f"U de Mann-Whitney (laranja) apresentou o melhor desempenho em todas as situações log-normais "
         f"simuladas, ampliando sua vantagem à medida que o efeito aumenta (em δ = 50%, atinge "
         f"{float(base_50['poder_mann_whitney_pct']):.2f}% contra {float(base_50['poder_welch_pct']):.2f}% "
         f"no cenário original, uma vantagem de +{float(base_50['vantagem_mw_pp']):.2f} p.p.). "
         f"Sob violação de pressupostos por outliers severos (Q3), o poder de Welch sofre um colapso "
         f"drástico (caindo para {float(out_50['poder_welch_pct']):.2f}% em δ = 50%), enquanto Mann-Whitney "
-        f"mantém {float(out_50['poder_mann_whitney_pct']):.2f}% (+{float(out_50['vantagem_mw_pp']):.2f} p.p. "
-        f"de vantagem), e com amostra pequena (n = 10) Mann-Whitney também lidera "
-        f"({float(small_50['poder_mann_whitney_pct']):.2f}% vs. {float(small_50['poder_welch_pct']):.2f}%). "
-        f"Como demonstra o painel direito, a vantagem só muda de lado em favor do teste t de Welch "
-        f"quando os dados seguem uma distribuição Normal simétrica sem outliers (onde Welch atinge "
-        f"{float(gauss_30['poder_welch_pct']):.2f}% contra {float(gauss_30['poder_mann_whitney_pct']):.2f}% "
-        f"de Mann-Whitney em δ = 30%, devido à eficiência assintótica relativa de 95,5% dos postos sob normalidade)."
+        f"mantém melhor desempenho com {float(out_50['poder_mann_whitney_pct']):.2f}% "
+        f"(+{float(out_50['vantagem_mw_pp']):.2f} p.p. de vantagem), liderando também com amostra "
+        f"pequena de n = 10 ({float(small_50['poder_mann_whitney_pct']):.2f}% vs. {float(small_50['poder_welch_pct']):.2f}%). "
+        f"Como demonstra o painel direito, a situação em que o teste t de Welch apresenta melhor "
+        f"desempenho restringe-se exclusivamente à distribuição Normal simétrica sem outliers "
+        f"(onde Welch atinge {float(gauss_30['poder_welch_pct']):.2f}% contra "
+        f"{float(gauss_30['poder_mann_whitney_pct']):.2f}% de Mann-Whitney em δ = 30%, devido à sua "
+        f"eficiência ótima paramétrica sob normalidade)."
     )
 
 

@@ -501,9 +501,9 @@ def texto_interpretativo_g3(df_dados: Optional[pd.DataFrame] = None) -> str:
     return (
         f"O gráfico G3 compara a taxa empírica de Erro Tipo I dos dois testes em 10.000 simulações sob H₀ "
         f"frente ao nível nominal de 5% (linha tracejada vermelha). "
-        f"O teste U de Mann-Whitney manteve-se rigorosamente próximo aos 5% em todas as condições "
-        f"analisadas ({t_mw_base} na base, {t_mw_out} com outliers e {t_mw_small} com amostra pequena), "
-        f"confirmando robustez estrita por operar sobre postos ordenados. "
+        f"O teste U de Mann-Whitney apresentou o melhor desempenho em todas as condições simuladas, "
+        f"mantendo-se rigorosamente próximo aos 5% ({t_mw_base} na base, {t_mw_out} com outliers "
+        f"e {t_mw_small} com amostra pequena), confirmando robustez estrita por operar sobre postos ordenados. "
         f"Já o teste t de Welch apresentou comportamento conservador em todos os cenários, rejeitando H₀ "
         f"consideravelmente menos do que o esperado ({t_w_base} na base, {t_w_out} com outliers "
         f"e {t_w_small} com amostra pequena). "

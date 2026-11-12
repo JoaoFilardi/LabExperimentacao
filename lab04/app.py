@@ -15,6 +15,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import streamlit as st
 
+from lab04.src.analise_dados_reais import (
+    executar_analise_completa_dados_reais,
+    gerar_tabela_comparativa_secao6,
+)
 from lab04.src.apresentacao_oral import (
     avaliar_impacto_alpha_001,
     obter_perguntas_11_a_15,
@@ -233,28 +237,120 @@ with st.expander("Ver diagnóstico de impacto de Q3 e controle Gaussiano (quando
 
 # ------------------------------------------------------------ 6. Dados reais
 st.header("6. Dados reais")
-comp_reais = aplicar_ambos_testes(
-    reais,
-    alpha=CENARIO.alpha,
-    alternativa=CENARIO.tipo_teste,
-    origem_dados="Amostra de Dados Reais (tiangolo/fastapi)",
-    semente=None,
-)
-st.dataframe(comparacao_para_dataframe(comp_reais), use_container_width=True)
-st.markdown(f"**Conclusão nos dados reais:** {comp_reais.resumo_comparativo}")
-st.markdown(f"**Comparação entre os testes na amostra real:** {comp_reais.explicacao_diferencas}")
+rel_reais = executar_analise_completa_dados_reais()
+df_tab_secao6 = gerar_tabela_comparativa_secao6(rel_reais)
+
+st.subheader("Resultados Consolidados dos Dois Testes Estatísticos na Amostra Real")
+col_card_w, col_card_mw = st.columns(2)
+with col_card_w:
+    st.markdown(f"### {rel_reais.welch.nome_teste} (Paramétrico)")
+    st.metric(
+        label="Estatística t (gl)",
+        value=f"t = {rel_reais.welch.estatistica_valor:.4f}",
+        delta=f"gl = {rel_reais.welch.parametro_auxiliar_valor:.2f}",
+        delta_color="off",
+    )
+    st.metric(
+        label="p-valor (bicaudal)",
+        value=f"{rel_reais.welch.p_valor:.4f}",
+        delta="p ≥ 0,05 (Não Rejeitar H₀)",
+        delta_color="off",
+    )
+    st.metric(
+        label="Tamanho do Efeito (d de Cohen)",
+        value=f"d = {rel_reais.welch.tamanho_efeito.valor:.4f}",
+        delta=f"Magnitude: {rel_reais.welch.tamanho_efeito.magnitude}",
+        delta_color="off",
+    )
+    st.caption(f"**Decisão Formal (α = 0,05):** {rel_reais.welch.decisao_formal}")
+
+with col_card_mw:
+    st.markdown(f"### {rel_reais.mann_whitney.nome_teste} (Não-paramétrico)")
+    st.metric(
+        label="Estatística U (z padronizado)",
+        value=f"U = {rel_reais.mann_whitney.estatistica_valor:.1f}",
+        delta=f"z = {rel_reais.mann_whitney.parametro_auxiliar_valor:.4f}",
+        delta_color="off",
+    )
+    st.metric(
+        label="p-valor (bicaudal)",
+        value=f"{rel_reais.mann_whitney.p_valor:.4f}",
+        delta="p ≥ 0,05 (Não Rejeitar H₀)",
+        delta_color="off",
+    )
+    st.metric(
+        label="Tamanho do Efeito (Rank-Biserial)",
+        value=f"r_rb = {rel_reais.mann_whitney.tamanho_efeito.valor:.4f}",
+        delta=f"P(com < sem) = {rel_reais.probabilidade_superioridade * 100:.1f}%",
+        delta_color="off",
+    )
+    st.caption(f"**Decisão Formal (α = 0,05):** {rel_reais.mann_whitney.decisao_formal}")
+
+st.subheader("Tabela Comparativa Exigida — Estatística, p-valor, Tamanho do Efeito e Conclusão")
+st.dataframe(df_tab_secao6, use_container_width=True)
+
+st.markdown("### Análise da Amostra Real, Decisões de H₀ e Importância Prática")
+col_info_1, col_info_2 = st.columns(2)
+with col_info_1:
+    st.markdown("**1. Integridade dos Dados e Compatibilidade com os Testes:**")
+    st.markdown(
+        f"- **Dataset Recuperado:** 60 Pull Requests minerados do repositório `{rel_reais.repositorio}` "
+        f"(30 do grupo `com_bot` e 30 de `sem_bot`), com 100% de integridade (sem nulos, sem duplicatas, "
+        f"datas consistentes e tempos estritamente positivos).\n"
+        f"- **Compatibilidade com Pressupostos:** Ambos os grupos violam severamente a normalidade "
+        f"(Shapiro-Wilk: p = {rel_reais.pressupostos.shapiro_p_sem_bot:.4g} sem bot e "
+        f"p = {rel_reais.pressupostos.shapiro_p_com_bot:.4g} com bot; p < 0,001), apresentando forte assimetria "
+        f"à direita ({rel_reais.pressupostos.assimetria_sem_bot:.2f} e {rel_reais.pressupostos.assimetria_com_bot:.2f}) "
+        f"e outliers severos (máximos de 88,0 h e 105,5 h). Enquanto Welch tem sua variância inflada pela cauda, "
+        f"Mann-Whitney opera sobre postos, sendo perfeitamente adequado e teoricamente compatível."
+    )
+    st.markdown("**2. Comparação dos Resultados com α = 0,05 e Decisão de H₀:**")
+    st.markdown(
+        f"- **Teste t de Welch:** p-valor = {rel_reais.welch.p_valor:.4f} ≥ 0,05 → **NÃO REJEITA H₀**.\n"
+        f"- **Teste U de Mann-Whitney:** p-valor = {rel_reais.mann_whitney.p_valor:.4f} ≥ 0,05 → **NÃO REJEITA H₀**.\n"
+        f"- **Convergência de Decisão:** {rel_reais.resumo_comparativo}"
+    )
+
+with col_info_2:
+    st.markdown("**3. Medida do Tamanho do Efeito e Importância Prática:**")
+    st.markdown(
+        f"- **Medidas Adotadas:** Adotou-se o **d de Cohen de Welch** ({rel_reais.welch.tamanho_efeito.valor:.4f}) "
+        f"para a comparação de médias e a **correlação rank-biserial r_rb** ({rel_reais.mann_whitney.tamanho_efeito.valor:.4f}, "
+        f"equivalente ao Delta de Cliff) para os postos, complementada pela probabilidade de superioridade "
+        f"(P(com < sem) = {rel_reais.probabilidade_superioridade * 100:.1f}%).\n"
+        f"- **Magnitude Observada:** Ambas as métricas enquadram-se na faixa de magnitude **pequena** "
+        f"(|d| < 0,50 e |r_rb| < 0,33).\n"
+        f"- **Importância Prática:** {rel_reais.implicacoes_praticas}"
+    )
+    st.markdown("**4. Por que os Testes Apresentaram p-valores Diferentes?**")
+    st.markdown(rel_reais.discussao_diferencas)
+
+with st.expander("Ver diagnóstico de Poder Amostral com n = 30 (Conexão direta com as curvas do Gráfico G4)"):
+    st.markdown(rel_reais.diagnostico_poder_n30)
+    comp_reais = aplicar_ambos_testes(
+        reais,
+        alpha=CENARIO.alpha,
+        alternativa=CENARIO.tipo_teste,
+        origem_dados=f"Amostra de Dados Reais ({rel_reais.repositorio})",
+        semente=None,
+    )
+    st.markdown("**Detalhamento técnico exaustivo dos parâmetros dos dois testes:**")
+    st.dataframe(comparacao_para_dataframe(comp_reais), use_container_width=True)
 
 # ------------------------------------------------------------- 7. Conclusão
 st.header("7. Conclusão")
 st.markdown(
     "As simulações de Monte Carlo das Sprints 1 e 2 (Q1, Q2 e Q3, 10.000 repetições por condição, semente = 42) "
-    "confirmam integralmente a expectativa teórica registrada pelo grupo antes de simular: sob a assimetria "
-    "log-normal e a presença de outliers típicas de tempos de merge de Pull Requests, o **teste U de Mann-Whitney** "
-    "é a recomendação oficial, pois mantém a taxa de Erro Tipo I calibrada próxima de 5% (4,58% na base, 4,52% "
-    "com outliers e 4,33% com n=10) e alcança poder estatístico amplamente superior ao teste t de Welch "
+    "somadas à aplicação empírica nos dados reais confirmam integralmente a expectativa teórica registrada pelo grupo "
+    "antes de simular: sob a assimetria log-normal e a presença de outliers típicas de tempos de merge de Pull Requests, "
+    "o **teste U de Mann-Whitney** é a recomendação oficial. Ele mantém a taxa de Erro Tipo I calibrada próxima de 5% "
+    "(4,58% na base, 4,52% com outliers e 4,33% com n=10) e alcança poder estatístico amplamente superior ao teste t de Welch "
     "(79,08% vs. 64,20% em δ=50% na base, e 62,30% vs. 22,62% sob outliers severos). "
-    "A recomendação só mudaria em favor do teste t de Welch caso os tempos de processo fossem simétricos/normais "
-    "e isentos de outliers (ou após transformação logarítmica validada sem contaminação de cauda)."
+    "Nos dados reais, a robustez aos postos de Mann-Whitney produziu um p-valor menor (0,1715 vs. 0,2641 de Welch), "
+    "e as curvas de poder de G4 explicam por que com n = 30 nenhum dos testes rejeitou H₀ (poder entre 28% e 48% "
+    "para o efeito pequeno observado de 24% a 28%). A recomendação só mudaria em favor do teste t de Welch caso os "
+    "tempos de processo fossem simétricos/normais e isentos de outliers (onde Welch atinge 75,80% vs. 73,12% de "
+    "Mann-Whitney em δ=30%)."
 )
 
 with st.expander("Roteiro de Apoio para a Apresentação Oral — Perguntas 11 a 15 (#62)"):
