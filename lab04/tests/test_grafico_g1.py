@@ -2,7 +2,11 @@ import matplotlib
 matplotlib.use("Agg")
 
 from lab04.src.grafico_g1 import (
-    carregar_reais, carregar_simulados, gerar_g1, texto_interpretativo,
+    carregar_reais,
+    carregar_simulados,
+    gerar_g1,
+    obter_tabela_comparativa_g1,
+    texto_interpretativo,
 )
 
 
@@ -22,3 +26,23 @@ def test_g1_reprodutivel():
 
 def test_texto_interpretativo_nao_vazio():
     assert len(texto_interpretativo(carregar_reais(), carregar_simulados())) > 100
+
+
+def test_obter_tabela_comparativa_g1():
+    reais = carregar_reais()
+    simulados = carregar_simulados()
+    df_tab = obter_tabela_comparativa_g1(reais, simulados)
+    assert len(df_tab) == 4  # 2 fontes x 2 grupos
+    assert set(df_tab.columns) == {
+        "Origem",
+        "Grupo",
+        "n",
+        "Média (h)",
+        "Mediana (h)",
+        "DP (h)",
+        "IQR (h)",
+        "Assimetria",
+        "Outliers (Tukey)",
+        "Máximo (h)",
+    }
+    assert (df_tab["n"] == 30).all()

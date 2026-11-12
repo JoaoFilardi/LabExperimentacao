@@ -49,6 +49,35 @@ def _resumo(serie: pd.Series) -> dict:
     }
 
 
+def obter_tabela_comparativa_g1(reais: pd.DataFrame, simulados: pd.DataFrame) -> pd.DataFrame:
+    """Gera tabela comparativa com estatísticas descritivas dos dados reais e simulados."""
+    linhas = []
+    fontes = [
+        ("Dados Reais (tiangolo/fastapi)", reais),
+        ("Dados Simulados S01 (semente = 42)", simulados),
+    ]
+    for nome_fonte, df in fontes:
+        for g in GRUPOS:
+            serie = df.loc[df[COL_GRUPO] == g, COL_VALOR].dropna()
+            r = _resumo(serie)
+            q1, q3 = serie.quantile([0.25, 0.75])
+            linhas.append(
+                {
+                    "Origem": nome_fonte,
+                    "Grupo": ROTULO_GRUPO[g],
+                    "n": r["n"],
+                    "Média (h)": round(r["media"], 2),
+                    "Mediana (h)": round(r["mediana"], 2),
+                    "DP (h)": round(r["dp"], 2),
+                    "IQR (h)": round(q3 - q1, 2),
+                    "Assimetria": round(r["assimetria"], 2),
+                    "Outliers (Tukey)": r["n_outliers"],
+                    "Máximo (h)": round(float(serie.max()), 2),
+                }
+            )
+    return pd.DataFrame(linhas)
+
+
 def gerar_g1(reais: pd.DataFrame, simulados: pd.DataFrame, n_bins: int = 15):
     """Retorna uma Figure 2x2: linhas = grupos, colunas = (reais, simulados)."""
     todos = np.concatenate([reais[COL_VALOR].to_numpy(), simulados[COL_VALOR].to_numpy()])

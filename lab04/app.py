@@ -25,10 +25,18 @@ from lab04.src.apresentacao_oral import (
     obter_perguntas_11_a_15,
 )
 from lab04.src.cenario import CENARIO
+from lab04.src.conclusao_dashboard import (
+    obter_expectativa_vs_resultados,
+    obter_limitacoes_estudo,
+    obter_recomendacao_final,
+    obter_resumo_conclusao_markdown,
+    obter_tabela_expectativa_vs_resultados,
+)
 from lab04.src.grafico_g1 import (
     carregar_reais,
     carregar_simulados,
     gerar_g1,
+    obter_tabela_comparativa_g1,
     texto_interpretativo,
 )
 from lab04.src.grafico_g2 import gerar_g2, texto_interpretativo_g2
@@ -42,6 +50,7 @@ from lab04.src.grafico_g4 import (
     gerar_g4,
     texto_interpretativo_g4,
 )
+from lab04.src.simulacao import ParametrosSimulacao
 from lab04.src.simulacao_q1 import (
     carregar_ou_executar_q1,
     gerar_texto_interpretativo_q1,
@@ -68,19 +77,41 @@ st.markdown(
 # ---------------------------------------------------------------- 1. Cenário
 st.header("1. Cenário")
 st.markdown(CENARIO.texto_dashboard_cenario)
-with st.expander("Ver detalhes formais das hipóteses e previsão pré-simulação"):
-    st.markdown(f"- **Pergunta de pesquisa:** {CENARIO.pergunta_pesquisa}")
-    st.markdown(f"- **H₀ (conceitual):** {CENARIO.h0_conceitual}")
-    st.markdown(f"- **H₁ (conceitual):** {CENARIO.h1_conceitual}")
-    st.markdown(f"- **H₀ / H₁ (t de Welch):** `{CENARIO.h0_welch}` vs. `{CENARIO.h1_welch}`")
+
+col_cen_1, col_cen_2, col_cen_3 = st.columns(3)
+with col_cen_1:
+    st.subheader("Pergunta de Pesquisa")
+    st.info(f"**Pergunta única e objetiva:**\n\n*{CENARIO.pergunta_pesquisa}*")
     st.markdown(
-        f"- **H₀ / H₁ (U de Mann-Whitney):** `{CENARIO.h0_mann_whitney}` vs. `{CENARIO.h1_mann_whitney}`"
+        f"- **Par selecionado:** `{CENARIO.par_id}` ({CENARIO.nome_par})\n"
+        f"- **Tipo de teste:** {CENARIO.tipo_teste} (bicaudal / two-sided)\n"
+        f"- **Nível de significância:** α = {CENARIO.alpha:.2f} (confiança de {CENARIO.nivel_confianca * 100:.0f}%)"
     )
+
+with col_cen_2:
+    st.subheader("Hipóteses Investigadas")
+    st.markdown(f"**H₀ (Nula):** {CENARIO.h0_conceitual}")
+    st.markdown(f"**H₁ (Alternativa):** {CENARIO.h1_conceitual}")
     st.markdown(
-        f"- **Direção e significância:** Teste {CENARIO.tipo_teste} com α = {CENARIO.alpha:.2f} "
-        f"(confiança de {CENARIO.nivel_confianca * 100:.0f}%)."
+        f"- **t de Welch (médias):** `{CENARIO.h0_welch}` vs. `{CENARIO.h1_welch}`\n"
+        f"- **Mann-Whitney (postos):** `{CENARIO.h0_mann_whitney}` vs. `{CENARIO.h1_mann_whitney}`"
     )
-    st.markdown(f"- **Previsão inicial (antes de simular):** {CENARIO.justificativa_previsao}")
+
+with col_cen_3:
+    st.subheader("Origem dos Dados Reais")
+    st.markdown(
+        f"- **Repositório:** `{CENARIO.origem_dados_reais}`\n"
+        f"- **Total coletado:** **{CENARIO.n_observacoes_reais_total} Pull Requests** "
+        f"({CENARIO.n_observacoes_reais_por_grupo} `com_bot` vs. {CENARIO.n_observacoes_reais_por_grupo} `sem_bot`)\n"
+        f"- **Variável resposta:** `{CENARIO.variavel_dependente}`\n"
+        f"- **Critério de amostragem:** {CENARIO.criterio_selecao_prs}"
+    )
+
+st.subheader("Previsão Inicial do Grupo (Registrada Antes de Simular)")
+st.warning(
+    f"**Teste com melhor desempenho esperado:** **{CENARIO.teste_esperado_melhor_desempenho}**\n\n"
+    f"**Justificativa pré-experimental:** {CENARIO.justificativa_previsao}"
+)
 
 # ---------------------------------------------------------------- 2. Os dados
 st.header("2. Os dados")
@@ -88,6 +119,33 @@ reais = carregar_reais()
 simulados = carregar_simulados(semente=42)
 st.pyplot(gerar_g1(reais, simulados))
 st.markdown(texto_interpretativo(reais, simulados))
+
+st.subheader("Características Descritivas dos Dados Reais e Simulados (Assimetria, Dispersão e Outliers)")
+df_tab_g1 = obter_tabela_comparativa_g1(reais, simulados)
+st.dataframe(df_tab_g1, use_container_width=True)
+
+with st.expander("Justificativa das Distribuições e Calibração dos Parâmetros da Simulação"):
+    st.markdown(
+        "### Por que a Distribuição Log-normal?\n"
+        "Em Engenharia de Software, tempos de ciclo (como o tempo até o merge de Pull Requests) são grandezas "
+        "estritamente positivas ($Y > 0$), contínuas e governadas por fatores multiplicativos, exibindo forte "
+        "assimetria à direita (*right-skewness*) e caudas pesadas com presença recorrente de outliers severos "
+        "(PRs bloqueados por disputas ou dependências externas). A distribuição normal simétrica falha "
+        "em representar esse comportamento, tornando a distribuição Log-normal a escolha teórica mais adequada."
+    )
+    p_sim = ParametrosSimulacao()
+    st.markdown(
+        f"### Calibração Rigorosa com Base nos Dados Reais:\n"
+        f"- **Grupo Sem Bot (`sem_bot`):** Mediana real de 18,9h → ajustada para $\\mu_{{\\log}} = {p_sim.mu_log_sem_bot:.4f}$ "
+        f"e $\\sigma_{{\\log}} = {p_sim.sigma_log_sem_bot:.4f}$ (mediana teórica de 19,5h, média de 28,5h);\n"
+        f"- **Grupo Com Bot (`com_bot`):** Mediana real de 13,6h → ajustada para $\\mu_{{\\log}} = {p_sim.mu_log_com_bot:.4f}$ "
+        f"e $\\sigma_{{\\log}} = {p_sim.sigma_log_com_bot:.4f}$ (mediana teórica de 14,0h, média de 22,3h);\n"
+        f"- **Cenário Baseline Comum sob $H_0$:** Agrupamento *pooled* dos 60 PRs reais → $\\mu_{{\\log}} = {p_sim.mu_log_h0:.4f}$ "
+        f"e $\\sigma_{{\\log}} = {p_sim.sigma_log_h0:.4f}$ (mediana teórica comum de 16,5h e média de 25,4h), garantindo que "
+        f"ambos os grupos pertençam à mesma população idêntica nas simulações de Erro Tipo I (Q1 e Q3);\n"
+        f"- **Reprodutibilidade Estrita:** Todos os dados simulados utilizam semente pseudoaleatória fixa `42` "
+        f"(`numpy.random.default_rng(42)`)."
+    )
 
 # ------------------------------------------- 3. Como os testes funcionam (G2)
 st.header("3. Como os testes funcionam")
@@ -340,19 +398,32 @@ with st.expander("Ver diagnóstico de Poder Amostral com n = 30 (Conexão direta
 
 # ------------------------------------------------------------- 7. Conclusão
 st.header("7. Conclusão")
-st.markdown(
-    "As simulações de Monte Carlo das Sprints 1 e 2 (Q1, Q2 e Q3, 10.000 repetições por condição, semente = 42) "
-    "somadas à aplicação empírica nos dados reais confirmam integralmente a expectativa teórica registrada pelo grupo "
-    "antes de simular: sob a assimetria log-normal e a presença de outliers típicas de tempos de merge de Pull Requests, "
-    "o **teste U de Mann-Whitney** é a recomendação oficial. Ele mantém a taxa de Erro Tipo I calibrada próxima de 5% "
-    "(4,58% na base, 4,52% com outliers e 4,33% com n=10) e alcança poder estatístico amplamente superior ao teste t de Welch "
-    "(79,08% vs. 64,20% em δ=50% na base, e 62,30% vs. 22,62% sob outliers severos). "
-    "Nos dados reais, a robustez aos postos de Mann-Whitney produziu um p-valor menor (0,1715 vs. 0,2641 de Welch), "
-    "e as curvas de poder de G4 explicam por que com n = 30 nenhum dos testes rejeitou H₀ (poder entre 28% e 48% "
-    "para o efeito pequeno observado de 24% a 28%). A recomendação só mudaria em favor do teste t de Welch caso os "
-    "tempos de processo fossem simétricos/normais e isentos de outliers (onde Welch atinge 75,80% vs. 73,12% de "
-    "Mann-Whitney em δ=30%)."
-)
+
+st.markdown(obter_resumo_conclusao_markdown())
+
+st.subheader("Expectativa Pré-Simulação vs. Resultados Obtidos (Q1, Q2, Q3 e Dados Reais)")
+st.dataframe(obter_tabela_expectativa_vs_resultados(), use_container_width=True)
+
+rec = obter_recomendacao_final()
+st.subheader("Recomendação Oficial e Condições de Transição")
+col_rec_a, col_rec_b = st.columns(2)
+with col_rec_a:
+    st.success(
+        f"**Teste Recomendado:** {rec.teste_recomendado} ({rec.tipo_abordagem})\n\n"
+        f"**Justificativa:** {rec.justificativa_principal}\n\n"
+        f"**Medida de Efeito:** {rec.tamanho_efeito_recomendado}"
+    )
+with col_rec_b:
+    st.warning(
+        f"**Quando a Recomendação Mudaria:**\n\n{rec.quando_muda_a_recomendacao}"
+    )
+
+st.subheader("Principais Limitações do Estudo")
+for lim in obter_limitacoes_estudo():
+    with st.expander(f"[{lim.numero}] {lim.titulo}"):
+        st.markdown(f"**Descrição:** {lim.descricao}")
+        st.markdown(f"**Impacto na Inferência:** {lim.impacto_na_inferencia}")
+        st.markdown(f"**Como Mitigar Futuramente:** {lim.como_mitigar_futuramente}")
 
 with st.expander("Roteiro de Apoio para a Apresentação Oral — Perguntas 6 a 10 (#60)"):
     for item_p in obter_perguntas_6_a_10():

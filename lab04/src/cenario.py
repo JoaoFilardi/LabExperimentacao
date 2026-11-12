@@ -26,6 +26,16 @@ class DefinicaoCenario:
     grupo_tratamento: str = "com_bot"
     grupo_controle: str = "sem_bot"
     unidade_medida: str = "horas"
+    origem_dados_reais: str = "Repositório público open-source no GitHub: tiangolo/fastapi"
+    n_observacoes_reais_total: int = 60
+    n_observacoes_reais_por_grupo: int = 30
+    variavel_dependente: str = (
+        "tempo_horas (lead time to merge: tempo decorrido entre a abertura e o merge do PR, em horas)"
+    )
+    criterio_selecao_prs: str = (
+        "30 Pull Requests com assistência de bots de automação (FastAPI Bot, GitHub Actions) e "
+        "30 Pull Requests revisados exclusivamente por humanos minerados do histórico oficial."
+    )
 
     # Pergunta de Pesquisa em frase única e objetiva
     pergunta_pesquisa: str = (
@@ -84,7 +94,7 @@ class DefinicaoCenario:
 CENARIO = DefinicaoCenario()
 
 
-def get_info_cenario() -> Dict[str, str | float]:
+def get_info_cenario() -> Dict[str, str | float | int]:
     """Retorna dicionário estruturado com as informações principais do cenário para o Dashboard."""
     return {
         "par_id": CENARIO.par_id,
@@ -95,6 +105,10 @@ def get_info_cenario() -> Dict[str, str | float]:
         "tipo_teste": CENARIO.tipo_teste,
         "alpha": CENARIO.alpha,
         "teste_esperado": CENARIO.teste_esperado_melhor_desempenho,
+        "origem_dados": CENARIO.origem_dados_reais,
+        "n_observacoes_total": CENARIO.n_observacoes_reais_total,
+        "n_por_grupo": CENARIO.n_observacoes_reais_por_grupo,
+        "variavel": CENARIO.variavel_dependente,
         "texto_dashboard": CENARIO.texto_dashboard_cenario,
     }
 
