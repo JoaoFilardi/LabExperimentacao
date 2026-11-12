@@ -15,6 +15,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import streamlit as st
 
+from lab04.src.apresentacao_oral import (
+    avaliar_impacto_alpha_001,
+    obter_perguntas_11_a_15,
+)
 from lab04.src.cenario import CENARIO
 from lab04.src.grafico_g1 import (
     carregar_reais,
@@ -252,3 +256,15 @@ st.markdown(
     "A recomendação só mudaria em favor do teste t de Welch caso os tempos de processo fossem simétricos/normais "
     "e isentos de outliers (ou após transformação logarítmica validada sem contaminação de cauda)."
 )
+
+with st.expander("Roteiro de Apoio para a Apresentação Oral — Perguntas 11 a 15 (#62)"):
+    for item_p in obter_perguntas_11_a_15():
+        st.markdown(f"#### Pergunta {item_p.numero} — {item_p.titulo_curto}")
+        st.markdown(f"**Enunciado:** *{item_p.pergunta_oficial}*")
+        st.markdown(f"**Onde apontar no Dashboard:** {item_p.onde_apontar_no_dashboard}")
+        st.info(f"**Resposta direta (30s):** {item_p.fala_30_segundos}")
+        if item_p.pergunta_variante and item_p.fala_variante_30_segundos:
+            st.markdown(f"**Variante de arguição (Tamanho amostral):** *{item_p.pergunta_variante}*")
+            st.info(f"**Resposta direta p/ variante (30s):** {item_p.fala_variante_30_segundos}")
+    st.markdown("**Tabela auxiliar para a Pergunta 12 (comparativo empírico α = 0,05 vs. α = 0,01):**")
+    st.dataframe(avaliar_impacto_alpha_001(semente=42, n_simulacoes=10_000), use_container_width=True)
