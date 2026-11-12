@@ -65,12 +65,14 @@ from lab04.src.testes_estatisticos import (
 
 LINK_REPOSITORIO = "https://github.com/JoaoFilardi/LabExperimentacao"
 LINK_PROJECTS = "https://github.com/JoaoFilardi/LabExperimentacao/projects"
+LINK_DASHBOARD = "http://localhost:8501"
 
 st.set_page_config(page_title="LAB04 - Testes de Hipótese", layout="wide")
 
 st.title("LAB04 - Testes de Hipótese por Dentro: Cenário, Simulação e Visualização")
 st.markdown(
-    f"**Repositório:** [{LINK_REPOSITORIO}]({LINK_REPOSITORIO}) | "
+    f"**Dashboard:** [{LINK_DASHBOARD}]({LINK_DASHBOARD}) | "
+    f"**Repositório GitHub:** [{LINK_REPOSITORIO}]({LINK_REPOSITORIO}) | "
     f"**GitHub Projects:** [{LINK_PROJECTS}]({LINK_PROJECTS}) | "
     f"**Par selecionado:** {CENARIO.par_id} ({CENARIO.nome_par})"
 )
@@ -152,6 +154,42 @@ with st.expander("Justificativa das Distribuições e Calibração dos Parâmetr
 st.header("3. Como os testes funcionam")
 st.pyplot(gerar_g2(simulados=simulados, semente=42, alpha=CENARIO.alpha))
 st.markdown(texto_interpretativo_g2(simulados=simulados, semente=42, alpha=CENARIO.alpha))
+
+st.subheader("O que cada teste compara e como interpretar o p-valor do exemplo")
+col_g2_w, col_g2_mw = st.columns(2)
+with col_g2_w:
+    st.markdown(f"### {CENARIO.teste_parametrico} (Paramétrico)")
+    st.markdown(
+        "- **O que compara:** Médias aritméticas populacionais (μ_com vs. μ_sem), "
+        "ponderando a diferença pelo erro padrão combinado sem exigir igualdade de variâncias.\n"
+        "- **Distribuição sob H₀:** Distribuição t de Student centrada em zero com graus de liberdade de "
+        "Welch-Satterthwaite (gl ≈ 50,6).\n"
+        "- **Região de rejeição (α = 0,05):** Duas caudas bilaterais com 2,5% de probabilidade cada, "
+        "delimitadas pelos quantis críticos t_crit = ±2,01.\n"
+        "- **Exemplo da S01 (semente = 42):** t = -0,5828 ⟹ p = 0,5626. Como o p-valor é "
+        "superior a 0,05, a estatística observada situa-se fora da região de rejeição."
+    )
+
+with col_g2_mw:
+    st.markdown(f"### {CENARIO.teste_nao_parametrico} (Não-paramétrico)")
+    st.markdown(
+        "- **O que compara:** Ordenação conjunta de postos (ranks) e dominância estocástica "
+        "P(X_com > Y_sem) (equivalente a medianas sob formatos semelhantes).\n"
+        "- **Distribuição sob H₀:** Distribuição simétrica da soma de postos centrada em μ_U = 450 pares "
+        "com aproximação Normal padronizada (Z ~ N(0, 1)).\n"
+        "- **Região de rejeição (α = 0,05):** Duas caudas bilaterais nos extremos U ≤ 319,4 e U ≥ 580,6 "
+        "(correspondentes a |z| ≥ 1,96).\n"
+        "- **Exemplo da S01 (semente = 42):** U = 347,5 (z = -1,5154) ⟹ p = 0,1315. Como p ≥ 0,05, "
+        "também não há rejeição de H₀."
+    )
+
+st.info(
+    "**Interpretação do p-valor do exemplo:**\n\n"
+    "- **O que significa:** A probabilidade de sortear uma amostra com diferença tão ou mais extrema que a observada "
+    "se a hipótese nula for estritamente verdadeira (56,3% em Welch e 13,2% em Mann-Whitney).\n"
+    "- **O que NÃO significa:** Não é a probabilidade de H₀ ser verdadeira, não indica que a hipótese alternativa "
+    "é falsa, não mede o tamanho do efeito ou sua relevância prática, e p > 0,05 jamais 'prova' que não há efeito."
+)
 
 comp_simulados = aplicar_ambos_testes(
     simulados,

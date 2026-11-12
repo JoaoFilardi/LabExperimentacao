@@ -437,7 +437,8 @@ def gerar_g3(
     ax.set_ylabel("Taxa Empírica de Erro Tipo I (%)", fontsize=11, fontweight="bold")
     ax.set_xlabel("Cenário e Condição Experimental sob H₀", fontsize=11, fontweight="bold")
     ax.set_xticks(x)
-    ax.set_xticklabels(cenarios, fontsize=10.5)
+    cenarios_limpos = [str(c).replace("\r", "") for c in cenarios]
+    ax.set_xticklabels(cenarios_limpos, fontsize=10.5)
     ax.set_ylim(0.0, 7.5)
 
     ax.grid(axis="y", linestyle=":", alpha=0.6, zorder=0)
