@@ -1,0 +1,107 @@
+# Infraestrutura Docker do LAB05 (Issue #64 - Sprint 1)
+# Comparação controlada: PostgreSQL 17.12 x PostgreSQL 18.7
+#
+# Regras operacionais do experimento:
+# 1. Tags explícitas na mesma base de SO (Debian Bookworm) - nunca usar 'latest'.
+# 2. Volumes separados por versão (atenção à mudança do PGDATA no PostgreSQL 18:
+#    PG17 monta em /var/lib/postgresql/data; PG18 monta em /var/lib/postgresql).
+# 3. Limites computacionais idênticos (4 CPUs e 2 GiB de RAM) e mesma configuração base.
+# 4. Credenciais estritamente fictícias (uso exclusivo em rede local de teste).
+# 5. Durante o benchmark, executar carga em apenas UM container por vez.
+
+services:
+  postgres_17:
+    image: postgres:17.12-bookworm
+    container_name: postgres_17
+    restart: "no"
+    cpus: 4.0
+    mem_limit: 2g
+    memswap_limit: 2g
+    ports:
+      - "127.0.0.1:5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: lab05_pg_bench
+      POSTGRES_DB: pgbench_lab05
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - pg17_data:/var/lib/postgresql/data
+    command:
+      - postgres
+      - -c
+      - max_connections=100
+      - -c
+      - shared_buffers=256MB
+      - -c
+      - work_mem=4MB
+      - -c
+      - maintenance_work_mem=64MB
+      - -c
+      - effective_cache_size=1GB
+      - -c
+      - checkpoint_timeout=15min
+      - -c
+      - max_wal_size=1GB
+      - -c
+      - synchronous_commit=on
+      - -c
+      - logging_collector=off
+      - -c
+      - log_min_messages=warning
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d pgbench_lab05"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
+  postgres_18:
+    image: postgres:18.7-bookworm
+    container_name: postgres_18
+    restart: "no"
+    cpus: 4.0
+    mem_limit: 2g
+    memswap_limit: 2g
+    ports:
+      - "127.0.0.1:5433:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: lab05_pg_bench
+      POSTGRES_DB: pgbench_lab05
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - pg18_data:/var/lib/postgresql
+    command:
+      - postgres
+      - -c
+      - max_connections=100
+      - -c
+      - shared_buffers=256MB
+      - -c
+      - work_mem=4MB
+      - -c
+      - maintenance_work_mem=64MB
+      - -c
+      - effective_cache_size=1GB
+      - -c
+      - checkpoint_timeout=15min
+      - -c
+      - max_wal_size=1GB
+      - -c
+      - synchronous_commit=on
+      - -c
+      - logging_collector=off
+      - -c
+      - log_min_messages=warning
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d pgbench_lab05"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
+volumes:
+  pg17_data:
+    name: lab05_pg17_data
+  pg18_data:
+    name: lab05_pg18_data

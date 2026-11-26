@@ -1,0 +1,125 @@
+{
+  "aprovado": true,
+  "erros": [],
+  "avisos": [],
+  "contagens": {
+    "total_linhas_raw": 12,
+    "execucoes_warmup_excluidas_do_tratado": 4,
+    "execucoes_medidas_validas": 8,
+    "por_versao": {
+      "PG17": 4,
+      "PG18": 4
+    },
+    "amostras_serie_temporal_raw": 95,
+    "amostras_serie_temporal_validadas": 75
+  },
+  "balanceamento_blocos_media_indice": {
+    "PG17": 2.5,
+    "PG18": 2.5
+  },
+  "verificacoes_dominio": {
+    "latencia_media_ms_positiva": true,
+    "latencia_dp_ms_nao_negativa": true,
+    "tps_positivo": true,
+    "transacoes_processadas_positivas": true,
+    "cpu_media_nao_negativa": true,
+    "cpu_normalizada_no_intervalo_0_100": true,
+    "memoria_media_positiva": true,
+    "memoria_pico_ge_media": true,
+    "amostras_recursos_suficientes": true
+  },
+  "consistencia_tps_diff_relativa_max": 0.041,
+  "outliers_sinalizados_iqr_nao_removidos": {
+    "latencia_media_ms": {
+      "PG17": 0,
+      "PG18": 0
+    },
+    "tps": {
+      "PG17": 0,
+      "PG18": 0
+    },
+    "cpu_media_pct": {
+      "PG17": 0,
+      "PG18": 0
+    },
+    "memoria_media_mib": {
+      "PG17": 0,
+      "PG18": 0
+    }
+  },
+  "resumo_sanidade_por_versao": {
+    "PG17": {
+      "latencia_media_ms": {
+        "n": 4,
+        "media": 44.3452,
+        "mediana": 19.9705,
+        "dp": 62.97,
+        "min": 2.073,
+        "max": 135.367
+      },
+      "tps": {
+        "n": 4,
+        "media": 1963.6137,
+        "mediana": 1969.7776,
+        "dp": 2113.5718,
+        "min": 58.1671,
+        "max": 3856.7323
+      },
+      "cpu_media_pct": {
+        "n": 4,
+        "media": 151.4296,
+        "mediana": 152.0306,
+        "dp": 152.2769,
+        "min": 10.9375,
+        "max": 290.7198
+      },
+      "memoria_media_mib": {
+        "n": 4,
+        "media": 402.5654,
+        "mediana": 410.1162,
+        "dp": 153.6599,
+        "min": 252.7207,
+        "max": 537.3086
+      }
+    },
+    "PG18": {
+      "latencia_media_ms": {
+        "n": 4,
+        "media": 2.1755,
+        "mediana": 2.1765,
+        "dp": 0.1069,
+        "min": 2.063,
+        "max": 2.286
+      },
+      "tps": {
+        "n": 4,
+        "media": 3682.1493,
+        "mediana": 3677.5724,
+        "dp": 181.3393,
+        "min": 3497.4821,
+        "max": 3875.9702
+      },
+      "cpu_media_pct": {
+        "n": 4,
+        "media": 266.0092,
+        "mediana": 266.8841,
+        "dp": 11.1003,
+        "min": 251.6641,
+        "max": 278.6045
+      },
+      "memoria_media_mib": {
+        "n": 4,
+        "media": 576.0142,
+        "mediana": 576.6549,
+        "dp": 15.7954,
+        "min": 560.0412,
+        "max": 590.7055
+      }
+    }
+  },
+  "metadados_origem": {
+    "backend": "native",
+    "coleta_iniciada_utc": "2026-11-26T02:06:05+00:00",
+    "coleta_finalizada_utc": "2026-11-26T02:09:26+00:00"
+  }
+}

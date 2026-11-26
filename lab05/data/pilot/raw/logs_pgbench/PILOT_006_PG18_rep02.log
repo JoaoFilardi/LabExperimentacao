@@ -1,0 +1,24 @@
+CMD: C:\Users\kayqu\AppData\Local\lab05_pg_runtime\pg_18.7\pgsql\bin\pgbench.exe -h 127.0.0.1 -p 55433 -U postgres -c 8 -j 4 -T 10 -P 5 --random-seed=4202 pgbench_lab05
+RETURNCODE: 0
+--- STDOUT ---
+pgbench (18.7)
+transaction type: <builtin: TPC-B (sort of)>
+scaling factor: 10
+query mode: simple
+number of clients: 8
+number of threads: 4
+maximum number of tries: 1
+duration: 10 s
+number of transactions actually processed: 37346
+number of failed transactions: 0 (0.000%)
+latency average = 2.108 ms
+latency stddev = 4.466 ms
+initial connection time = 159.138 ms
+tps = 3793.635802 (without initial connection time)
+
+--- STDERR ---
+pgbench: setting random seed to 4202
+starting vacuum...end.
+progress: 5.0 s, 3510.4 tps, lat 2.206 ms stddev 6.461, 0 failed
+progress: 10.0 s, 3957.6 tps, lat 2.021 ms stddev 0.770, 0 failed
+
