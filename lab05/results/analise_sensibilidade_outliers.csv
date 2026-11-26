@@ -1,0 +1,5 @@
+rq,metrica,outliers_removidos_n,n_pg17_sem_outliers,n_pg18_sem_outliers,diff_media_pct_sem_outliers,teste_sem_outliers,p_valor_sem_outliers,rejeita_h0_0_05_sem_outliers,rejeita_h0_bonferroni_sem_outliers,tamanho_efeito_sem_outliers,magnitude_sem_outliers,teste_pareado_complementar,p_valor_pareado,rejeita_h0_0_05_pareado
+RQ1,latencia_media_ms,2,30,28,1.2608,Teste t de Student (independente),0.03920511072535613,True,False,0.5548,médio,t pareado,0.0009080539966535938,True
+RQ2,tps,1,30,29,-1.4637,Teste t de Student (independente),0.01945415354754993,True,False,-0.6262,médio,t pareado,0.0007494350924239203,True
+RQ3,cpu_media_pct,3,28,29,0.6758,Mann-Whitney U (bilateral),0.1314398378617778,False,False,0.234,pequeno,Wilcoxon pareado,0.19092952087521553,False
+RQ4,memoria_media_mib,5,28,27,8.2561,Teste t de Student (independente),1.502880714269832e-27,True,True,5.7178,grande,Wilcoxon pareado,9.313225746154785e-09,True

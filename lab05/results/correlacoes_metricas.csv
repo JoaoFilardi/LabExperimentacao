@@ -1,0 +1,5 @@
+metrica,latencia_media_ms,tps,cpu_media_pct,memoria_media_mib
+latencia_media_ms,1.0,-0.9997,0.1143,0.2754
+tps,-0.9997,1.0,-0.1195,-0.2744
+cpu_media_pct,0.1143,-0.1195,1.0,0.4155
+memoria_media_mib,0.2754,-0.2744,0.4155,1.0
